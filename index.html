@@ -5,139 +5,230 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>沈琳昆 | Game Designer & Animator</title>
     <style>
-        /* ===== Reset & Base ===== */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; font-size: 16px; }
         body {
-            font-family: 'Segoe UI', 'Microsoft YaHei', -apple-system, sans-serif;
-            background: #06060b;
+            font-family: 'Noto Sans SC', 'Segoe UI', sans-serif;
+            background: #05050a;
             color: #e0e0e0;
             line-height: 1.7;
             overflow-x: hidden;
-            cursor: default;
         }
         a { color: inherit; text-decoration: none; }
         ::selection { background: #6c5ce7; color: #fff; }
 
-        /* ===== Custom Cursor (PC only) ===== */
+        /* ========== CINEMATIC INTRO ========== */
+        #intro {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 10000; background: #05050a;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column;
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #intro.fade-out {
+            opacity: 0; pointer-events: none;
+        }
+        #introCanvas {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        }
+        .intro-text-layer {
+            position: relative; z-index: 2; text-align: center;
+            opacity: 0;
+        }
+        .intro-text-layer.show { animation: introTextIn 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes introTextIn {
+            0% { opacity: 0; transform: scale(0.8) translateY(20px); filter: blur(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+        }
+        .intro-name {
+            font-family: 'Orbitron', 'Noto Sans SC', sans-serif;
+            font-size: clamp(2rem, 8vw, 6rem);
+            font-weight: 900;
+            letter-spacing: 0.15em;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe, #74b9ff, #a29bfe, #6c5ce7);
+            background-size: 300% auto;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: introGradient 3s linear infinite;
+            text-shadow: 0 0 80px rgba(108,92,231,0.5);
+            position: relative;
+        }
+        .intro-name::after {
+            content: ''; position: absolute; bottom: -10px; left: 50%;
+            transform: translateX(-50%);
+            width: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, #a29bfe, transparent);
+            animation: introLine 1.5s 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes introLine { to { width: 80%; } }
+        @keyframes introGradient { to { background-position: 300% center; } }
+        .intro-sub {
+            font-size: clamp(0.8rem, 2vw, 1.1rem);
+            color: #555; letter-spacing: 6px; margin-top: 1.5rem;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: introSubIn 1s 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes introSubIn {
+            from { opacity: 0; transform: translateY(15px); letter-spacing: 20px; }
+            to { opacity: 1; transform: translateY(0); letter-spacing: 6px; }
+        }
+        .intro-enter {
+            margin-top: 3rem; padding: 0.8rem 3rem; border: 1px solid rgba(108,92,231,0.3);
+            border-radius: 60px; color: #a29bfe; font-size: 0.9rem;
+            letter-spacing: 4px; text-transform: uppercase;
+            background: transparent; cursor: pointer;
+            opacity: 0; animation: introEnterIn 1s 1.6s ease forwards;
+            transition: all 0.4s;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .intro-enter:hover {
+            background: rgba(108,92,231,0.15);
+            box-shadow: 0 0 40px rgba(108,92,231,0.3), inset 0 0 40px rgba(108,92,231,0.05);
+            transform: scale(1.05);
+            border-color: #a29bfe;
+        }
+        .intro-enter .arrow {
+            display: inline-block; margin-left: 8px;
+            animation: arrowBounce 1.5s ease infinite;
+        }
+        @keyframes arrowBounce {
+            0%,100% { transform: translateX(0); }
+            50% { transform: translateX(6px); }
+        }
+        @keyframes introEnterIn { to { opacity: 1; } }
+
+        /* Shockwave on enter */
+        .shockwave {
+            position: fixed; top: 50%; left: 50%; z-index: 9999;
+            width: 10px; height: 10px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(108,92,231,0.6), transparent 70%);
+            transform: translate(-50%, -50%) scale(0);
+            pointer-events: none;
+        }
+        .shockwave.active {
+            animation: shockwaveExpand 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes shockwaveExpand {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(300); opacity: 0; }
+        }
+
+        /* ========== CUSTOM CURSOR ========== */
         .cursor-dot, .cursor-ring {
-            display: none;
-            position: fixed; top: 0; left: 0;
-            pointer-events: none; z-index: 9999;
-            border-radius: 50%;
+            display: none; position: fixed; top: 0; left: 0;
+            pointer-events: none; z-index: 99999; border-radius: 50%;
             transform: translate(-50%, -50%);
-            transition: opacity 0.3s;
         }
         @media (hover: hover) and (pointer: fine) {
             body { cursor: none; }
             a, button, .clickable { cursor: none; }
             .cursor-dot {
-                display: block;
-                width: 8px; height: 8px;
-                background: #a29bfe;
-                mix-blend-mode: difference;
+                display: block; width: 6px; height: 6px;
+                background: #fff; mix-blend-mode: difference;
             }
             .cursor-ring {
-                display: block;
-                width: 40px; height: 40px;
-                border: 2px solid rgba(108,92,231,0.5);
-                transition: width 0.3s, height 0.3s, border-color 0.3s;
+                display: block; width: 40px; height: 40px;
+                border: 1.5px solid rgba(162,155,254,0.6);
+                transition: width 0.4s, height 0.4s, border-color 0.4s, background 0.4s;
             }
             .cursor-ring.hover {
-                width: 60px; height: 60px;
-                border-color: rgba(162,155,254,0.8);
-                background: rgba(108,92,231,0.1);
+                width: 64px; height: 64px;
+                border-color: #a29bfe;
+                background: rgba(108,92,231,0.08);
             }
         }
 
-        /* ===== Scroll Progress Bar ===== */
+        /* ========== SCROLL PROGRESS ========== */
         .scroll-progress {
             position: fixed; top: 0; left: 0; height: 3px;
-            background: linear-gradient(90deg, #6c5ce7, #a29bfe, #74b9ff);
+            background: linear-gradient(90deg, #6c5ce7, #a29bfe, #74b9ff, #6c5ce7);
+            background-size: 300% auto;
+            animation: introGradient 3s linear infinite;
             z-index: 1000; width: 0%;
-            transition: width 0.1s linear;
         }
 
-        /* ===== Particle Canvas ===== */
+        /* ========== PARTICLE CANVAS (main page) ========== */
         #particles {
             position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1;
+            width: 100%; height: 100%; z-index: -1;
         }
 
-        /* ===== Navigation ===== */
+        /* ========== NAVIGATION ========== */
         nav {
             position: fixed; top: 0; width: 100%; z-index: 100;
-            padding: 1rem 2rem;
-            background: rgba(6, 6, 11, 0.8);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(108,92,231,0.08);
+            padding: 1.2rem 2.5rem;
+            background: rgba(5, 5, 10, 0);
+            backdrop-filter: blur(0px);
+            border-bottom: 1px solid transparent;
             display: flex; justify-content: space-between; align-items: center;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
         nav.scrolled {
-            padding: 0.6rem 2rem;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.4);
-            border-bottom-color: rgba(108,92,231,0.15);
+            padding: 0.7rem 2.5rem;
+            background: rgba(5, 5, 10, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom-color: rgba(108,92,231,0.1);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
         }
         .nav-logo {
-            font-size: 1.4rem; font-weight: 800; letter-spacing: 2px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem; font-weight: 700; letter-spacing: 3px;
             background: linear-gradient(135deg, #6c5ce7, #a29bfe);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .nav-links {
-            display: flex; gap: 2rem; list-style: none;
-            align-items: center;
-        }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
         .nav-links a {
-            font-size: 0.9rem; letter-spacing: 0.5px; position: relative;
-            transition: color 0.3s; padding: 0.3rem 0;
+            font-size: 0.85rem; letter-spacing: 1px; position: relative;
+            transition: color 0.3s; text-transform: uppercase; font-weight: 500;
         }
         .nav-links a::after {
-            content: ''; position: absolute; bottom: -2px; left: 50%;
+            content: ''; position: absolute; bottom: -4px; left: 50%;
             width: 0; height: 2px; transform: translateX(-50%);
-            background: linear-gradient(90deg, #6c5ce7, #a29bfe);
+            background: #a29bfe; border-radius: 1px;
             transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            border-radius: 1px;
         }
         .nav-links a:hover { color: #a29bfe; }
         .nav-links a:hover::after { width: 100%; }
 
-        /* Hamburger Menu */
         .hamburger {
-            display: none;
-            flex-direction: column; gap: 5px;
-            background: none; border: none; padding: 8px;
-            cursor: pointer; z-index: 200;
+            display: none; flex-direction: column; gap: 5px;
+            background: none; border: none; padding: 8px; cursor: pointer; z-index: 200;
         }
         .hamburger span {
-            display: block; width: 24px; height: 2px;
-            background: #e0e0e0; border-radius: 2px;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: block; width: 24px; height: 2px; background: #e0e0e0;
+            border-radius: 2px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             transform-origin: center;
         }
         .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
         .hamburger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
         .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-
         .mobile-menu {
             display: none; position: fixed; top: 0; left: 0;
             width: 100%; height: 100vh;
-            background: rgba(6, 6, 11, 0.95);
+            background: rgba(5, 5, 10, 0.96);
             backdrop-filter: blur(30px);
-            z-index: 99;
-            flex-direction: column;
-            align-items: center; justify-content: center; gap: 2rem;
+            z-index: 99; flex-direction: column;
+            align-items: center; justify-content: center; gap: 2.5rem;
         }
-        .mobile-menu.open { display: flex; animation: fadeIn 0.4s ease; }
+        .mobile-menu.open { display: flex; animation: mmIn 0.5s ease; }
+        @keyframes mmIn { from { opacity: 0; } to { opacity: 1; } }
         .mobile-menu a {
-            font-size: 1.8rem; font-weight: 600; color: #888;
-            transition: all 0.3s;
-            position: relative;
+            font-size: 1.6rem; font-weight: 600; color: #666;
+            transition: all 0.3s; letter-spacing: 2px;
         }
         .mobile-menu a:hover { color: #a29bfe; transform: translateX(10px); }
 
-        /* ===== Sections ===== */
+        /* ========== PAGE CONTENT ========== */
+        .page-content {
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 1s 0.3s, transform 1s 0.3s;
+            transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .page-content.show { opacity: 1; transform: translateY(0); }
+
+        /* ========== SECTIONS ========== */
         section { padding: 7rem 2rem; max-width: 1100px; margin: 0 auto; }
         .section-title {
             font-size: 2.2rem; font-weight: 700; margin-bottom: 3.5rem;
@@ -149,479 +240,495 @@
             border-radius: 2px;
         }
         .section-title .en {
-            font-size: 0.85rem; font-weight: 400; color: #555;
-            margin-left: 0.5rem; letter-spacing: 3px; text-transform: uppercase;
+            font-size: 0.8rem; font-weight: 400; color: #444;
+            letter-spacing: 4px; text-transform: uppercase;
+            font-family: 'Orbitron', sans-serif;
         }
 
-        /* ===== Hero ===== */
+        /* ========== HERO ========== */
         .hero {
             min-height: 100vh; display: flex; align-items: center;
             justify-content: center; text-align: center;
             padding-top: 5rem; position: relative;
+            perspective: 1000px;
         }
-        .hero-content { max-width: 850px; }
+        .hero-content { max-width: 900px; }
+        /* 3D parallax depth layers */
+        .hero-depth-1 { transform: translateZ(0px); transition: transform 0.3s ease-out; }
+        .hero-depth-2 { transform: translateZ(0px); transition: transform 0.3s ease-out; }
+        .hero-depth-3 { transform: translateZ(0px); transition: transform 0.3s ease-out; }
+
         .hero-tag {
-            display: inline-block; padding: 0.4rem 1.4rem;
-            border: 1px solid rgba(108,92,231,0.3); border-radius: 50px;
-            font-size: 0.85rem; color: #a29bfe; margin-bottom: 2rem;
-            letter-spacing: 3px;
-            animation: tagPulse 3s ease-in-out infinite;
+            display: inline-block; padding: 0.5rem 1.6rem;
+            border: 1px solid rgba(108,92,231,0.25); border-radius: 50px;
+            font-size: 0.82rem; color: #a29bfe; margin-bottom: 2rem;
+            letter-spacing: 4px; font-family: 'Orbitron', sans-serif;
+            position: relative; overflow: hidden;
         }
-        @keyframes tagPulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(108,92,231,0.2); }
-            50% { box-shadow: 0 0 20px 5px rgba(108,92,231,0.1); }
+        .hero-tag::before {
+            content: ''; position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(108,92,231,0.15), transparent);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        @keyframes shimmer {
+            0% { left: -100%; } 50% { left: 100%; } 100% { left: 100%; }
         }
 
         .hero h1 {
-            font-size: 4.5rem; font-weight: 800; line-height: 1.15;
-            margin-bottom: 1.5rem;
+            font-size: clamp(3rem, 7vw, 5rem); font-weight: 900; line-height: 1.1;
+            margin-bottom: 0.5rem;
         }
-        .hero h1 .highlight {
-            position: relative; display: inline-block;
-            background: linear-gradient(135deg, #6c5ce7, #a29bfe, #74b9ff);
+        .hero .name-cn {
+            display: inline-block; position: relative;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe, #74b9ff, #a29bfe);
+            background-size: 300% auto;
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-size: 200% auto;
-            animation: gradientShift 4s ease-in-out infinite;
+            animation: introGradient 4s linear infinite;
         }
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% center; }
-            50% { background-position: 200% center; }
+        .hero .name-cn::after {
+            content: ''; position: absolute; inset: -8px;
+            background: radial-gradient(ellipse, rgba(108,92,231,0.15), transparent 70%);
+            filter: blur(20px); z-index: -1;
+            animation: glowPulse 3s ease-in-out infinite;
         }
-
-        /* Glitch Effect */
-        .glitch {
-            position: relative;
-            animation: glitchTrigger 6s linear infinite;
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
         }
-        .glitch::before, .glitch::after {
-            content: attr(data-text); position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #06060b;
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text;
-            opacity: 0;
+        .hero .name-en {
+            display: block;
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            font-weight: 400; color: #555;
+            letter-spacing: 8px; margin-top: 0.5rem;
         }
-        .glitch::before {
-            color: #ff006e; z-index: -1;
-        }
-        .glitch::after {
-            color: #00f5d4; z-index: -2;
-        }
-        @keyframes glitchTrigger {
-            0%, 92%, 100% { }
-            93% { transform: translate(-2px, 1px); }
-            94% { transform: translate(2px, -1px); }
-            95% { transform: translate(-1px, -1px); }
-            96% { transform: translate(1px, 2px); }
-            97% { transform: translate(0); }
-        }
-
         .hero-subtitle {
-            font-size: 1.1rem; color: #888; max-width: 600px;
-            margin: 0 auto 1rem;
+            font-size: 1.05rem; color: #777; margin: 1.5rem auto 0.5rem;
+            max-width: 600px;
         }
         .typing-line {
-            font-size: 1.15rem; color: #a29bfe;
+            font-size: 1.1rem; color: #a29bfe;
             margin-bottom: 2.5rem; min-height: 1.8rem;
+            font-family: 'Orbitron', 'Noto Sans SC', sans-serif;
+            font-weight: 400; font-size: 0.95rem;
         }
         .typing-cursor {
-            display: inline-block; width: 2px; height: 1.15rem;
+            display: inline-block; width: 2px; height: 1em;
             background: #a29bfe; margin-left: 2px;
-            animation: blink 0.8s step-end infinite;
+            animation: blink 0.7s step-end infinite;
             vertical-align: text-bottom;
         }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
 
         .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
         .btn {
-            padding: 0.85rem 2.2rem; border-radius: 10px; font-size: 0.95rem;
+            padding: 0.9rem 2.5rem; border-radius: 12px; font-size: 0.9rem;
             font-weight: 600; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             cursor: pointer; border: none; position: relative; overflow: hidden;
+            letter-spacing: 1px;
         }
-        .btn::before {
-            content: ''; position: absolute; top: 50%; left: 50%;
-            width: 0; height: 0; border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-        .btn:hover::before { width: 300px; height: 300px; }
         .btn-primary {
-            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-            color: #fff; box-shadow: 0 4px 25px rgba(108,92,231,0.3);
+            background: linear-gradient(135deg, #6c5ce7, #7c6cf7);
+            color: #fff;
+            box-shadow: 0 4px 25px rgba(108,92,231,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
         }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 35px rgba(108,92,231,0.5); }
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(108,92,231,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
         .btn-outline {
-            background: transparent; color: #a29bfe;
-            border: 1.5px solid rgba(108,92,231,0.4);
+            background: rgba(108,92,231,0.05); color: #a29bfe;
+            border: 1.5px solid rgba(108,92,231,0.3);
         }
-        .btn-outline:hover { background: rgba(108,92,231,0.08); transform: translateY(-3px); border-color: #a29bfe; }
+        .btn-outline:hover {
+            background: rgba(108,92,231,0.1); transform: translateY(-3px);
+            border-color: #a29bfe;
+            box-shadow: 0 8px 30px rgba(108,92,231,0.2);
+        }
+        /* Magnetic button ripple */
+        .btn .ripple {
+            position: absolute; border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            transform: scale(0); animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+        @keyframes ripple { to { transform: scale(4); opacity: 0; } }
 
         .scroll-hint {
             position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-            display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-            color: #444; font-size: 0.75rem; letter-spacing: 3px;
+            display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
+            color: #333; font-size: 0.7rem; letter-spacing: 4px;
+            font-family: 'Orbitron', sans-serif;
         }
         .scroll-mouse {
-            width: 22px; height: 34px; border: 2px solid #444; border-radius: 11px;
+            width: 22px; height: 36px; border: 2px solid #333; border-radius: 11px;
             position: relative;
         }
         .scroll-mouse::after {
             content: ''; position: absolute; top: 6px; left: 50%;
             transform: translateX(-50%);
-            width: 3px; height: 8px; border-radius: 2px; background: #a29bfe;
+            width: 3px; height: 8px; border-radius: 2px; background: #6c5ce7;
             animation: scrollWheel 2s ease-in-out infinite;
         }
         @keyframes scrollWheel {
             0% { opacity: 1; transform: translateX(-50%) translateY(0); }
-            100% { opacity: 0; transform: translateX(-50%) translateY(12px); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(14px); }
         }
 
-        /* ===== Stats Counter ===== */
+        /* ========== STATS ========== */
         .stats-row {
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
             margin-top: 4rem;
         }
         .stat-card {
             text-align: center; padding: 2rem 1rem;
-            border-radius: 16px;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.4s;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.015);
+            border: 1px solid rgba(255,255,255,0.04);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative; overflow: hidden;
         }
-        .stat-card:hover { border-color: rgba(108,92,231,0.3); transform: translateY(-5px); }
+        .stat-card::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(108,92,231,0.08), transparent 70%);
+            opacity: 0; transition: opacity 0.5s;
+        }
+        .stat-card:hover::before { opacity: 1; }
+        .stat-card:hover { border-color: rgba(108,92,231,0.25); transform: translateY(-8px) scale(1.02); }
         .stat-number {
-            font-size: 2.5rem; font-weight: 800;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.8rem; font-weight: 900;
             background: linear-gradient(135deg, #6c5ce7, #a29bfe);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            position: relative; z-index: 1;
         }
-        .stat-label { font-size: 0.85rem; color: #666; margin-top: 0.3rem; letter-spacing: 1px; }
+        .stat-label {
+            font-size: 0.82rem; color: #555; margin-top: 0.4rem;
+            letter-spacing: 1px; position: relative; z-index: 1;
+        }
 
-        /* ===== About ===== */
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
-        .about-text p { color: #aaa; margin-bottom: 1.2rem; font-size: 1.05rem; }
-        .about-text .emphasis { color: #e0e0e0; font-weight: 600; }
+        /* ========== ABOUT ========== */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: start; }
+        .about-text p { color: #999; margin-bottom: 1.3rem; font-size: 1.05rem; }
+        .about-text .emphasis {
+            color: #e0e0e0; font-weight: 600;
+            background: linear-gradient(135deg, rgba(108,92,231,0.15), rgba(108,92,231,0));
+            padding: 0 4px; border-radius: 3px;
+        }
         .info-cards { display: flex; flex-direction: column; gap: 1rem; }
         .info-card {
-            padding: 1.3rem 1.6rem; border-radius: 14px;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 1.4rem 1.8rem; border-radius: 16px;
+            background: rgba(255,255,255,0.015);
+            border: 1px solid rgba(255,255,255,0.04);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative; overflow: hidden;
         }
         .info-card::before {
             content: ''; position: absolute; top: 0; left: 0;
-            width: 3px; height: 0; background: linear-gradient(180deg, #6c5ce7, #a29bfe);
-            transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 3px; height: 0;
+            background: linear-gradient(180deg, #6c5ce7, #a29bfe);
+            transition: height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .info-card:hover { border-color: rgba(108,92,231,0.3); transform: translateX(8px); }
+        .info-card:hover { border-color: rgba(108,92,231,0.25); transform: translateX(10px); }
         .info-card:hover::before { height: 100%; }
         .info-card .label {
-            font-size: 0.72rem; color: #6c5ce7; text-transform: uppercase;
-            letter-spacing: 2px; margin-bottom: 0.4rem; font-weight: 600;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem; color: #6c5ce7; text-transform: uppercase;
+            letter-spacing: 3px; margin-bottom: 0.4rem; font-weight: 700;
         }
-        .info-card .value { font-size: 1rem; font-weight: 500; }
+        .info-card .value { font-size: 0.95rem; font-weight: 500; }
 
-        /* ===== Experience ===== */
-        .timeline { position: relative; padding-left: 2.5rem; }
+        /* ========== EXPERIENCE ========== */
+        .timeline { position: relative; padding-left: 3rem; }
         .timeline::before {
             content: ''; position: absolute; left: 0; top: 0; bottom: 0;
             width: 2px;
-            background: linear-gradient(180deg, #6c5ce7, rgba(108,92,231,0.1));
+            background: linear-gradient(180deg, #6c5ce7 0%, rgba(108,92,231,0.05) 100%);
         }
         .timeline-item {
-            position: relative; margin-bottom: 3rem; padding-left: 2rem;
-            opacity: 0; transform: translateX(-20px);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative; margin-bottom: 3.5rem; padding-left: 2rem;
         }
-        .timeline-item.visible { opacity: 1; transform: translateX(0); }
         .timeline-item::before {
-            content: ''; position: absolute; left: -2.85rem; top: 0.5rem;
+            content: ''; position: absolute; left: -3.35rem; top: 0.4rem;
             width: 14px; height: 14px; border-radius: 50%;
-            background: #6c5ce7; border: 3px solid #06060b;
-            box-shadow: 0 0 15px rgba(108,92,231,0.6), 0 0 30px rgba(108,92,231,0.2);
-            transition: box-shadow 0.4s;
+            background: #6c5ce7; border: 3px solid #05050a;
+            box-shadow: 0 0 0 4px rgba(108,92,231,0.2), 0 0 20px rgba(108,92,231,0.5);
+            transition: all 0.4s;
         }
-        .timeline-item:hover::before { box-shadow: 0 0 20px rgba(108,92,231,0.8), 0 0 40px rgba(108,92,231,0.4); }
-        .timeline-date { font-size: 0.85rem; color: #6c5ce7; margin-bottom: 0.4rem; font-weight: 700; letter-spacing: 1px; }
+        .timeline-item:hover::before {
+            box-shadow: 0 0 0 8px rgba(108,92,231,0.15), 0 0 30px rgba(108,92,231,0.6);
+            transform: scale(1.3);
+        }
+        .timeline-date {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem; color: #6c5ce7; margin-bottom: 0.5rem;
+            font-weight: 700; letter-spacing: 2px;
+        }
         .timeline-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.2rem; }
-        .timeline-sub { font-size: 0.95rem; color: #888; margin-bottom: 1rem; }
-        .timeline-desc { color: #aaa; font-size: 0.95rem; }
+        .timeline-sub { font-size: 0.95rem; color: #777; margin-bottom: 1rem; }
+        .timeline-desc { color: #999; font-size: 0.92rem; }
         .timeline-desc li {
-            margin-bottom: 0.5rem; list-style: none; padding-left: 1.4rem; position: relative;
+            margin-bottom: 0.6rem; list-style: none; padding-left: 1.5rem; position: relative;
         }
         .timeline-desc li::before {
             content: ''; position: absolute; left: 0; top: 0.55rem;
-            width: 6px; height: 6px; border-radius: 50%;
-            background: #6c5ce7; opacity: 0.5;
+            width: 6px; height: 6px; border-radius: 2px;
+            background: #6c5ce7; opacity: 0.4;
         }
 
-        /* ===== Projects ===== */
+        /* ========== PROJECTS ========== */
         .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
         .project-card {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 18px; overflow: hidden;
+            background: rgba(255,255,255,0.015);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 20px; overflow: hidden;
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
-            transform-style: preserve-3d;
         }
+        /* Spotlight glow follow */
         .project-card::after {
-            content: ''; position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-                rgba(108,92,231,0.08), transparent 40%);
-            opacity: 0; transition: opacity 0.4s;
-            pointer-events: none; border-radius: 18px;
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%),
+                rgba(108,92,231,0.07), transparent 40%);
+            opacity: 0; transition: opacity 0.5s; pointer-events: none;
+            border-radius: 20px;
         }
         .project-card:hover::after { opacity: 1; }
         .project-card:hover {
-            border-color: rgba(108,92,231,0.35);
-            transform: translateY(-8px);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3), 0 0 30px rgba(108,92,231,0.1);
+            border-color: rgba(108,92,231,0.3);
+            transform: translateY(-10px) scale(1.01);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3), 0 0 40px rgba(108,92,231,0.08);
         }
         .project-header {
             padding: 2rem 2rem 1.2rem;
-            background: linear-gradient(135deg, rgba(108,92,231,0.06), rgba(162,155,254,0.02));
-            position: relative;
+            background: linear-gradient(135deg, rgba(108,92,231,0.05), transparent);
+            position: relative; overflow: hidden;
         }
         .project-number {
-            position: absolute; top: 1rem; right: 1.5rem;
-            font-size: 3rem; font-weight: 900; color: rgba(108,92,231,0.08);
+            position: absolute; top: 0.8rem; right: 1.2rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem; font-weight: 900; color: rgba(108,92,231,0.06);
             line-height: 1;
         }
         .project-genre {
-            display: inline-block; padding: 0.3rem 0.9rem; border-radius: 50px;
-            font-size: 0.75rem; background: rgba(108,92,231,0.12); color: #a29bfe;
-            margin-bottom: 0.8rem; font-weight: 500;
+            display: inline-block; padding: 0.3rem 1rem; border-radius: 50px;
+            font-size: 0.72rem; background: rgba(108,92,231,0.1); color: #a29bfe;
+            margin-bottom: 0.8rem; font-weight: 600; letter-spacing: 1px;
+            font-family: 'Orbitron', sans-serif;
         }
         .project-card h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.3rem; }
-        .project-card .project-date { font-size: 0.85rem; color: #555; }
+        .project-card .project-date { font-size: 0.82rem; color: #555; }
         .project-body { padding: 1.2rem 2rem 2rem; }
-        .project-body p { color: #999; font-size: 0.92rem; margin-bottom: 1.2rem; line-height: 1.8; }
+        .project-body p { color: #888; font-size: 0.9rem; margin-bottom: 1.2rem; line-height: 1.8; }
         .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .project-tag {
-            padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.78rem;
-            background: rgba(255,255,255,0.04); color: #777;
+            padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.75rem;
+            background: rgba(255,255,255,0.03); color: #666;
             border: 1px solid rgba(255,255,255,0.05);
             transition: all 0.3s;
         }
         .project-tag:hover { border-color: rgba(108,92,231,0.3); color: #a29bfe; }
 
-        /* ===== Skills ===== */
+        /* ========== SKILLS ========== */
         .skills-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
         .skill-group {
-            padding: 2rem; border-radius: 18px;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 2rem; border-radius: 20px;
+            background: rgba(255,255,255,0.015);
+            border: 1px solid rgba(255,255,255,0.04);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative; overflow: hidden;
         }
         .skill-group::before {
             content: ''; position: absolute; top: -50%; left: -50%;
             width: 200%; height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(108,92,231,0.05), transparent 30%);
-            animation: rotateBg 8s linear infinite;
-            opacity: 0; transition: opacity 0.5s;
+            background: conic-gradient(from 0deg, transparent, rgba(108,92,231,0.04), transparent 25%);
+            animation: skillRotate 10s linear infinite paused;
         }
-        .skill-group:hover::before { opacity: 1; }
-        @keyframes rotateBg { to { transform: rotate(360deg); } }
-        .skill-group:hover { border-color: rgba(108,92,231,0.3); transform: translateY(-5px); }
+        .skill-group:hover::before { animation-play-state: running; }
+        @keyframes skillRotate { to { transform: rotate(360deg); } }
+        .skill-group:hover { border-color: rgba(108,92,231,0.25); transform: translateY(-8px); }
         .skill-group h3 {
-            font-size: 1.1rem; margin-bottom: 1.3rem; color: #a29bfe;
+            font-size: 1.05rem; margin-bottom: 1.3rem; color: #a29bfe;
             display: flex; align-items: center; gap: 0.6rem;
             position: relative; z-index: 1;
         }
-        .skill-group h3 .icon { font-size: 1.3rem; }
+        .skill-group h3 .icon { font-size: 1.2rem; }
         .skill-item {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0.55rem 0; border-bottom: 1px solid rgba(255,255,255,0.03);
+            padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.025);
             position: relative; z-index: 1;
         }
         .skill-item:last-child { border-bottom: none; }
-        .skill-name { font-size: 0.9rem; }
+        .skill-name { font-size: 0.88rem; }
         .skill-bar-bg {
-            width: 80px; height: 4px; background: rgba(255,255,255,0.06);
+            width: 80px; height: 4px; background: rgba(255,255,255,0.05);
             border-radius: 2px; overflow: hidden;
         }
         .skill-bar {
             height: 100%; border-radius: 2px;
             background: linear-gradient(90deg, #6c5ce7, #a29bfe);
-            width: 0%; transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 0%; transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* ===== Software ===== */
         .software-title {
-            text-align: center; color: #555; font-weight: 400;
-            margin: 3rem 0 1.5rem; font-size: 0.85rem;
-            letter-spacing: 3px; text-transform: uppercase;
+            text-align: center; color: #444; font-weight: 700;
+            margin: 3.5rem 0 1.5rem; font-size: 0.8rem;
+            letter-spacing: 4px; text-transform: uppercase;
+            font-family: 'Orbitron', sans-serif;
         }
         .software-grid { display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center; }
         .sw-chip {
             padding: 0.6rem 1.3rem; border-radius: 50px;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.06);
-            font-size: 0.88rem; color: #999;
+            background: rgba(255,255,255,0.015);
+            border: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.85rem; color: #888;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .sw-chip:hover {
-            border-color: rgba(108,92,231,0.5); color: #a29bfe;
-            transform: scale(1.08); box-shadow: 0 0 20px rgba(108,92,231,0.15);
+            border-color: rgba(108,92,231,0.4); color: #a29bfe;
+            transform: scale(1.08) translateY(-3px);
+            box-shadow: 0 8px 25px rgba(108,92,231,0.15);
         }
 
-        /* ===== Contact ===== */
+        /* ========== CONTACT ========== */
         .contact-section { text-align: center; padding-bottom: 5rem; }
         .contact-section > p {
-            color: #777; font-size: 1.1rem; margin-bottom: 3rem;
+            color: #666; font-size: 1.05rem; margin-bottom: 3rem;
             max-width: 500px; margin-left: auto; margin-right: auto;
         }
         .contact-cards { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
         .contact-card {
             padding: 1.8rem 2.5rem; border-radius: 18px;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: rgba(255,255,255,0.015);
+            border: 1px solid rgba(255,255,255,0.04);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             min-width: 220px; position: relative; overflow: hidden;
         }
         .contact-card::before {
             content: ''; position: absolute; bottom: 0; left: 0;
             width: 100%; height: 3px;
             background: linear-gradient(90deg, #6c5ce7, #a29bfe);
-            transform: scaleX(0); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: scaleX(0); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: left;
         }
-        .contact-card:hover { border-color: rgba(108,92,231,0.3); transform: translateY(-5px); }
+        .contact-card:hover {
+            border-color: rgba(108,92,231,0.25); transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
         .contact-card:hover::before { transform: scaleX(1); }
         .contact-card .c-label {
-            font-size: 0.72rem; color: #6c5ce7; text-transform: uppercase;
-            letter-spacing: 2px; margin-bottom: 0.5rem; font-weight: 600;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem; color: #6c5ce7; text-transform: uppercase;
+            letter-spacing: 3px; margin-bottom: 0.5rem; font-weight: 700;
         }
-        .contact-card .c-value { font-size: 0.95rem; font-weight: 500; word-break: break-all; }
+        .contact-card .c-value { font-size: 0.92rem; font-weight: 500; word-break: break-all; }
 
-        /* ===== Footer ===== */
         footer {
             text-align: center; padding: 2.5rem;
-            border-top: 1px solid rgba(255,255,255,0.04);
-            color: #333; font-size: 0.85rem;
+            border-top: 1px solid rgba(255,255,255,0.03);
+            color: #2a2a2a; font-size: 0.82rem;
         }
 
-        /* ===== Animations ===== */
+        /* ========== REVEAL ANIMATIONS ========== */
         .reveal {
-            opacity: 0; transform: translateY(40px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0; transform: translateY(50px);
+            transition: opacity 1s, transform 1s;
+            transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        .reveal-left {
-            opacity: 0; transform: translateX(-40px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal-left.visible { opacity: 1; transform: translateX(0); }
-        .reveal-right {
-            opacity: 0; transform: translateX(40px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal-right.visible { opacity: 1; transform: translateX(0); }
-        .reveal-scale {
-            opacity: 0; transform: scale(0.9);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal-scale.visible { opacity: 1; transform: scale(1); }
+        .reveal.vis { opacity: 1; transform: translateY(0); }
+        .reveal-left { opacity: 0; transform: translateX(-50px); transition: opacity 1s, transform 1s; transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-left.vis { opacity: 1; transform: translateX(0); }
+        .reveal-right { opacity: 0; transform: translateX(50px); transition: opacity 1s, transform 1s; transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-right.vis { opacity: 1; transform: translateX(0); }
 
-        /* Stagger children animation */
-        .stagger-children > * {
-            opacity: 0; transform: translateY(20px);
-            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        .stagger > * {
+            opacity: 0; transform: translateY(25px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .stagger-children.visible > *:nth-child(1) { transition-delay: 0.05s; }
-        .stagger-children.visible > *:nth-child(2) { transition-delay: 0.1s; }
-        .stagger-children.visible > *:nth-child(3) { transition-delay: 0.15s; }
-        .stagger-children.visible > *:nth-child(4) { transition-delay: 0.2s; }
-        .stagger-children.visible > *:nth-child(5) { transition-delay: 0.25s; }
-        .stagger-children.visible > *:nth-child(6) { transition-delay: 0.3s; }
-        .stagger-children.visible > *:nth-child(7) { transition-delay: 0.35s; }
-        .stagger-children.visible > *:nth-child(8) { transition-delay: 0.4s; }
-        .stagger-children.visible > *:nth-child(9) { transition-delay: 0.45s; }
-        .stagger-children.visible > *:nth-child(10) { transition-delay: 0.5s; }
-        .stagger-children.visible > *:nth-child(11) { transition-delay: 0.55s; }
-        .stagger-children.visible > *:nth-child(12) { transition-delay: 0.6s; }
-        .stagger-children.visible > *:nth-child(13) { transition-delay: 0.65s; }
-        .stagger-children.visible > *:nth-child(14) { transition-delay: 0.7s; }
-        .stagger-children.visible > *:nth-child(15) { transition-delay: 0.75s; }
-        .stagger-children.visible > *:nth-child(16) { transition-delay: 0.8s; }
-        .stagger-children.visible > * { opacity: 1; transform: translateY(0); }
+        .stagger.vis > * { opacity: 1; transform: translateY(0); }
+        .stagger.vis > *:nth-child(1) { transition-delay: 0.05s; }
+        .stagger.vis > *:nth-child(2) { transition-delay: 0.1s; }
+        .stagger.vis > *:nth-child(3) { transition-delay: 0.15s; }
+        .stagger.vis > *:nth-child(4) { transition-delay: 0.2s; }
+        .stagger.vis > *:nth-child(5) { transition-delay: 0.25s; }
+        .stagger.vis > *:nth-child(6) { transition-delay: 0.3s; }
+        .stagger.vis > *:nth-child(7) { transition-delay: 0.35s; }
+        .stagger.vis > *:nth-child(8) { transition-delay: 0.4s; }
+        .stagger.vis > *:nth-child(9) { transition-delay: 0.45s; }
+        .stagger.vis > *:nth-child(10) { transition-delay: 0.5s; }
+        .stagger.vis > *:nth-child(11) { transition-delay: 0.55s; }
+        .stagger.vis > *:nth-child(12) { transition-delay: 0.6s; }
+        .stagger.vis > *:nth-child(13) { transition-delay: 0.65s; }
+        .stagger.vis > *:nth-child(14) { transition-delay: 0.7s; }
+        .stagger.vis > *:nth-child(15) { transition-delay: 0.75s; }
+        .stagger.vis > *:nth-child(16) { transition-delay: 0.8s; }
 
-        /* ===== Mobile Back to Top ===== */
         .back-to-top {
             position: fixed; bottom: 2rem; right: 2rem;
-            width: 44px; height: 44px; border-radius: 12px;
-            background: rgba(108,92,231,0.2); border: 1px solid rgba(108,92,231,0.3);
-            color: #a29bfe; font-size: 1.2rem;
+            width: 46px; height: 46px; border-radius: 14px;
+            background: rgba(108,92,231,0.15); border: 1px solid rgba(108,92,231,0.25);
+            color: #a29bfe; font-size: 1.1rem;
             display: flex; align-items: center; justify-content: center;
             opacity: 0; transform: translateY(20px);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             cursor: pointer; z-index: 50; backdrop-filter: blur(10px);
         }
         .back-to-top.show { opacity: 1; transform: translateY(0); }
-        .back-to-top:hover { background: rgba(108,92,231,0.3); }
+        .back-to-top:hover { background: rgba(108,92,231,0.3); transform: translateY(-3px); }
 
-        /* ===== Responsive ===== */
-        @media (max-width: 900px) {
-            .skills-container { grid-template-columns: 1fr 1fr; }
-        }
+        @media (max-width: 900px) { .skills-container { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 768px) {
             section { padding: 5rem 1.2rem; }
-            .hero h1 { font-size: 2.8rem; }
-            .hero-subtitle { font-size: 0.95rem; }
-            .typing-line { font-size: 1rem; }
+            .hero h1 { font-size: 2.6rem; }
             .about-grid { grid-template-columns: 1fr; gap: 2rem; }
             .projects-grid { grid-template-columns: 1fr; }
             .skills-container { grid-template-columns: 1fr; }
             .stats-row { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
             .stat-number { font-size: 2rem; }
-            .section-title { font-size: 1.6rem; margin-bottom: 2.5rem; }
             .nav-links { display: none; }
             .hamburger { display: flex; }
             nav { padding: 0.8rem 1.2rem; }
             .contact-cards { flex-direction: column; align-items: center; }
             .contact-card { width: 100%; max-width: 340px; }
-            .project-header { padding: 1.5rem 1.5rem 1rem; }
+            .project-header { padding: 1.5rem; }
             .project-body { padding: 1rem 1.5rem 1.5rem; }
-            .project-card h3 { font-size: 1.3rem; }
-            .project-number { font-size: 2rem; }
-            .project-card.full-width { grid-column: auto; }
+            .full-width { grid-column: auto !important; }
         }
         @media (max-width: 480px) {
-            .hero h1 { font-size: 2.2rem; }
-            .hero-tag { font-size: 0.72rem; letter-spacing: 2px; }
-            .stats-row { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+            .hero h1 { font-size: 2rem; }
             .stat-card { padding: 1.2rem 0.5rem; }
             .stat-number { font-size: 1.6rem; }
-            .stat-label { font-size: 0.75rem; }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
     </style>
 </head>
 <body>
 
-<!-- Custom Cursor -->
+<!-- Cursor -->
 <div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ===== CINEMATIC INTRO ===== -->
+<div id="intro">
+    <canvas id="introCanvas"></canvas>
+    <div class="intro-text-layer" id="introText">
+        <div class="intro-name">LINKUN SHEN</div>
+        <div class="intro-sub">Game Designer & Animator</div>
+        <button class="intro-enter" id="introEnter" onclick="enterSite()">
+            Enter <span class="arrow">&rarr;</span>
+        </button>
+    </div>
+</div>
+<div class="shockwave" id="shockwave"></div>
 
 <!-- Scroll Progress -->
 <div class="scroll-progress" id="scrollProgress"></div>
 
-<!-- Particle Background -->
+<!-- Particle BG -->
 <canvas id="particles"></canvas>
 
-<!-- Navigation -->
+<!-- Nav -->
 <nav id="navbar">
     <div class="nav-logo">LINKUN</div>
     <ul class="nav-links">
@@ -635,8 +742,6 @@
         <span></span><span></span><span></span>
     </button>
 </nav>
-
-<!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
     <a href="#about" onclick="closeMobile()">About</a>
     <a href="#experience" onclick="closeMobile()">Experience</a>
@@ -645,17 +750,20 @@
     <a href="#contact" onclick="closeMobile()">Contact</a>
 </div>
 
+<!-- ===== PAGE CONTENT ===== -->
+<div class="page-content" id="pageContent">
+
 <!-- Hero -->
-<section class="hero">
+<section class="hero" id="heroSection">
     <div class="hero-content">
-        <div class="hero-tag reveal">GAME DESIGNER & ANIMATOR</div>
-        <h1 class="reveal">
-            Hi, I'm<br>
-            <span class="highlight glitch" data-text="沈琳昆">沈琳昆</span>
+        <div class="hero-tag hero-depth-1 reveal">GAME DESIGNER & ANIMATOR</div>
+        <h1 class="hero-depth-2 reveal">
+            <span class="name-cn">沈琳昆</span>
+            <span class="name-en">LINKUN SHEN</span>
         </h1>
-        <p class="hero-subtitle reveal">Linkun Shen</p>
-        <div class="typing-line reveal" id="typingLine"><span class="typing-cursor"></span></div>
-        <div class="hero-buttons reveal">
+        <p class="hero-subtitle hero-depth-3 reveal">游戏策划 / 系统设计 / 关卡设计 / 叙事设计 / 游戏动画制作</p>
+        <div class="typing-line hero-depth-3 reveal" id="typingLine"><span class="typing-cursor"></span></div>
+        <div class="hero-buttons hero-depth-3 reveal">
             <a href="#projects" class="btn btn-primary">View Projects</a>
             <a href="#contact" class="btn btn-outline">Get in Touch</a>
         </div>
@@ -668,60 +776,28 @@
 
 <!-- Stats -->
 <section style="padding-top: 0; margin-top: -3rem;">
-    <div class="stats-row stagger-children">
-        <div class="stat-card">
-            <div class="stat-number" data-target="4">0</div>
-            <div class="stat-label">Game Projects</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number" data-target="7">0</div>
-            <div class="stat-label">Years in Game Dev</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number" data-target="1">0</div>
-            <div class="stat-label">Game on Steam</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number" data-target="16">0</div>
-            <div class="stat-label">Tools Mastered</div>
-        </div>
+    <div class="stats-row stagger">
+        <div class="stat-card"><div class="stat-number" data-target="4">0</div><div class="stat-label">Game Projects</div></div>
+        <div class="stat-card"><div class="stat-number" data-target="7">0</div><div class="stat-label">Years in Game Dev</div></div>
+        <div class="stat-card"><div class="stat-number" data-target="1">0</div><div class="stat-label">Game on Steam</div></div>
+        <div class="stat-card"><div class="stat-number" data-target="16">0</div><div class="stat-label">Tools Mastered</div></div>
     </div>
 </section>
 
 <!-- About -->
 <section id="about">
-    <div class="section-title reveal">关于我 <span class="en">About Me</span></div>
+    <div class="section-title reveal">关于我 <span class="en">About</span></div>
     <div class="about-grid">
         <div class="about-text reveal-left">
-            <p>
-                我是一名<span class="emphasis">游戏策划与动画制作</span>从业者，毕业于<span class="emphasis">犹他大学 (University of Utah)</span>
-                游戏设计与制作专业（全美 Top 3），拥有从独立游戏全流程开发到大型工业化项目的复合型经验。
-            </p>
-            <p>
-                目前就职于<span class="emphasis">腾讯天美工作室群</span>，担任系统策划，参与国民级手游《传说对决》(Arena of Valor) 的核心玩法与系统开发。
-            </p>
-            <p>
-                我热衷于心理恐怖游戏与沉浸式体验设计，擅长将叙事融入关卡与系统中，同时具备动画制作与程序逻辑的双重知识背景，
-                能在策划、美术与程序团队之间高效协作。
-            </p>
+            <p>我是一名<span class="emphasis">游戏策划与动画制作</span>从业者，毕业于<span class="emphasis">犹他大学 (University of Utah)</span>游戏设计与制作专业（全美 Top 3），拥有从独立游戏全流程开发到大型工业化项目的复合型经验。</p>
+            <p>目前就职于<span class="emphasis">腾讯天美工作室群</span>，担任系统策划，参与国民级手游《传说对决》(Arena of Valor) 的核心玩法与系统开发。</p>
+            <p>我热衷于心理恐怖游戏与沉浸式体验设计，擅长将叙事融入关卡与系统中，同时具备动画制作与程序逻辑的双重知识背景，能在策划、美术与程序团队之间高效协作。</p>
         </div>
-        <div class="info-cards stagger-children reveal-right">
-            <div class="info-card">
-                <div class="label">Education</div>
-                <div class="value">University of Utah - B.S. Game Design & Production</div>
-            </div>
-            <div class="info-card">
-                <div class="label">Current Role</div>
-                <div class="value">系统策划 @ 腾讯天美工作室群</div>
-            </div>
-            <div class="info-card">
-                <div class="label">Focus</div>
-                <div class="value">系统设计 / 关卡设计 / 叙事设计 / 游戏动画</div>
-            </div>
-            <div class="info-card">
-                <div class="label">Languages</div>
-                <div class="value">中文（母语）/ English（Fluent）</div>
-            </div>
+        <div class="info-cards stagger reveal-right">
+            <div class="info-card"><div class="label">Education</div><div class="value">University of Utah - B.S. Game Design & Production</div></div>
+            <div class="info-card"><div class="label">Current Role</div><div class="value">系统策划 @ 腾讯天美工作室群</div></div>
+            <div class="info-card"><div class="label">Focus</div><div class="value">系统设计 / 关卡设计 / 叙事设计 / 游戏动画</div></div>
+            <div class="info-card"><div class="label">Languages</div><div class="value">中文（母语）/ English（Fluent）</div></div>
         </div>
     </div>
 </section>
@@ -730,25 +806,25 @@
 <section id="experience">
     <div class="section-title reveal">工作经历 <span class="en">Experience</span></div>
     <div class="timeline">
-        <div class="timeline-item">
-            <div class="timeline-date">2025.08 - Present</div>
+        <div class="timeline-item reveal">
+            <div class="timeline-date">2025.08 — Present</div>
             <div class="timeline-title">系统策划</div>
-            <div class="timeline-sub">腾讯天美工作室群 - 《传说对决》(Arena of Valor)</div>
+            <div class="timeline-sub">腾讯天美工作室群 — 《传说对决》(Arena of Valor)</div>
             <ul class="timeline-desc">
-                <li>独立负责"灵宝系统"核心动画状态机架构设计，优化多状态切换逻辑，提升局外界面表演动画的流畅度与表现力</li>
-                <li>协助完成"灵宝衣橱系统"及"次元英雄自定义创角系统"开发，负责角色创建、换装搭配等主流程功能落地</li>
+                <li>独立负责"灵宝系统"核心动画状态机架构设计，优化多状态切换逻辑</li>
+                <li>协助完成"灵宝衣橱系统"及"次元英雄自定义创角系统"开发</li>
                 <li>深度参与"吃鸡乱斗"模式开发，负责英雄技能逻辑适配与参数调优</li>
-                <li>通过 AI 辅助完成《AoV Arena》赛事网站全栈开发，覆盖 106 名内部用户，人均页面活跃度达 6.26</li>
+                <li>全栈开发《AoV Arena》赛事网站，覆盖 106 名用户，人均活跃度 6.26</li>
             </ul>
         </div>
-        <div class="timeline-item">
-            <div class="timeline-date">2018.09 - 2025.05</div>
+        <div class="timeline-item reveal">
+            <div class="timeline-date">2018.09 — 2025.05</div>
             <div class="timeline-title">游戏设计与制作 B.S.</div>
-            <div class="timeline-sub">犹他大学 (University of Utah) - 全美 Top 3</div>
+            <div class="timeline-sub">犹他大学 (University of Utah) — 全美 Top 3</div>
             <ul class="timeline-desc">
-                <li>核心课程：角色动画制作、动作捕捉、游戏交互设计、游戏项目管理、游戏关卡策划、游戏故事创作</li>
-                <li>在校期间独立开发多款游戏作品，涵盖恐怖、动作、音游等多种类型</li>
-                <li>毕业设计：Steam 上架音游《ClayBeats》，全程负责动画制作与核心交互设计</li>
+                <li>核心课程：角色动画、动作捕捉、游戏交互设计、项目管理、关卡策划、故事创作</li>
+                <li>在校期间独立开发多款游戏作品，涵盖恐怖、动作、音游等类型</li>
+                <li>毕业设计：Steam 上架音游《ClayBeats》，负责动画制作与核心交互设计</li>
             </ul>
         </div>
     </div>
@@ -757,112 +833,31 @@
 <!-- Projects -->
 <section id="projects">
     <div class="section-title reveal">项目作品 <span class="en">Projects</span></div>
-    <div class="projects-grid stagger-children">
-        <div class="project-card" onmousemove="cardGlow(event, this)">
-            <div class="project-header">
-                <div class="project-number">01</div>
-                <div class="project-genre">Psychological Horror</div>
-                <h3>《Dream》</h3>
-                <div class="project-date">2024.08 - 2024.12 | 独立开发</div>
-            </div>
-            <div class="project-body">
-                <p>
-                    一款借鉴《Devotion》和《Silent Hill》的心理恐怖游戏。打造"探索—解谜—AI 追逐"核心循环，
-                    基于 UE 蓝图自主搭建小丑追逐者 AI 系统，设计"安全探索—高压追逐"交替节奏。
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">Unreal Engine</span>
-                    <span class="project-tag">Blueprint</span>
-                    <span class="project-tag">AI Behavior Tree</span>
-                    <span class="project-tag">Level Design</span>
-                    <span class="project-tag">Narrative</span>
-                </div>
-            </div>
+    <div class="projects-grid stagger">
+        <div class="project-card" onmousemove="cardGlow(event,this)">
+            <div class="project-header"><div class="project-number">01</div><div class="project-genre">HORROR</div><h3>《Dream》</h3><div class="project-date">2024.08 – 2024.12 | 独立开发</div></div>
+            <div class="project-body"><p>借鉴《Devotion》和《Silent Hill》的心理恐怖游戏。"探索—解谜—AI 追逐"核心循环，基于 UE 蓝图搭建 AI 系统，"安全探索—高压追逐"交替节奏。</p>
+            <div class="project-tags"><span class="project-tag">Unreal Engine</span><span class="project-tag">Blueprint</span><span class="project-tag">AI Behavior Tree</span><span class="project-tag">Level Design</span></div></div>
         </div>
-
-        <div class="project-card" onmousemove="cardGlow(event, this)">
-            <div class="project-header">
-                <div class="project-number">02</div>
-                <div class="project-genre">Loop Horror</div>
-                <h3>《0423》</h3>
-                <div class="project-date">2024.08 - 2024.12 | 独立开发</div>
-            </div>
-            <div class="project-body">
-                <p>
-                    类似《八番出口》的循环恐怖步行模拟器。玩家需在重复场景中识别"异常"并做出正确抉择以打破循环。
-                    纯环境叙事，无 UI 指引，隐性引导玩家探索。
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">Unreal Engine</span>
-                    <span class="project-tag">Environmental Storytelling</span>
-                    <span class="project-tag">Loop Mechanic</span>
-                    <span class="project-tag">Implicit Guidance</span>
-                </div>
-            </div>
+        <div class="project-card" onmousemove="cardGlow(event,this)">
+            <div class="project-header"><div class="project-number">02</div><div class="project-genre">LOOP HORROR</div><h3>《0423》</h3><div class="project-date">2024.08 – 2024.12 | 独立开发</div></div>
+            <div class="project-body"><p>类似《八番出口》的循环恐怖步行模拟器。重复场景中识别"异常"打破循环，纯环境叙事，无 UI 指引，隐性引导玩家探索。</p>
+            <div class="project-tags"><span class="project-tag">Unreal Engine</span><span class="project-tag">Environmental Storytelling</span><span class="project-tag">Loop Mechanic</span></div></div>
         </div>
-
-        <div class="project-card" onmousemove="cardGlow(event, this)">
-            <div class="project-header">
-                <div class="project-number">03</div>
-                <div class="project-genre">Roguelike Action</div>
-                <h3>《Jim's Adventure》</h3>
-                <div class="project-date">2024.01 - 2024.05 | 独立开发</div>
-            </div>
-            <div class="project-body">
-                <p>
-                    二次元风格类 Roguelike 动作游戏。"击杀小兵→获取经验→技能成长"核心战斗循环，
-                    参考《吸血鬼幸存者》升级机制 3D 化创新，4 场 Boss 战 + 最终"巨龙"Boss。
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">Unreal Engine</span>
-                    <span class="project-tag">System Design</span>
-                    <span class="project-tag">Boss Design</span>
-                    <span class="project-tag">Balance Tuning</span>
-                </div>
-            </div>
+        <div class="project-card" onmousemove="cardGlow(event,this)">
+            <div class="project-header"><div class="project-number">03</div><div class="project-genre">ROGUELIKE</div><h3>《Jim's Adventure》</h3><div class="project-date">2024.01 – 2024.05 | 独立开发</div></div>
+            <div class="project-body"><p>二次元风格类 Roguelike 动作游戏。"击杀→经验→技能成长"核心循环，《吸血鬼幸存者》升级机制 3D 化，4 场 Boss 战 + 最终巨龙 Boss。</p>
+            <div class="project-tags"><span class="project-tag">Unreal Engine</span><span class="project-tag">System Design</span><span class="project-tag">Boss Design</span></div></div>
         </div>
-
-        <div class="project-card" onmousemove="cardGlow(event, this)">
-            <div class="project-header">
-                <div class="project-number">04</div>
-                <div class="project-genre">Rhythm Game</div>
-                <h3>《ClayBeats》</h3>
-                <div class="project-date">毕业设计 | Steam 上架</div>
-            </div>
-            <div class="project-body">
-                <p>
-                    已上架 Steam 的音乐节奏游戏，毕业设计代表作。
-                    全程负责动画制作与核心交互设计，将动画专业技能与游戏设计完美结合。
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">Steam</span>
-                    <span class="project-tag">Animation</span>
-                    <span class="project-tag">Interaction Design</span>
-                    <span class="project-tag">Music</span>
-                </div>
-            </div>
+        <div class="project-card" onmousemove="cardGlow(event,this)">
+            <div class="project-header"><div class="project-number">04</div><div class="project-genre">RHYTHM</div><h3>《ClayBeats》</h3><div class="project-date">毕业设计 | Steam 上架</div></div>
+            <div class="project-body"><p>已上架 Steam 的音乐节奏游戏。全程负责动画制作与核心交互设计，动画专业技能与游戏设计的结合代表作。</p>
+            <div class="project-tags"><span class="project-tag">Steam</span><span class="project-tag">Animation</span><span class="project-tag">Interaction Design</span><span class="project-tag">Music</span></div></div>
         </div>
-
-        <div class="project-card full-width" style="grid-column: 1 / -1;" onmousemove="cardGlow(event, this)">
-            <div class="project-header">
-                <div class="project-number">05</div>
-                <div class="project-genre">Full-Stack Web</div>
-                <h3>《AoV Arena》赛事网站</h3>
-                <div class="project-date">腾讯天美 - 内部项目</div>
-            </div>
-            <div class="project-body">
-                <p>
-                    为提升内部赛事运营效率，通过 AI 辅助完成全栈开发。实现赛程管理、实时竞猜、聊天室、数据可视化等全链路功能，
-                    设计数据埋点体系，覆盖 106 名内部用户，人均页面活跃度达 6.26。
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">Full-Stack</span>
-                    <span class="project-tag">Data Analytics</span>
-                    <span class="project-tag">Real-time</span>
-                    <span class="project-tag">UX Design</span>
-                    <span class="project-tag">106 Users</span>
-                </div>
-            </div>
+        <div class="project-card full-width" style="grid-column: 1 / -1;" onmousemove="cardGlow(event,this)">
+            <div class="project-header"><div class="project-number">05</div><div class="project-genre">FULL-STACK</div><h3>《AoV Arena》赛事网站</h3><div class="project-date">腾讯天美 — 内部项目</div></div>
+            <div class="project-body"><p>全栈开发的内部赛事平台。赛程管理、实时竞猜、聊天室、数据可视化全链路功能，数据埋点体系覆盖 106 名用户，驱动 UI/UX 迭代。</p>
+            <div class="project-tags"><span class="project-tag">Full-Stack</span><span class="project-tag">Data Analytics</span><span class="project-tag">Real-time</span><span class="project-tag">UX Design</span></div></div>
         </div>
     </div>
 </section>
@@ -870,149 +865,142 @@
 <!-- Skills -->
 <section id="skills">
     <div class="section-title reveal">技能树 <span class="en">Skills</span></div>
-    <div class="skills-container stagger-children">
+    <div class="skills-container stagger">
         <div class="skill-group">
             <h3><span class="icon">&#9881;</span> 游戏策划</h3>
-            <div class="skill-item"><span class="skill-name">关卡设计</span><div class="skill-bar-bg"><div class="skill-bar" data-width="95"></div></div></div>
-            <div class="skill-item"><span class="skill-name">系统设计</span><div class="skill-bar-bg"><div class="skill-bar" data-width="95"></div></div></div>
-            <div class="skill-item"><span class="skill-name">叙事设计</span><div class="skill-bar-bg"><div class="skill-bar" data-width="85"></div></div></div>
-            <div class="skill-item"><span class="skill-name">世界观构建</span><div class="skill-bar-bg"><div class="skill-bar" data-width="80"></div></div></div>
+            <div class="skill-item"><span class="skill-name">关卡设计</span><div class="skill-bar-bg"><div class="skill-bar" data-w="95"></div></div></div>
+            <div class="skill-item"><span class="skill-name">系统设计</span><div class="skill-bar-bg"><div class="skill-bar" data-w="95"></div></div></div>
+            <div class="skill-item"><span class="skill-name">叙事设计</span><div class="skill-bar-bg"><div class="skill-bar" data-w="85"></div></div></div>
+            <div class="skill-item"><span class="skill-name">世界观构建</span><div class="skill-bar-bg"><div class="skill-bar" data-w="80"></div></div></div>
         </div>
-
         <div class="skill-group">
             <h3><span class="icon">&#9889;</span> 引擎 & 技术</h3>
-            <div class="skill-item"><span class="skill-name">Unreal Engine</span><div class="skill-bar-bg"><div class="skill-bar" data-width="95"></div></div></div>
-            <div class="skill-item"><span class="skill-name">UE Blueprint</span><div class="skill-bar-bg"><div class="skill-bar" data-width="95"></div></div></div>
-            <div class="skill-item"><span class="skill-name">AI 行为树</span><div class="skill-bar-bg"><div class="skill-bar" data-width="85"></div></div></div>
-            <div class="skill-item"><span class="skill-name">全栈开发</span><div class="skill-bar-bg"><div class="skill-bar" data-width="65"></div></div></div>
+            <div class="skill-item"><span class="skill-name">Unreal Engine</span><div class="skill-bar-bg"><div class="skill-bar" data-w="95"></div></div></div>
+            <div class="skill-item"><span class="skill-name">UE Blueprint</span><div class="skill-bar-bg"><div class="skill-bar" data-w="95"></div></div></div>
+            <div class="skill-item"><span class="skill-name">AI 行为树</span><div class="skill-bar-bg"><div class="skill-bar" data-w="85"></div></div></div>
+            <div class="skill-item"><span class="skill-name">全栈开发</span><div class="skill-bar-bg"><div class="skill-bar" data-w="65"></div></div></div>
         </div>
-
         <div class="skill-group">
             <h3><span class="icon">&#9834;</span> 动画 & 建模</h3>
-            <div class="skill-item"><span class="skill-name">Maya</span><div class="skill-bar-bg"><div class="skill-bar" data-width="85"></div></div></div>
-            <div class="skill-item"><span class="skill-name">MotionBuilder</span><div class="skill-bar-bg"><div class="skill-bar" data-width="85"></div></div></div>
-            <div class="skill-item"><span class="skill-name">ZBrush</span><div class="skill-bar-bg"><div class="skill-bar" data-width="65"></div></div></div>
-            <div class="skill-item"><span class="skill-name">Adobe Suite</span><div class="skill-bar-bg"><div class="skill-bar" data-width="80"></div></div></div>
+            <div class="skill-item"><span class="skill-name">Maya</span><div class="skill-bar-bg"><div class="skill-bar" data-w="85"></div></div></div>
+            <div class="skill-item"><span class="skill-name">MotionBuilder</span><div class="skill-bar-bg"><div class="skill-bar" data-w="85"></div></div></div>
+            <div class="skill-item"><span class="skill-name">ZBrush</span><div class="skill-bar-bg"><div class="skill-bar" data-w="65"></div></div></div>
+            <div class="skill-item"><span class="skill-name">Adobe Suite</span><div class="skill-bar-bg"><div class="skill-bar" data-w="80"></div></div></div>
         </div>
     </div>
-
     <h3 class="software-title reveal">Tools & Software</h3>
-    <div class="software-grid stagger-children">
-        <span class="sw-chip">Unreal Engine 5</span>
-        <span class="sw-chip">Maya</span>
-        <span class="sw-chip">MotionBuilder</span>
-        <span class="sw-chip">ZBrush</span>
-        <span class="sw-chip">Cinema 4D</span>
-        <span class="sw-chip">Twinmotion</span>
-        <span class="sw-chip">After Effects</span>
-        <span class="sw-chip">Photoshop</span>
-        <span class="sw-chip">Premiere Pro</span>
-        <span class="sw-chip">FL Studio</span>
-        <span class="sw-chip">MuseScore</span>
-        <span class="sw-chip">Roblox Studio</span>
-        <span class="sw-chip">Unity</span>
-        <span class="sw-chip">Git / GitHub</span>
-        <span class="sw-chip">Mixamo</span>
-        <span class="sw-chip">Megascans</span>
+    <div class="software-grid stagger">
+        <span class="sw-chip">Unreal Engine 5</span><span class="sw-chip">Maya</span><span class="sw-chip">MotionBuilder</span>
+        <span class="sw-chip">ZBrush</span><span class="sw-chip">Cinema 4D</span><span class="sw-chip">Twinmotion</span>
+        <span class="sw-chip">After Effects</span><span class="sw-chip">Photoshop</span><span class="sw-chip">Premiere Pro</span>
+        <span class="sw-chip">FL Studio</span><span class="sw-chip">MuseScore</span><span class="sw-chip">Roblox Studio</span>
+        <span class="sw-chip">Unity</span><span class="sw-chip">Git / GitHub</span><span class="sw-chip">Mixamo</span><span class="sw-chip">Megascans</span>
     </div>
 </section>
 
 <!-- Contact -->
 <section id="contact" class="contact-section">
     <div class="section-title reveal" style="justify-content: center;">联系方式 <span class="en">Contact</span></div>
-    <p class="reveal">如果你对我的作品感兴趣，或者想要交流游戏设计相关话题，欢迎随时联系我。</p>
-    <div class="contact-cards stagger-children">
-        <div class="contact-card">
-            <div class="c-label">Email</div>
-            <div class="c-value">shenlinkun829@gmail.com</div>
-        </div>
-        <div class="contact-card">
-            <div class="c-label">QQ Email</div>
-            <div class="c-value">2391572166@qq.com</div>
-        </div>
-        <div class="contact-card">
-            <div class="c-label">Phone</div>
-            <div class="c-value">177-1615-0829</div>
-        </div>
-        <div class="contact-card">
-            <div class="c-label">GitHub</div>
-            <div class="c-value">FlyPigKun</div>
-        </div>
+    <p class="reveal">如果你对我的作品感兴趣，或者想交流游戏设计，欢迎随时联系我。</p>
+    <div class="contact-cards stagger">
+        <div class="contact-card"><div class="c-label">Email</div><div class="c-value">shenlinkun829@gmail.com</div></div>
+        <div class="contact-card"><div class="c-label">QQ</div><div class="c-value">2391572166@qq.com</div></div>
+        <div class="contact-card"><div class="c-label">Phone</div><div class="c-value">177-1615-0829</div></div>
+        <div class="contact-card"><div class="c-label">GitHub</div><div class="c-value">FlyPigKun</div></div>
     </div>
 </section>
 
-<!-- Footer -->
-<footer>
-    <p>&copy; 2025 沈琳昆 (Linkun Shen). Crafted with passion for games.</p>
-</footer>
+<footer><p>&copy; 2025 沈琳昆 (Linkun Shen). Crafted with passion for games.</p></footer>
+</div><!-- /page-content -->
 
-<!-- Back to Top -->
 <div class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0})">&#9650;</div>
 
 <script>
-/* ===== Particle System ===== */
-(function() {
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    let w, h, particles, mouse = { x: -1000, y: -1000 };
-    const isMobile = window.innerWidth < 768;
-    const PARTICLE_COUNT = isMobile ? 40 : 80;
-    const CONNECT_DIST = isMobile ? 100 : 150;
+/* =============== INTRO PARTICLE SYSTEM =============== */
+(function(){
+    const c = document.getElementById('introCanvas');
+    const ctx = c.getContext('2d');
+    let W, H, particles = [], phase = 'converge'; // converge → hold → idle
+    const isMob = window.innerWidth < 768;
+    const COUNT = isMob ? 120 : 300;
+    const CENTER_FORCE = 0.02;
 
-    function resize() {
-        w = canvas.width = window.innerWidth;
-        h = canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
+    function resize(){ W = c.width = window.innerWidth; H = c.height = window.innerHeight; }
+    window.addEventListener('resize', resize); resize();
 
-    class Particle {
-        constructor() { this.reset(); }
-        reset() {
-            this.x = Math.random() * w;
-            this.y = Math.random() * h;
-            this.vx = (Math.random() - 0.5) * 0.5;
-            this.vy = (Math.random() - 0.5) * 0.5;
-            this.r = Math.random() * 2 + 0.5;
-            this.alpha = Math.random() * 0.5 + 0.1;
+    class P {
+        constructor(){
+            // Start from edges
+            const side = Math.random() * 4 | 0;
+            if(side===0){ this.x = Math.random()*W; this.y = -50; }
+            else if(side===1){ this.x = W+50; this.y = Math.random()*H; }
+            else if(side===2){ this.x = Math.random()*W; this.y = H+50; }
+            else { this.x = -50; this.y = Math.random()*H; }
+            this.tx = W/2 + (Math.random()-0.5)*Math.min(W,600);
+            this.ty = H/2 + (Math.random()-0.5)*Math.min(H,400);
+            this.r = Math.random()*2+0.5;
+            this.alpha = Math.random()*0.6+0.2;
+            this.vx = 0; this.vy = 0;
+            this.ox = this.tx; this.oy = this.ty; // orbit center
+            this.angle = Math.random()*Math.PI*2;
+            this.orbitR = Math.random()*80+20;
+            this.orbitSpeed = (Math.random()-0.5)*0.008;
+            this.arrived = false;
         }
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
-            // Mouse repulsion
-            const dx = this.x - mouse.x, dy = this.y - mouse.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 120) {
-                const force = (120 - dist) / 120 * 0.8;
-                this.x += (dx / dist) * force;
-                this.y += (dy / dist) * force;
+        update(){
+            if(phase==='converge'){
+                const dx = this.tx-this.x, dy = this.ty-this.y;
+                this.vx += dx*CENTER_FORCE; this.vy += dy*CENTER_FORCE;
+                this.vx *= 0.92; this.vy *= 0.92;
+                this.x += this.vx; this.y += this.vy;
+                if(Math.abs(dx)<2 && Math.abs(dy)<2) this.arrived = true;
+            } else {
+                // Gentle orbit
+                this.angle += this.orbitSpeed;
+                this.x += (this.ox + Math.cos(this.angle)*this.orbitR - this.x)*0.02;
+                this.y += (this.oy + Math.sin(this.angle)*this.orbitR - this.y)*0.02;
             }
-            if (this.x < -10 || this.x > w + 10 || this.y < -10 || this.y > h + 10) this.reset();
         }
-        draw() {
+        draw(){
             ctx.beginPath();
-            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(108, 92, 231, ${this.alpha})`;
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+            ctx.fillStyle = `rgba(108,92,231,${this.alpha})`;
             ctx.fill();
         }
     }
 
-    particles = Array.from({ length: PARTICLE_COUNT }, () => new Particle());
+    for(let i=0;i<COUNT;i++) particles.push(new P());
 
-    function animate() {
-        ctx.clearRect(0, 0, w, h);
-        for (let i = 0; i < particles.length; i++) {
+    let frame = 0;
+    function animate(){
+        if(!document.getElementById('intro') || document.getElementById('intro').classList.contains('fade-out')){
+            return; // stop when intro gone
+        }
+        ctx.clearRect(0,0,W,H);
+        frame++;
+
+        // Check if most arrived
+        if(phase==='converge' && frame > 60){
+            const done = particles.filter(p=>p.arrived).length;
+            if(done > COUNT*0.7){
+                phase = 'idle';
+                document.getElementById('introText').classList.add('show');
+            }
+        }
+
+        for(let i=0;i<particles.length;i++){
             particles[i].update();
             particles[i].draw();
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < CONNECT_DIST) {
+            // Connect nearby
+            for(let j=i+1;j<particles.length;j++){
+                const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
+                const d=Math.sqrt(dx*dx+dy*dy);
+                const maxD = isMob ? 60 : 100;
+                if(d<maxD){
                     ctx.beginPath();
                     ctx.moveTo(particles[i].x, particles[i].y);
                     ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.strokeStyle = `rgba(108, 92, 231, ${0.08 * (1 - dist / CONNECT_DIST)})`;
+                    ctx.strokeStyle = `rgba(108,92,231,${0.12*(1-d/maxD)})`;
                     ctx.lineWidth = 0.5;
                     ctx.stroke();
                 }
@@ -1021,165 +1009,223 @@
         requestAnimationFrame(animate);
     }
     animate();
-
-    document.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-    document.addEventListener('mouseleave', () => { mouse.x = -1000; mouse.y = -1000; });
 })();
 
-/* ===== Custom Cursor ===== */
-(function() {
-    const dot = document.getElementById('cursorDot');
-    const ring = document.getElementById('cursorRing');
-    if (!dot || !ring) return;
-    let mx = 0, my = 0, rx = 0, ry = 0;
-
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-
-    function animateCursor() {
-        rx += (mx - rx) * 0.15;
-        ry += (my - ry) * 0.15;
-        dot.style.left = mx + 'px';
-        dot.style.top = my + 'px';
-        ring.style.left = rx + 'px';
-        ring.style.top = ry + 'px';
-        requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-    document.querySelectorAll('a, button, .btn, .project-card, .sw-chip, .info-card, .contact-card, .stat-card').forEach(el => {
-        el.addEventListener('mouseenter', () => ring.classList.add('hover'));
-        el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
-    });
-})();
-
-/* ===== Scroll Progress ===== */
-window.addEventListener('scroll', () => {
-    const winScroll = document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    document.getElementById('scrollProgress').style.width = (winScroll / height * 100) + '%';
-});
-
-/* ===== Navbar ===== */
-const nav = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 60);
-});
-
-/* ===== Hamburger Menu ===== */
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    mobileMenu.classList.toggle('open');
-    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-});
-function closeMobile() {
-    hamburger.classList.remove('active');
-    mobileMenu.classList.remove('open');
+/* =============== ENTER SITE =============== */
+function enterSite(){
+    const sw = document.getElementById('shockwave');
+    sw.classList.add('active');
+    document.getElementById('intro').classList.add('fade-out');
     document.body.style.overflow = '';
+    setTimeout(()=>{
+        document.getElementById('intro').style.display = 'none';
+        sw.remove();
+        document.getElementById('pageContent').classList.add('show');
+        startMainParticles();
+        startTyping();
+    }, 1000);
+}
+// Prevent scroll during intro
+document.body.style.overflow = 'hidden';
+
+/* =============== MAIN PARTICLE BG =============== */
+function startMainParticles(){
+    const c = document.getElementById('particles');
+    const ctx = c.getContext('2d');
+    let w, h, pts = [], mouse = {x:-999,y:-999};
+    const mob = window.innerWidth < 768;
+    const N = mob ? 50 : 90;
+    const DIST = mob ? 100 : 140;
+
+    function resize(){ w=c.width=window.innerWidth; h=c.height=window.innerHeight; }
+    window.addEventListener('resize', resize); resize();
+
+    class Pt {
+        constructor(){
+            this.x=Math.random()*w; this.y=Math.random()*h;
+            this.vx=(Math.random()-0.5)*0.4; this.vy=(Math.random()-0.5)*0.4;
+            this.r=Math.random()*1.5+0.5; this.a=Math.random()*0.4+0.1;
+        }
+        update(){
+            this.x+=this.vx; this.y+=this.vy;
+            const dx=this.x-mouse.x, dy=this.y-mouse.y;
+            const d=Math.sqrt(dx*dx+dy*dy);
+            if(d<130){ const f=(130-d)/130*0.6; this.x+=dx/d*f; this.y+=dy/d*f; }
+            if(this.x<-20) this.x=w+20;
+            if(this.x>w+20) this.x=-20;
+            if(this.y<-20) this.y=h+20;
+            if(this.y>h+20) this.y=-20;
+        }
+        draw(){
+            ctx.beginPath();
+            ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+            ctx.fillStyle=`rgba(108,92,231,${this.a})`;
+            ctx.fill();
+        }
+    }
+    for(let i=0;i<N;i++) pts.push(new Pt());
+
+    (function loop(){
+        ctx.clearRect(0,0,w,h);
+        for(let i=0;i<pts.length;i++){
+            pts[i].update(); pts[i].draw();
+            for(let j=i+1;j<pts.length;j++){
+                const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y;
+                const d=Math.sqrt(dx*dx+dy*dy);
+                if(d<DIST){
+                    ctx.beginPath();
+                    ctx.moveTo(pts[i].x,pts[i].y);
+                    ctx.lineTo(pts[j].x,pts[j].y);
+                    ctx.strokeStyle=`rgba(108,92,231,${0.06*(1-d/DIST)})`;
+                    ctx.lineWidth=0.5;
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(loop);
+    })();
+
+    document.addEventListener('mousemove', e=>{ mouse.x=e.clientX; mouse.y=e.clientY; });
 }
 
-/* ===== Typing Effect ===== */
-(function() {
+/* =============== TYPING =============== */
+function startTyping(){
     const phrases = [
-        '用创意与技术，构建令人沉浸的交互体验',
-        'Level Design / System Design / Narrative Design',
+        '用创意与技术，构建沉浸体验',
+        'Level Design / System Design / Narrative',
         '心理恐怖游戏 & 沉浸式体验设计',
         'Unreal Engine / Maya / MotionBuilder',
-        'Tencent TiMi Studio - Arena of Valor'
+        'Tencent TiMi Studio — Arena of Valor'
     ];
     const el = document.getElementById('typingLine');
-    let phraseIdx = 0, charIdx = 0, deleting = false, wait = 0;
-
-    function type() {
-        const phrase = phrases[phraseIdx];
-        if (wait > 0) { wait--; requestAnimationFrame(type); return; }
-
-        if (!deleting) {
-            charIdx++;
-            if (charIdx > phrase.length) { wait = 120; deleting = true; }
-        } else {
-            charIdx--;
-            if (charIdx < 0) { charIdx = 0; deleting = false; phraseIdx = (phraseIdx + 1) % phrases.length; wait = 30; }
-        }
-        el.innerHTML = phrase.substring(0, charIdx) + '<span class="typing-cursor"></span>';
-        setTimeout(() => requestAnimationFrame(type), deleting ? 25 : 55);
+    let pi=0, ci=0, del=false, wait=0;
+    function tick(){
+        const p=phrases[pi];
+        if(wait>0){wait--;requestAnimationFrame(tick);return;}
+        if(!del){ci++;if(ci>p.length){wait=120;del=true;}}
+        else{ci--;if(ci<0){ci=0;del=false;pi=(pi+1)%phrases.length;wait=30;}}
+        el.innerHTML=p.substring(0,ci)+'<span class="typing-cursor"></span>';
+        setTimeout(()=>requestAnimationFrame(tick), del?22:50);
     }
-    setTimeout(type, 1200);
-})();
+    setTimeout(tick,800);
+}
 
-/* ===== Scroll Reveal ===== */
-(function() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger-children, .timeline-item').forEach(el => {
-        observer.observe(el);
+/* =============== CURSOR =============== */
+(function(){
+    const dot=document.getElementById('cursorDot'), ring=document.getElementById('cursorRing');
+    if(!dot||!ring) return;
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+    (function loop(){
+        rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
+        dot.style.left=mx+'px'; dot.style.top=my+'px';
+        ring.style.left=rx+'px'; ring.style.top=ry+'px';
+        requestAnimationFrame(loop);
+    })();
+    document.querySelectorAll('a,button,.btn,.project-card,.sw-chip,.info-card,.contact-card,.stat-card,.intro-enter').forEach(el=>{
+        el.addEventListener('mouseenter',()=>ring.classList.add('hover'));
+        el.addEventListener('mouseleave',()=>ring.classList.remove('hover'));
     });
 })();
 
-/* ===== Skill Bar Animation ===== */
-(function() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.querySelectorAll('.skill-bar').forEach(bar => {
-                    bar.style.width = bar.dataset.width + '%';
-                });
+/* =============== SCROLL =============== */
+window.addEventListener('scroll',()=>{
+    const s=document.documentElement.scrollTop;
+    const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+    document.getElementById('scrollProgress').style.width=(s/h*100)+'%';
+    document.getElementById('navbar').classList.toggle('scrolled',s>60);
+    document.getElementById('backToTop').classList.toggle('show',s>600);
+});
+
+/* =============== HAMBURGER =============== */
+document.getElementById('hamburger').addEventListener('click',()=>{
+    document.getElementById('hamburger').classList.toggle('active');
+    document.getElementById('mobileMenu').classList.toggle('open');
+    document.body.style.overflow=document.getElementById('mobileMenu').classList.contains('open')?'hidden':'';
+});
+function closeMobile(){
+    document.getElementById('hamburger').classList.remove('active');
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.body.style.overflow='';
+}
+
+/* =============== HERO PARALLAX =============== */
+(function(){
+    const hero = document.getElementById('heroSection');
+    if(!hero || window.innerWidth<768) return;
+    hero.addEventListener('mousemove', e=>{
+        const cx=window.innerWidth/2, cy=window.innerHeight/2;
+        const dx=(e.clientX-cx)/cx, dy=(e.clientY-cy)/cy;
+        hero.querySelectorAll('.hero-depth-1').forEach(el=>{ el.style.transform=`translate(${dx*8}px, ${dy*8}px)`; });
+        hero.querySelectorAll('.hero-depth-2').forEach(el=>{ el.style.transform=`translate(${dx*15}px, ${dy*15}px)`; });
+        hero.querySelectorAll('.hero-depth-3').forEach(el=>{ el.style.transform=`translate(${dx*25}px, ${dy*25}px)`; });
+    });
+})();
+
+/* =============== REVEAL ON SCROLL =============== */
+(function(){
+    const obs = new IntersectionObserver(entries=>{
+        entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('vis'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stagger,.timeline-item').forEach(el=>obs.observe(el));
+})();
+
+/* =============== SKILL BARS =============== */
+(function(){
+    const obs = new IntersectionObserver(entries=>{
+        entries.forEach(e=>{
+            if(e.isIntersecting){
+                e.target.querySelectorAll('.skill-bar').forEach(b=>{ b.style.width=b.dataset.w+'%'; });
             }
         });
     }, { threshold: 0.3 });
-    document.querySelectorAll('.skill-group').forEach(el => observer.observe(el));
+    document.querySelectorAll('.skill-group').forEach(el=>obs.observe(el));
 })();
 
-/* ===== Counter Animation ===== */
-(function() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.querySelectorAll('.stat-number').forEach(el => {
-                    const target = parseInt(el.dataset.target);
-                    let current = 0;
-                    const step = Math.max(1, Math.floor(target / 40));
-                    const timer = setInterval(() => {
-                        current += step;
-                        if (current >= target) { current = target; clearInterval(timer); }
-                        el.textContent = current + '+';
-                    }, 40);
+/* =============== COUNTER =============== */
+(function(){
+    const obs = new IntersectionObserver(entries=>{
+        entries.forEach(e=>{
+            if(e.isIntersecting){
+                e.target.querySelectorAll('.stat-number').forEach(el=>{
+                    const t=+el.dataset.target; let c=0;
+                    const s=Math.max(1,Math.floor(t/30));
+                    const i=setInterval(()=>{c+=s;if(c>=t){c=t;clearInterval(i);}el.textContent=c+'+';},45);
                 });
-                observer.unobserve(entry.target);
+                obs.unobserve(e.target);
             }
         });
     }, { threshold: 0.5 });
-    document.querySelectorAll('.stats-row').forEach(el => observer.observe(el));
+    document.querySelectorAll('.stats-row').forEach(el=>obs.observe(el));
 })();
 
-/* ===== Card Glow Effect ===== */
-function cardGlow(e, card) {
-    const rect = card.getBoundingClientRect();
-    card.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
-    card.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+/* =============== CARD GLOW =============== */
+function cardGlow(e,card){
+    const r=card.getBoundingClientRect();
+    card.style.setProperty('--mx',(e.clientX-r.left)+'px');
+    card.style.setProperty('--my',(e.clientY-r.top)+'px');
 }
 
-/* ===== Back to Top ===== */
-const btt = document.getElementById('backToTop');
-window.addEventListener('scroll', () => {
-    btt.classList.toggle('show', window.scrollY > 600);
+/* =============== BUTTON RIPPLE =============== */
+document.querySelectorAll('.btn').forEach(btn=>{
+    btn.addEventListener('click',function(e){
+        const r=this.getBoundingClientRect();
+        const ripple=document.createElement('span');
+        ripple.classList.add('ripple');
+        ripple.style.left=(e.clientX-r.left)+'px';
+        ripple.style.top=(e.clientY-r.top)+'px';
+        ripple.style.width=ripple.style.height=Math.max(r.width,r.height)+'px';
+        this.appendChild(ripple);
+        setTimeout(()=>ripple.remove(),600);
+    });
 });
 
-/* ===== Smooth anchor scrolling with offset ===== */
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', function(e) {
+/* =============== SMOOTH ANCHOR =============== */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',function(e){
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            const offset = 80;
-            const y = target.getBoundingClientRect().top + window.pageYOffset - offset;
-            window.scrollTo({ top: y, behavior: 'smooth' });
-        }
+        const t=document.querySelector(this.getAttribute('href'));
+        if(t){ window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-80,behavior:'smooth'}); }
     });
 });
 </script>
