@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Shen Linkun — Selected Works</title>
+<style>
+:root{
+  --ink:#14171C; --sub:#3E4550; --muted:#6B7280; --faint:#9AA1AC;
+  --line:#DEDAD2; --paper:#FBFAF7; --panel:#F3F1EA;
+  --accent:#B8402E; --accent2:#2E4A73; --ok:#3F7A55;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+body{
+  font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  color:var(--ink); background:#8a8a8a; font-size:10.5pt; line-height:1.52;
+  -webkit-font-smoothing:antialiased;
+}
+.page{
+  width:210mm; height:297mm; background:var(--paper); position:relative;
+  overflow:hidden; page-break-after:always; break-after:page;
+  padding:15mm 14mm 12mm; margin:0 auto 8mm; display:flex; flex-direction:column;
+}
+.page:last-child{page-break-after:auto;}
+@page{ size:A4; margin:0; }
+@media print{ body{background:none;} .page{margin:0; box-shadow:none;} }
+
+/* ---------- type ---------- */
+h1,h2,h3,h4{font-weight:600; line-height:1.2;}
+.display{font-family:Georgia,"Times New Roman",serif;}
+.eyebrow{font-size:7.2pt; letter-spacing:.22em; text-transform:uppercase; color:var(--accent); font-weight:700;}
+.eyebrow.d{color:var(--faint);}
+.ptitle{font-size:21pt; letter-spacing:-.01em; margin-top:3mm;}
+.psub{font-size:10.4pt; color:var(--muted); margin-top:1.5mm; max-width:150mm;}
+.rule{height:2px; background:var(--ink); width:16mm; margin:3.5mm 0 4mm;}
+h3.sec{font-size:10pt; letter-spacing:.1em; text-transform:uppercase; color:var(--sub); margin-bottom:2mm;
+  padding-bottom:1.2mm; border-bottom:1px solid var(--line);}
+p{margin-bottom:2.2mm;}
+strong{font-weight:650; color:var(--ink);}
+em{font-style:normal; color:var(--accent); font-weight:600;}
+ul{list-style:none;}
+li{padding-left:4mm; position:relative; margin-bottom:1.6mm;}
+li:before{content:"—"; position:absolute; left:0; color:var(--accent); font-weight:700;}
+.small{font-size:9.3pt; color:var(--muted); line-height:1.45;}
+.tiny{font-size:8.2pt; color:var(--faint); line-height:1.4;}
+
+/* ---------- layout ---------- */
+.grid{display:grid; gap:4mm;}
+.g2{grid-template-columns:1fr 1fr;}
+.g3{grid-template-columns:1fr 1fr 1fr;}
+.g4{grid-template-columns:repeat(4,1fr);}
+.g23{grid-template-columns:2fr 3fr;}
+.g32{grid-template-columns:3fr 2fr;}
+.flexfill{flex:1; min-height:0;}
+.mt2{margin-top:2mm;} .mt4{margin-top:4mm;} .mt6{margin-top:6mm;} .mta{margin-top:auto;}
+
+/* ---------- meta bar ---------- */
+.meta{display:flex; gap:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin:4mm 0;}
+.meta div{flex:1; padding:2.2mm 3mm 2.2mm 0;}
+.meta .k{font-size:6.8pt; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); font-weight:700;}
+.meta .v{font-size:9.4pt; color:var(--sub); margin-top:.6mm;}
+
+/* ---------- media ---------- */
+figure{margin:0;}
+img{width:100%; display:block; border-radius:1.5px;}
+.fit{object-fit:cover; width:100%;}
+figcaption{font-size:8pt; color:var(--muted); margin-top:1.2mm; line-height:1.35;}
+figcaption b{color:var(--sub); font-weight:650;}
+.ph{
+  border:1px dashed #BEB8AC; background:
+    repeating-linear-gradient(45deg,#F3F1EA,#F3F1EA 6px,#EEEBE2 6px,#EEEBE2 12px);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; color:#8A8375; padding:3mm; border-radius:1.5px;
+}
+.ph .t{font-size:7.6pt; font-weight:700; letter-spacing:.06em; text-transform:uppercase;}
+.ph .d{font-size:6.8pt; margin-top:1mm; line-height:1.4;}
+
+/* ---------- panels ---------- */
+.panel{background:var(--panel); border-radius:2px; padding:3.5mm 4mm;}
+.panel.acc{background:#F7EEEC; border-left:2.5px solid var(--accent);}
+.panel.blue{background:#EDF1F7; border-left:2.5px solid var(--accent2);}
+.panel h4{font-size:8.9pt; letter-spacing:.1em; text-transform:uppercase; color:var(--sub); margin-bottom:1.8mm;}
+.kpi{display:flex; gap:6mm;}
+.kpi .n{font-family:Georgia,serif; font-size:19pt; color:var(--accent); line-height:1;}
+.kpi .l{font-size:7pt; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; margin-top:1.2mm;}
+.tagrow{display:flex; flex-wrap:wrap; gap:1.5mm; margin-top:2mm;}
+.tag{font-size:7.8pt; letter-spacing:.05em; padding:.9mm 2mm; border:1px solid var(--line);
+  border-radius:8px; color:var(--sub); background:#fff;}
+.nda{display:inline-block; font-size:6.6pt; letter-spacing:.14em; text-transform:uppercase; font-weight:700;
+  color:#8A6A1F; background:#FBF2D9; border:1px solid #E8D9A8; padding:.7mm 2mm; border-radius:2px;}
+
+/* ---------- page furniture ---------- */
+.folio{position:absolute; left:14mm; right:14mm; bottom:6mm; display:flex; justify-content:space-between;
+  font-size:6.8pt; letter-spacing:.12em; text-transform:uppercase; color:var(--faint);
+  border-top:1px solid var(--line); padding-top:2mm;}
+
+/* ---------- cover ---------- */
+.cover{background:#14171C; color:#F2EFE9; padding:20mm 18mm 14mm; justify-content:space-between;}
+.cover .name{font-size:40pt; line-height:1.02; letter-spacing:-.02em; color:#fff;}
+.cover .cn{font-size:14pt; color:#8C949F; margin-top:2mm; letter-spacing:.3em;}
+.cover .role{font-size:11pt; color:#D8D2C6; margin-top:8mm; line-height:1.6; max-width:120mm;}
+.cover .role b{color:#E8845F; font-weight:600;}
+.coverstrip{display:grid; grid-template-columns:repeat(5,1fr); gap:1.2mm;
+  margin:0 -18mm; width:210mm;}
+.coverstrip img{height:90mm; object-fit:cover; border-radius:0; filter:saturate(.9) contrast(1.03);}
+.cover .foot{display:flex; justify-content:space-between; align-items:flex-end;
+  border-top:1px solid #333941; padding-top:4mm; font-size:8.4pt; color:#9BA3AE;}
+.cover .foot b{color:#F2EFE9; font-weight:600;}
+
+/* ---------- contents ---------- */
+.toc{display:grid; grid-template-columns:1fr 1fr; gap:0 8mm;}
+.toc div{display:flex; justify-content:space-between; gap:3mm; padding:1.8mm 0;
+  border-bottom:1px dotted var(--line); font-size:9.2pt;}
+.toc span:last-child{color:var(--faint); font-variant-numeric:tabular-nums;}
+
+/* ---------- diagram ---------- */
+.dia{background:#fff; border:1px solid var(--line); border-radius:2px; padding:3mm;}
+svg{display:block; width:100%; height:auto;}
+.stack{display:flex; flex-direction:column; gap:3mm;}
+
+/* ---------- CityU edition: SCM requires every text at 9pt or above ---------- */
+.cpage{padding:12mm 12mm 11mm; font-size:9pt; line-height:1.44;}
+.cpage p, .cpage li, .cpage figcaption, .cpage .small, .cpage .tiny,
+.cpage .k, .cpage .l, .cpage .tag, .cpage h4, .cpage .eyebrow, .cpage .nda,
+.cpage .folio, .cpage .folio span{font-size:9pt !important; line-height:1.42;}
+.cpage figcaption{margin-top:1mm; color:var(--muted);}
+.cpage h4{letter-spacing:.06em; margin-bottom:1.2mm;}
+.cpage .eyebrow{letter-spacing:.16em;}
+.cpage .folio{bottom:5mm; left:12mm; right:12mm;}
+.cpage .sec{font-size:9pt; letter-spacing:.06em; margin-bottom:1.6mm;}
+.cpage p{margin-bottom:1.8mm;}
+.cpage li{margin-bottom:1.2mm;}
+.cpage .panel{padding:2.6mm 3mm;}
+.cpage .kpi .n{font-size:14pt;}
+.cpage .ph .t{font-size:9pt;} .cpage .ph .d{font-size:9pt; margin-top:.6mm;}
+</style>
+</head>
+<body>
+
+<section class="page cover" data-v="ntu hku">
+  <div>
+    <div class="eyebrow" style="color:#E8845F">Selected Works · 2022 – 2026</div>
+    <h1 class="display name" style="margin-top:6mm">Shen Linkun</h1>
+    <div class="cn">沈 琳 昆</div>
+    <div class="role">
+      Game designer working at the seam between <b>systems design</b>,
+      <b>technical implementation</b>, and <b>AI-assisted content production</b>.<br>
+      Systems Designer at Tencent TiMi Studio Group · B.S. Games, University of Utah.
+    </div>
+  </div>
+
+  <div class="coverstrip">
+    <img src="assets/dc_05.jpg" alt=""><img src="assets/rb_final.jpg" alt="">
+    <img src="assets/dc_04.jpg" alt=""><img src="assets/dc_06.jpg" alt="">
+    <img src="assets/dc_02.jpg" alt="">
+  </div>
+
+  <div class="foot">
+    <div>
+      <b>Portfolio for Graduate Admission 2026/27</b><br>
+      <span style="font-size:7.6pt">All work is original and created by the applicant.<br>
+      Generative-AI use is disclosed on the final page.</span>
+    </div>
+    <div style="text-align:right">
+      ukeming@icloud.com
+    </div>
+  </div>
+</section>
+<section class="page" data-v="ntu hku">
+  <div class="eyebrow">About</div>
+  <h1 class="display ptitle">I design systems — and build the pipelines that make them producible.</h1>
+  <div class="rule"></div>
+
+  <div class="grid g32">
+    <div>
+      <p>I came into games through design and stayed because of the machinery underneath it.
+      Across four solo/independent titles and two years inside a live mobile MOBA, the thread in my work
+      has been the same: <strong>a design is only as good as the production system that can actually ship it a
+      hundred times over.</strong></p>
+
+      <p>That belief pushed me from writing design documents into writing the tools — behaviour trees,
+      blueprint logic, editor scripts, configuration generators — and, more recently, into
+      <strong>AI-assisted content pipelines</strong>: image generation, image-to-3D, retopology, rigging, and the
+      validation gates that keep generated assets from silently breaking a build.</p>
+
+      <p>What I want from a graduate programme is the other half of that loop: the theory, the critical
+      vocabulary, and a studio culture where the question isn't only <em>"can this be produced?"</em> but
+      <em>"what is worth producing?"</em></p>
+
+      <div class="panel acc mt4">
+        <h4>How I work</h4>
+        <ul class="small" style="margin-bottom:0">
+          <li><strong>Framework first, features second.</strong> Structure the system, then fill it.</li>
+          <li><strong>Instrument everything.</strong> If I can't measure the experience, I'm guessing.</li>
+          <li><strong>Automate the repetition, never the judgement.</strong> AI proposes; a human gate approves.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div class="panel">
+        <h4>Capabilities</h4>
+        <div class="small">
+          <p style="margin-bottom:1.5mm"><strong>Design</strong><br>Systems &amp; economy · level design · combat &amp; boss encounters · environmental / looping narrative</p>
+          <p style="margin-bottom:1.5mm"><strong>Engineering</strong><br>Unreal Blueprints · behaviour trees · Python tooling · Flask / SQL · CI test gates</p>
+          <p style="margin-bottom:1.5mm"><strong>Art &amp; Tech Art</strong><br>Maya · MotionBuilder · ZBrush · Blender · retopology · skinning · PBR · Roblox R15</p>
+          <p style="margin-bottom:0"><strong>AI Production</strong><br>Image generation · image→3D · ComfyUI local deployment · RAG pipelines · multi-model API middleware</p>
+        </div>
+      </div>
+      <div class="panel blue">
+        <h4>Contents</h4>
+        <div class="toc" style="grid-template-columns:1fr">
+          <div><span>I&nbsp;&nbsp;Game Design — four titles</span><span>03</span></div>
+          <div><span>II&nbsp;&nbsp;Systems Design in Production</span><span>08</span></div>
+          <div><span>III&nbsp;&nbsp;AI-Assisted Art Pipelines</span><span>12</span></div>
+          <div><span>IV&nbsp;&nbsp;Tools &amp; Full-Stack Work</span><span>17</span></div>
+          <div><span>V&nbsp;&nbsp;Original Visual Work</span><span>19</span></div>
+          <div><span>AI Disclosure &amp; Contact</span><span>20</span></div>
+        </div>
+      </div>
+      <div class="tagrow">
+        <span class="tag">Unreal Engine</span><span class="tag">Unity</span><span class="tag">Maya</span>
+        <span class="tag">Blender</span><span class="tag">ZBrush</span><span class="tag">Roblox Studio</span>
+        <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">ComfyUI</span>
+        <span class="tag">Behaviour Trees</span><span class="tag">Git</span>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>Shen Linkun — Selected Works</span><span>02</span></div>
+</section>
+<section class="page" data-v="ntu hku">
+  <div class="eyebrow">I · Game Design — 01</div>
+  <h1 class="display ptitle">Dream</h1>
+  <div class="psub">A first-person psychological horror game about reading a building that refuses to explain itself.</div>
+  <div class="meta">
+    <div><div class="k">Role</div><div class="v">Solo — design &amp; all Blueprint implementation</div></div>
+    <div><div class="k">Engine</div><div class="v">Unreal Engine 5</div></div>
+    <div><div class="k">Duration</div><div class="v">Aug – Dec 2024</div></div>
+    <div><div class="k">Outsourced</div><div class="v">Selected art &amp; audio assets only</div></div>
+  </div>
+
+  <div class="grid g2" style="margin-bottom:4mm">
+    <figure><img src="assets/dm_interact.jpg" alt="" style="height:63.4mm; object-fit:cover">
+      <figcaption><b>Fig 1.</b> The verb set is deliberately small — walk, look, and press E. Everything the
+      building says, it says through what it leaves lying on a desk.</figcaption></figure>
+    <figure><img src="assets/dm_corridor.jpg" alt="" style="height:63.4mm; object-fit:cover">
+      <figcaption><b>Fig 2.</b> One light source at the vanishing point. The corridor tells you where to go and
+      gives you no reason to want to.</figcaption></figure>
+  </div>
+
+  <div class="grid g23 flexfill">
+    <div>
+      <h3 class="sec">The core loop</h3>
+      <div class="dia" style="padding:4mm 3mm">
+        <svg viewBox="0 0 300 132" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+          <defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="2.5" orient="auto">
+            <path d="M0,0 L6,2.5 L0,5 z" fill="#B8402E"/></marker></defs>
+          <g font-size="9" text-anchor="middle">
+            <rect x="95" y="6" width="110" height="22" rx="3" fill="#F3F1EA" stroke="#DEDAD2"/>
+            <text x="150" y="20" fill="#14171C">Explore · E-key interact</text>
+            <rect x="188" y="46" width="106" height="22" rx="3" fill="#F3F1EA" stroke="#DEDAD2"/>
+            <text x="241" y="60" fill="#14171C">Read text clue</text>
+            <rect x="188" y="86" width="106" height="22" rx="3" fill="#F3F1EA" stroke="#DEDAD2"/>
+            <text x="241" y="100" fill="#14171C">Solve mechanism</text>
+            <rect x="95" y="104" width="110" height="22" rx="3" fill="#F7EEEC" stroke="#B8402E"/>
+            <text x="150" y="118" fill="#B8402E" font-weight="600">Chase zone · evade AI</text>
+            <rect x="6" y="86" width="106" height="22" rx="3" fill="#F3F1EA" stroke="#DEDAD2"/>
+            <text x="59" y="100" fill="#14171C">Recover key item</text>
+            <rect x="6" y="46" width="106" height="22" rx="3" fill="#F3F1EA" stroke="#DEDAD2"/>
+            <text x="59" y="60" fill="#14171C">New wing unlocks</text>
+          </g>
+          <g stroke="#B8402E" stroke-width="1.1" fill="none" marker-end="url(#ar)">
+            <path d="M205,20 L241,20 L241,42"/><path d="M241,68 L241,82"/>
+            <path d="M241,108 L241,118 L207,118"/><path d="M95,118 L59,118 L59,112"/>
+            <path d="M59,86 L59,72"/><path d="M59,46 L59,17 L93,17"/>
+          </g>
+        </svg>
+      </div>
+      <p class="small mt2">Exploration is the loop; pursuit is a <strong>rare branch off it</strong>. I deliberately
+      kept the chase scarce — constant threat becomes noise and the player stops feeling it, whereas a threat that
+      has fired once and could fire again turns every ordinary corridor into a <em>possible</em> corridor.</p>
+    </div>
+
+    <div>
+      <h3 class="sec">Design decisions</h3>
+      <ul class="small">
+        <li><strong>The threat is rare on purpose.</strong> Pursuit occupies only a small fraction of the running
+        time. Dread does not come from being chased often — it comes from having been chased once and not knowing
+        when it will happen again. Most of the game is the waiting.</li>
+        <li><strong>The AI must be able to lose.</strong> The pursuer disengages once the player exits its detection
+        region. A monster that can never be escaped stops being a threat and becomes a timer.</li>
+        <li><strong>State changes are diegetic.</strong> Triggering a mechanism swaps the score and shifts the
+        practical lights — the player learns the rule of the space without a single line of UI.</li>
+        <li><strong>Resources meter the courage.</strong> A flashlight and a finite stamina bar are the only systems
+        the player manages. Both spend fastest exactly when they are most needed, so caution has a price and panic
+        has a bigger one.</li>
+        <li><strong>Space carries the tension.</strong> Narrow corridors and low key-light do the work that
+        jump-scares would otherwise have to do — fear stays sustained rather than spiked.</li>
+      </ul>
+
+      <div class="panel blue mt2">
+        <h4>Production takeaway</h4>
+        <p class="small" style="margin-bottom:0">Halfway through I stopped adding features and
+        <strong>refactored the Blueprint layer</strong>, re-grouping scattered logic into explicit categories
+        (Interaction → door / teleport / letter …). Iteration speed roughly doubled:
+        <em>framework first, features second.</em></p>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>I · Game Design — Dream</span><span>03</span></div>
+</section>
+<section class="page" data-v="ntu">
+  <div class="eyebrow">I · Game Design — 01 (continued)</div>
+  <h1 class="display ptitle">Dream — pursuit AI &amp; tension authoring</h1>
+  <div class="rule"></div>
+
+  <div class="grid g2" style="gap:5mm">
+    <div>
+      <h3 class="sec">Pursuer behaviour tree</h3>
+      <div class="dia">
+        <svg viewBox="0 0 300 172" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+          <defs><marker id="ar2" markerWidth="6" markerHeight="6" refX="5" refY="2" orient="auto">
+            <path d="M0,0 L5,2 L0,4 z" fill="#6B7280"/></marker></defs>
+          <g font-size="8" text-anchor="middle">
+            <rect x="105" y="4" width="90" height="18" rx="2" fill="#14171C"/>
+            <text x="150" y="16" fill="#fff">ROOT · Selector</text>
+
+            <rect x="8" y="42" width="86" height="18" rx="2" fill="#F7EEEC" stroke="#B8402E"/>
+            <text x="51" y="54" fill="#B8402E" font-weight="600">Chase (priority)</text>
+            <rect x="107" y="42" width="86" height="18" rx="2" fill="#F3F1EA" stroke="#DEDAD2"/>
+            <text x="150" y="54">Investigate</text>
+            <rect x="206" y="42" width="86" height="18" rx="2" fill="#F3F1EA" stroke="#DEDAD2"/>
+            <text x="249" y="54">Patrol (fallback)</text>
+
+            <rect x="8" y="78" width="86" height="16" rx="2" fill="#fff" stroke="#DEDAD2"/>
+            <text x="51" y="89" font-size="7.2">? PlayerInZone == true</text>
+            <rect x="8" y="100" width="86" height="16" rx="2" fill="#fff" stroke="#DEDAD2"/>
+            <text x="51" y="111" font-size="7.2">→ MoveTo(player)</text>
+            <rect x="8" y="122" width="86" height="16" rx="2" fill="#fff" stroke="#DEDAD2"/>
+            <text x="51" y="133" font-size="7.2">? Distance &lt; catchR</text>
+            <rect x="8" y="144" width="86" height="16" rx="2" fill="#F7EEEC" stroke="#B8402E"/>
+            <text x="51" y="155" font-size="7.2" fill="#B8402E">→ DeathSequence</text>
+
+            <rect x="107" y="78" width="86" height="16" rx="2" fill="#fff" stroke="#DEDAD2"/>
+            <text x="150" y="89" font-size="7.2">→ MoveTo(lastKnown)</text>
+            <rect x="107" y="100" width="86" height="16" rx="2" fill="#fff" stroke="#DEDAD2"/>
+            <text x="150" y="111" font-size="7.2">→ Wait(n) · scan</text>
+            <rect x="107" y="122" width="86" height="16" rx="2" fill="#EDF1F7" stroke="#2E4A73"/>
+            <text x="150" y="133" font-size="7.2" fill="#2E4A73">→ Disengage</text>
+
+            <rect x="206" y="78" width="86" height="16" rx="2" fill="#fff" stroke="#DEDAD2"/>
+            <text x="249" y="89" font-size="7.2">→ NextPatrolPoint</text>
+          </g>
+          <g stroke="#6B7280" stroke-width=".9" fill="none" marker-end="url(#ar2)">
+            <path d="M150,22 L150,32 L51,32 L51,38"/><path d="M150,22 L150,38"/>
+            <path d="M150,22 L150,32 L249,32 L249,38"/>
+            <path d="M51,60 L51,74"/><path d="M51,94 L51,96"/><path d="M51,116 L51,118"/><path d="M51,138 L51,140"/>
+            <path d="M150,60 L150,74"/><path d="M150,94 L150,96"/><path d="M150,116 L150,118"/>
+            <path d="M249,60 L249,74"/>
+          </g>
+        </svg>
+      </div>
+      <p class="small mt2">The <em>Investigate → Disengage</em> branch is the design load-bearing wall.
+      It gives the player a <strong>legible escape rule</strong> — break line of sight, leave the zone, survive —
+      which converts panic into strategy without lowering the threat.</p>
+
+      <h3 class="sec mt4">Narrative, delivered as debris</h3>
+      <div class="grid g2" style="gap:3mm">
+        <figure><img src="assets/dm_diary.jpg" alt="" style="height:34mm; object-fit:cover">
+          <figcaption><b>Fig 5.</b> Dated diary pages — the only voice in the game.</figcaption></figure>
+        <figure><img src="assets/dm_objects.jpg" alt="" style="height:34mm; object-fit:cover">
+          <figcaption><b>Fig 6.</b> Props left mid-use, so rooms imply a person rather than describe one.</figcaption></figure>
+      </div>
+      <p class="small mt2">The story is never narrated; it is <strong>left behind</strong>. Diary entries carry
+      dates but arrive out of order, so the player assembles a chronology rather than receiving one — which means
+      the horror is something they concluded themselves, and is therefore much harder to argue with.</p>
+    </div>
+
+    <div>
+      <h3 class="sec">Authored tension curve</h3>
+      <div class="dia">
+        <svg viewBox="0 0 300 128" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+          <g stroke="#DEDAD2" stroke-width=".7">
+            <line x1="26" y1="10" x2="26" y2="104"/><line x1="26" y1="104" x2="292" y2="104"/>
+            <line x1="26" y1="34" x2="292" y2="34" stroke-dasharray="2 3"/>
+            <line x1="26" y1="69" x2="292" y2="69" stroke-dasharray="2 3"/>
+          </g>
+          <text x="4" y="14" font-size="6.5" fill="#9AA1AC">high</text>
+          <text x="4" y="107" font-size="6.5" fill="#9AA1AC">calm</text>
+          <path d="M26,86 C50,84 66,80 88,79 L96,79 L102,34 L116,30 L124,78 C150,76 168,74 186,73 L192,73
+                   L198,24 L212,20 L220,72 C238,71 246,70 254,69 L258,69 L264,14 L278,12 L288,60"
+                fill="none" stroke="#B8402E" stroke-width="1.8"/>
+          <g fill="#B8402E" opacity=".09">
+            <rect x="96" y="10" width="28" height="94"/><rect x="192" y="10" width="28" height="94"/>
+            <rect x="258" y="10" width="30" height="94"/>
+          </g>
+          <line x1="26" y1="80" x2="292" y2="80" stroke="#B8402E" stroke-width=".6" stroke-dasharray="1.5 2" opacity=".5"/>
+          <text x="30" y="77" font-size="5.6" fill="#B8402E" opacity=".8">unease floor — never returns to zero</text>
+          <g font-size="6.4" fill="#6B7280" text-anchor="middle">
+            <text x="60" y="116">explore</text><text x="110" y="116">pursuit</text>
+            <text x="158" y="116">explore</text><text x="206" y="116">pursuit</text>
+            <text x="242" y="116">explore</text><text x="274" y="116">finale</text>
+          </g>
+        </svg>
+      </div>
+      <p class="small mt2">The baseline is not calm — it is a low, continuous unease held by light and geometry
+      alone. Against that floor, the few pursuit events read as enormous. Each one is placed <strong>after</strong> a
+      long stretch of quiet and set slightly higher than the last, and the recovery troughs shorten as the game
+      goes on. That shortening is what makes the final act feel accelerating even though its content is not denser.</p>
+
+      <div class="grid g2 mt2" style="gap:3mm">
+        <figure><img src="assets/dm_maze.jpg" alt="" style="height:43.9mm; object-fit:cover">
+          <figcaption><b>Fig 3.</b> The late maze: geometry stripped of detail until wayfinding fails.</figcaption></figure>
+        <figure><img src="assets/dm_exit.jpg" alt="" style="height:43.9mm; object-fit:cover">
+          <figcaption><b>Fig 4.</b> An EXIT sign as the only warm colour in the chapter — the payoff of withholding.</figcaption></figure>
+      </div>
+      <div class="panel mt2">
+        <h4>What I would change</h4>
+        <p class="small" style="margin-bottom:0">The detection region is a hand-placed volume, which made
+        level iteration expensive — moving a doorway meant re-authoring the trigger. A perception-radius +
+        navmesh-query approach would have cost one more day up front and saved a week of tuning.</p>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>I · Game Design — Dream</span><span>04</span></div>
+</section>
+<section class="page" data-v="ntu">
+  <div class="eyebrow">I · Game Design — 02</div>
+  <h1 class="display ptitle">0423</h1>
+  <div class="psub">A first-person horror game in which a voice that calls itself your host sends you through his
+  building to collect five batteries. He is lying about something. The game never says what.</div>
+  <div class="meta">
+    <div><div class="k">Role</div><div class="v">Solo — design &amp; implementation</div></div>
+    <div><div class="k">Engine</div><div class="v">Unreal Engine 5</div></div>
+    <div><div class="k">Duration</div><div class="v">Aug – Dec 2024</div></div>
+    <div><div class="k">Interface</div><div class="v">A single counter. Nothing else.</div></div>
+  </div>
+
+  <div class="grid g3" style="margin-bottom:4mm">
+    <figure><img src="assets/z4_brief.jpg" alt="" style="height:53.7mm; object-fit:cover">
+      <figcaption><b>Fig 1.</b> The entire briefing, delivered once, in red, by someone you never meet.</figcaption></figure>
+    <figure><img src="assets/z4_corridor.jpg" alt="" style="height:53.7mm; object-fit:cover">
+      <figcaption><b>Fig 2.</b> The corridor you will walk perhaps forty times, lit so it can never be read at a glance.</figcaption></figure>
+    <figure><img src="assets/z4_doorway.jpg" alt="" style="height:53.7mm; object-fit:cover">
+      <figcaption><b>Fig 3.</b> Warm light is rationed. Where it appears, the player goes.</figcaption></figure>
+  </div>
+
+  <div class="grid g23 flexfill">
+    <div>
+      <h3 class="sec">Structure</h3>
+      <div class="dia">
+        <svg viewBox="0 0 300 116" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+          <defs><marker id="ar3" markerWidth="7" markerHeight="7" refX="6" refY="2.5" orient="auto">
+            <path d="M0,0 L6,2.5 L0,5 z" fill="#B8402E"/></marker></defs>
+          <g font-size="8" text-anchor="middle">
+            <rect x="86" y="6" width="128" height="20" rx="3" fill="#F7EEEC" stroke="#B8402E"/>
+            <text x="150" y="19" fill="#B8402E" font-weight="600">"I'm David" — the brief, once</text>
+
+            <rect x="8" y="42" width="80" height="20" rx="3" fill="#F3F1EA" stroke="#DEDAD2"/><text x="48" y="55">Search a floor</text>
+            <rect x="110" y="42" width="80" height="20" rx="3" fill="#F3F1EA" stroke="#DEDAD2"/><text x="150" y="55">Find a battery</text>
+            <rect x="212" y="42" width="80" height="20" rx="3" fill="#EDF1F7" stroke="#2E4A73"/>
+            <text x="252" y="55" fill="#2E4A73">Counter ticks up</text>
+
+            <rect x="110" y="78" width="80" height="20" rx="3" fill="#F3F1EA" stroke="#DEDAD2"/><text x="150" y="91">5 of 5?</text>
+            <rect x="212" y="78" width="80" height="20" rx="3" fill="#14171C"/><text x="252" y="91" fill="#fff">Elevator opens</text>
+          </g>
+          <g stroke="#B8402E" stroke-width="1.1" fill="none" marker-end="url(#ar3)">
+            <path d="M150,26 L150,38"/><path d="M88,52 L106,52"/><path d="M190,52 L208,52"/>
+            <path d="M252,62 L252,70 L194,70 L194,74" stroke-dasharray="2 2"/>
+            <path d="M190,88 L208,88"/>
+            <path d="M110,88 L48,88 L48,66"/>
+          </g>
+          <text x="150" y="110" font-size="6.2" fill="#9AA1AC" text-anchor="middle">
+            the only progress signal in the entire game is that number in the corner</text>
+        </svg>
+      </div>
+      <p class="small mt2">A collect-five errand is the thinnest possible objective, and that is the point: it
+      occupies the part of the player's mind that wants a task, and leaves the rest of their attention free to
+      notice that <strong>nothing about the building agrees with the story they were told.</strong></p>
+      <figure class="mt2"><img src="assets/z4_deep.jpg" alt="" style="height:40mm; object-fit:cover">
+        <figcaption><b>Fig 4.</b> A single distant light is the only depth cue in most shots — the player reads the
+        length of a corridor by how small the lamp at the end of it is.</figcaption></figure>
+    </div>
+
+    <div>
+      <h3 class="sec">Design decisions</h3>
+      <ul class="small">
+        <li><strong>One number is the whole HUD.</strong> <em>Battery 0 → 5</em> in the corner, nothing else — no
+        map, no objective list, no health. The player always knows how far along they are and never knows where
+        they are, which is the exact asymmetry the game wants.</li>
+        <li><strong>The narrator is the antagonist.</strong> "David" is warm, apologetic, and busy. Framing the
+        errand as hospitality rather than a warning means the dread has to be assembled by the player out of the
+        gap between what he says and what the rooms contain.</li>
+        <li><strong>Red is a state, not a style.</strong> The building is lit almost entirely in one hue, so the
+        rare cold or warm room reads as an event. A restricted palette turns lighting into a vocabulary with only
+        two words — and that makes both of them loud.</li>
+        <li><strong>Repetition is the level design.</strong> Floors reuse the same corridor grammar with small
+        substitutions. Players stop navigating by landmark and start navigating by memory, which is precisely when
+        a changed room becomes frightening rather than merely noticeable.</li>
+      </ul>
+
+      <div class="panel acc mt2">
+        <h4>What it taught me</h4>
+        <p class="small" style="margin-bottom:0">Giving the player a <strong>trivial task</strong> is a stronger
+        horror device than giving them none. With no objective they interrogate the room and find it inert; with a
+        small one they move confidently, and the environment gets to contradict them while their guard is down.
+        The design lever is not the fear — it is <em>where the player's attention is pointed when the fear arrives.</em></p>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>I · Game Design — 0423</span><span>05</span></div>
+</section>
+<section class="page" data-v="ntu">
+  <div class="eyebrow">I · Game Design — 03</div>
+  <h1 class="display ptitle">Jim's Adventure</h1>
+  <div class="psub">A 3D action roguelike. Most of the design work sits in one place: a 28-card upgrade deck that
+  has to stay interesting across every run.</div>
+  <div class="meta">
+    <div><div class="k">Role</div><div class="v">Solo — systems, combat &amp; boss design</div></div>
+    <div><div class="k">Engine</div><div class="v">Unreal Engine 5 — shipped build</div></div>
+    <div><div class="k">Duration</div><div class="v">Jan – May 2024</div></div>
+    <div><div class="k">Focus</div><div class="v">Progression pacing &amp; difficulty balance</div></div>
+  </div>
+
+  <div class="grid g2" style="margin-bottom:4mm">
+    <figure><img src="assets/jm_combat.jpg" alt="" style="height:43mm; object-fit:cover">
+      <figcaption><b>Fig 1.</b> Moment-to-moment: an elite among trash, with the arena ring and enemy level always
+      on screen so the player can price a fight before taking it.</figcaption></figure>
+    <figure><img src="assets/jm_dragon.jpg" alt="" style="height:43mm; object-fit:cover">
+      <figcaption><b>Fig 2.</b> The Dragon. Scale is the telegraph — at this size a wind-up stays readable from
+      anywhere in the arena.</figcaption></figure>
+  </div>
+
+  <div class="grid g2 flexfill" style="gap:5mm">
+    <div>
+      <h3 class="sec">The deck: 28 cards doing three different jobs</h3>
+      <div class="dia">
+        <svg viewBox="0 0 300 124" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+          <g text-anchor="middle">
+            <rect x="4" y="6" width="92" height="16" rx="2" fill="#14171C"/>
+            <text x="50" y="17" fill="#fff" font-size="7.4">UNLOCK · 3</text>
+            <rect x="104" y="6" width="92" height="16" rx="2" fill="#F7EEEC" stroke="#B8402E"/>
+            <text x="150" y="17" fill="#B8402E" font-size="7.4">RESHAPE · 9</text>
+            <rect x="204" y="6" width="92" height="16" rx="2" fill="#EDF1F7" stroke="#2E4A73"/>
+            <text x="250" y="17" fill="#2E4A73" font-size="7.4">TUNE · 16</text>
+
+            <g fill="#6B7280" font-size="6.4">
+              <text x="50" y="36">Slash</text><text x="50" y="46">Lightning</text><text x="50" y="56">Shield</text>
+              <text x="50" y="74" font-size="5.8" fill="#9AA1AC">changes what</text>
+              <text x="50" y="82" font-size="5.8" fill="#9AA1AC">you can do</text>
+
+              <text x="150" y="36">Slash · cross enemies</text><text x="150" y="46">Slash · persist time</text>
+              <text x="150" y="56">Slash · size +1</text><text x="150" y="66">Lightning · extra hit</text>
+              <text x="150" y="76">Shield · absorb +25</text>
+              <text x="150" y="90" font-size="5.8" fill="#9AA1AC">changes how it behaves</text>
+
+              <text x="250" y="36">attack · health · speed</text><text x="250" y="46">damage taken −3 / −6</text>
+              <text x="250" y="56">cooldown −7 / −10</text><text x="250" y="66">XP +5 / +10</text>
+              <text x="250" y="76">heal 30 / 50 · lifesteal</text>
+              <text x="250" y="90" font-size="5.8" fill="#9AA1AC">changes the numbers</text>
+            </g>
+          </g>
+          <line x1="100" y1="6" x2="100" y2="96" stroke="#DEDAD2" stroke-width=".7"/>
+          <line x1="200" y1="6" x2="200" y2="96" stroke="#DEDAD2" stroke-width=".7"/>
+          <rect x="4" y="102" width="292" height="18" rx="2" fill="#F3F1EA" stroke="#DEDAD2"/>
+          <text x="150" y="109" font-size="6.2" fill="#14171C" text-anchor="middle">
+            almost every effect ships at two magnitudes — 25/50, 5/10, 3/6, 7/10 — and the draw</text>
+          <text x="150" y="116.5" font-size="6.2" fill="#14171C" text-anchor="middle">
+            enforces a no-repeat rule, so a run keeps widening instead of stacking one card</text>
+        </svg>
+      </div>
+      <p class="small mt2">Splitting the deck this way is what stops a run from flattening.
+      <strong>Unlock</strong> cards change the verb set, so they matter most early; <strong>reshape</strong> cards
+      change how a verb behaves and only pay off once you own it; <strong>tune</strong> cards are the filler that
+      makes the other two feel like a find. Shipping most effects at <em>two</em> magnitudes buys a rarity axis
+      without building a rarity system.</p>
+      <figure class="mt2"><img src="assets/jm_powerup.jpg" alt="" style="height:31mm; object-fit:cover">
+        <figcaption><b>Fig 3.</b> Three cards, one pick. Putting a flat stat, a scaling stat and a behaviour change
+        in the same draw makes every choice a trade rather than an obvious upgrade.</figcaption></figure>
+    </div>
+
+    <div>
+      <h3 class="sec">Dynamic difficulty</h3>
+      <div class="dia">
+        <svg viewBox="0 0 300 96" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+          <g stroke="#DEDAD2" stroke-width=".7">
+            <line x1="24" y1="8" x2="24" y2="78"/><line x1="24" y1="78" x2="292" y2="78"/>
+          </g>
+          <path d="M24,72 C90,63 150,45 292,12" fill="none" stroke="#2E4A73" stroke-width="1.8"/>
+          <path d="M24,74 C90,67 150,52 292,22" fill="none" stroke="#B8402E" stroke-width="1.8" stroke-dasharray="3 2"/>
+          <g font-size="6.6" fill="#6B7280">
+            <text x="236" y="10" fill="#2E4A73">enemy power ×1.2 / min</text>
+            <text x="240" y="32" fill="#B8402E">player power</text>
+            <text x="150" y="91" text-anchor="middle" fill="#9AA1AC">time in run →</text>
+          </g>
+        </svg>
+      </div>
+      <ul class="small mt2">
+        <li><strong>Enemy attack and HP scale by +20 % of current value every minute.</strong> Compounding, not
+        linear — so the pressure curve matches the exponential shape of the player's own card stacking.</li>
+        <li><strong>It exists to kill farming, not the player.</strong> Without it the optimal strategy is to
+        stall in a safe corner and out-level the content, which quietly deletes the challenge.</li>
+        <li><strong>Result:</strong> runs converged to a 12–18 minute band, the Dragon reachable but never
+        guaranteed — the target shape for a roguelike.</li>
+      </ul>
+
+      <h3 class="sec mt4">Encounter roster &amp; gating</h3>
+      <p class="small">The bestiary is built as <strong>silhouette classes, not stat blocks</strong> — bat,
+      spider in two sizes, skull, golem, wizard, dragon — so a threat is read by shape at distance. Wizards ship
+      as elemental variants sharing one skeleton but firing different projectiles: three encounter types for the
+      cost of one character. Guardians are <strong>parallel, not sequential</strong> — the player picks the order,
+      but all must fall before the Dragon unlocks.</p>
+      <p class="small">Impact follows the same logic — camera shake is <strong>three named tiers</strong>, not a
+      per-effect tuning job, so every new ability inherits a consistent weight.</p>
+    </div>
+  </div>
+  <div class="folio"><span>I · Game Design — Jim's Adventure</span><span>06</span></div>
+</section>
+<section class="page" data-v="ntu">
+  <div class="eyebrow">I · Game Design — 04</div>
+  <h1 class="display ptitle">Clay Beats</h1>
+  <div class="psub">A couch co-op rhythm game about two cats learning pottery. Shipped on Steam. I owned animation
+  production and core interaction design.</div>
+  <div class="meta">
+    <div><div class="k">Role</div><div class="v">Animation production · core interaction design</div></div>
+    <div><div class="k">Team</div><div class="v">Shatter Studios LLC — university capstone team</div></div>
+    <div><div class="k">Release</div><div class="v">24 March 2025 · Steam · free-to-play</div></div>
+    <div><div class="k">Format</div><div class="v">Local co-op, two controllers · 7 levels</div></div>
+  </div>
+
+  <div class="grid g2" style="margin-bottom:4mm">
+    <figure><img src="assets/cb_rhythm.jpg" alt="" style="height:52mm; object-fit:cover">
+      <figcaption><b>Fig 1.</b> The core loop: two players throw one pot together, each reading their own note
+      stream and their own combo/accuracy readout.</figcaption></figure>
+    <figure><img src="assets/cb_overworld.jpg" alt="" style="height:52mm; object-fit:cover">
+      <figcaption><b>Fig 2.</b> Potteria. Commissions are met as characters in the world rather than picked from
+      a menu, so the rhythm levels arrive with a reason attached.</figcaption></figure>
+  </div>
+
+  <div class="grid g2 flexfill" style="gap:5mm">
+    <div>
+      <h3 class="sec">Core interaction</h3>
+      <ul class="small">
+        <li><strong>Two players, one artefact.</strong> The design problem that defines this game is that both
+        players act on the <em>same</em> pot. Individual accuracy had to stay legible while the outcome stayed
+        shared, so each player gets a private combo readout and the pot on the wheel carries the joint result.</li>
+        <li><strong>Feedback must beat the score.</strong> Players judge themselves on what they see and hear long
+        before they read a number, so each input state — early, perfect, late, miss — has its own animation and
+        audio signature. The character's recovery timing <em>is</em> the judgement display.</li>
+        <li><strong>Failure had to stay musical.</strong> A missed beat deforms the pot and thins the arrangement
+        instead of halting the run. Losing should still sound like a song and look like a lump of clay — which is
+        also the joke.</li>
+      </ul>
+      <div class="panel acc mt2">
+        <h4>Animation production</h4>
+        <p class="small" style="margin-bottom:0">Built and cleaned the animation set end to end — blocking in
+        Maya, mocap cleanup and retiming in MotionBuilder, rig retargeting where library motion was viable. The
+        binding constraint was <strong>beat-locking</strong>: across seven original songs every clip had to land its
+        accent on frame-exact musical time, so clips were authored against a tempo grid rather than to taste.
+        A clip that reads beautifully and lands two frames late is a bug in a rhythm game.</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="grid g2" style="gap:3mm">
+        <figure><img src="assets/cb_comic.jpg" alt="" style="height:34mm; object-fit:cover">
+          <figcaption><b>Fig 3.</b> Comic-panel cutscenes carry tone between commissions.</figcaption></figure>
+        <figure><img src="assets/cb_header.jpg" alt="" style="height:34mm; object-fit:contain; background:#F3F1EA">
+          <figcaption><b>Fig 4.</b> Store key art — credited to the full Shatter Studios team.</figcaption></figure>
+      </div>
+      <div class="panel mt2">
+        <h4>Why this project matters to me</h4>
+        <p class="small" style="margin-bottom:0">It was the first time I shipped to a public storefront rather than
+        to a grader — a real store page, real strangers, real reviews. Almost everything I now believe about
+        production I learned here under a hard deadline with a team: that scope is a schedule problem, that a
+        pipeline is worth more than a hero asset, and that "done" means a build other people can run.</p>
+      </div>
+      <div class="panel blue mt2">
+        <h4>Transferable outcome</h4>
+        <p class="small" style="margin-bottom:0">The tempo-grid authoring method built here is the direct ancestor
+        of the animation state-machine and blend-timing work I later did on a live commercial title — see Section II.</p>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>I · Game Design — Clay Beats</span><span>07</span></div>
+</section>
+<section class="page" data-v="ntu hku">
+  <div class="eyebrow">II · Systems Design in Production — 05</div>
+  <h1 class="display ptitle">Character presentation state machine</h1>
+  <div class="psub">Sole owner of the animation state architecture behind a collectible companion system in a live mobile MOBA.</div>
+  <div class="meta">
+    <div><div class="k">Context</div><div class="v">Tencent TiMi Studio Group · Systems Designer</div></div>
+    <div><div class="k">Title</div><div class="v">Nation-wide mobile MOBA (live service)</div></div>
+    <div><div class="k">Period</div><div class="v">Aug 2025 – present</div></div>
+    <div><div class="k">Ownership</div><div class="v">Sole designer for the state architecture</div></div>
+  </div>
+  <p class="small" style="margin-top:-1mm">
+    <span class="nda">Under NDA</span>&nbsp;&nbsp;No proprietary screenshots, configuration data or engine files are shown.
+    All diagrams in Section II are re-drawn by me at a generic, non-identifying level of abstraction.</p>
+
+  <div class="grid g32 flexfill mt4" style="gap:5mm">
+    <div>
+      <h3 class="sec">The problem</h3>
+      <p class="small">Out-of-match companions have to idle, wander, react to the player, respond to taps, and play
+      one-off performance beats — while the player is simultaneously browsing menus, changing outfits and entering
+      queue. The failure mode is not a missing animation; it is a <strong>bad seam</strong>: a companion snapping
+      mid-stride, or freezing because two systems each believed they owned the character that frame.</p>
+
+      <h3 class="sec mt4">The architecture</h3>
+      <div class="dia">
+        <svg viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+          <defs><marker id="ar5" markerWidth="6" markerHeight="6" refX="5" refY="2" orient="auto">
+            <path d="M0,0 L5,2 L0,4 z" fill="#6B7280"/></marker></defs>
+          <rect x="4" y="4" width="292" height="142" rx="3" fill="#fff" stroke="#DEDAD2"/>
+          <text x="12" y="16" font-size="6.6" fill="#9AA1AC" letter-spacing=".1em">PRESENTATION LAYER — ONE OWNER PER FRAME</text>
+          <g font-size="8" text-anchor="middle">
+            <circle cx="70" cy="52" r="24" fill="#F3F1EA" stroke="#DEDAD2"/><text x="70" y="55">IDLE</text>
+            <circle cx="160" cy="40" r="24" fill="#F3F1EA" stroke="#DEDAD2"/><text x="160" y="43">MOVE</text>
+            <circle cx="240" cy="66" r="24" fill="#F7EEEC" stroke="#B8402E"/>
+            <text x="240" y="65" fill="#B8402E">REACT</text><text x="240" y="74" font-size="6" fill="#B8402E">interrupt</text>
+            <circle cx="120" cy="116" r="24" fill="#EDF1F7" stroke="#2E4A73"/>
+            <text x="120" y="115" fill="#2E4A73">PERFORM</text><text x="120" y="124" font-size="6" fill="#2E4A73">one-shot</text>
+            <circle cx="228" cy="124" r="20" fill="#14171C"/><text x="228" y="127" fill="#fff" font-size="7">EXIT</text>
+          </g>
+          <g stroke="#6B7280" stroke-width=".9" fill="none" marker-end="url(#ar5)">
+            <path d="M92,45 C112,36 122,36 136,38"/><path d="M136,50 C120,60 104,58 93,56"/>
+            <path d="M182,50 C204,54 210,58 217,60"/><path d="M226,45 C210,32 196,30 184,32" stroke-dasharray="2 2"/>
+            <path d="M78,74 C90,96 96,102 102,106"/><path d="M144,110 C176,102 200,90 220,80"/>
+            <path d="M144,122 C170,126 190,126 206,125"/>
+          </g>
+          <text x="150" y="144" font-size="6.4" fill="#9AA1AC" text-anchor="middle">
+            blend-out is authored per transition; interrupts resolve by priority, never by whoever wrote last</text>
+        </svg>
+      </div>
+      <ul class="small mt2">
+        <li><strong>Explicit single ownership.</strong> Exactly one state drives the character each frame; every other
+        system requests rather than sets. This removed the entire class of "two systems fighting" bugs.</li>
+        <li><strong>Transitions are content, not glue.</strong> Each edge has its own authored blend-out, so a walk that
+        is interrupted by a tap decelerates instead of cutting.</li>
+        <li><strong>Interrupts resolve by declared priority.</strong> A reaction can always take the character from
+        idle or move, but never from a one-shot performance mid-beat.</li>
+      </ul>
+    </div>
+
+    <div class="stack">
+      <div class="panel acc">
+        <h4>Outcome</h4>
+        <p class="small" style="margin-bottom:0">Out-of-match presentation reads as continuous motion rather than a
+        sequence of clips. Concretely: no more visible pops at the idle↔move seam, and reaction beats can be
+        triggered from any menu context without the animation team hand-authoring a case for each one.</p>
+      </div>
+      <div class="panel">
+        <h4>What I actually did</h4>
+        <ul class="small" style="margin-bottom:0">
+          <li>Enumerated every behaviour the feature promised, then cut the state list to the smallest set that could
+          express all of them.</li>
+          <li>Wrote the transition matrix — including the illegal transitions, which is where most of the design lives.</li>
+          <li>Specified blend timings against the animation team's clips rather than assuming defaults.</li>
+          <li>Sat in review with engineering and animation until the seam list was empty.</li>
+        </ul>
+      </div>
+      <div class="panel blue">
+        <h4>Design principle carried forward</h4>
+        <p class="small" style="margin-bottom:0">A state machine is a <em>contract about who is allowed to lie to
+        the player</em>. Writing down which transitions are forbidden turned out to be far more valuable than
+        enumerating the permitted ones.</p>
+      </div>
+      <div class="tagrow">
+        <span class="tag">State machines</span><span class="tag">Animation systems</span>
+        <span class="tag">Cross-discipline spec</span><span class="tag">Live service</span>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>II · Systems Design in Production</span><span>08</span></div>
+</section>
+<section class="page" data-v="ntu">
+  <div class="eyebrow">II · Systems Design in Production — 06</div>
+  <h1 class="display ptitle">Wardrobe &amp; character customisation systems</h1>
+  <div class="psub">Co-owned delivery of a cosmetic wardrobe and a player-facing character-creation flow, from feature spec through resource integration to launch.</div>
+  <p class="small"><span class="nda">Under NDA</span>&nbsp;&nbsp;Diagrams are generic re-drawings; no product UI is reproduced.</p>
+
+  <div class="grid g2 mt4 flexfill" style="gap:5mm">
+    <div>
+      <h3 class="sec">The combinatorial problem</h3>
+      <div class="dia">
+        <svg viewBox="0 0 300 116" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+          <g font-size="7.4" text-anchor="middle">
+            <text x="150" y="10" font-size="6.6" fill="#9AA1AC" letter-spacing=".1em">SLOTS × VARIANTS = VALIDATION SURFACE</text>
+            <g fill="#F3F1EA" stroke="#DEDAD2">
+              <rect x="10" y="20" width="52" height="15" rx="2"/><rect x="10" y="40" width="52" height="15" rx="2"/>
+              <rect x="10" y="60" width="52" height="15" rx="2"/><rect x="10" y="80" width="52" height="15" rx="2"/>
+            </g>
+            <g fill="#14171C"><text x="36" y="31">Head</text><text x="36" y="51">Body</text>
+              <text x="36" y="71">Accessory</text><text x="36" y="91">Effect</text></g>
+            <g fill="#fff" stroke="#DEDAD2">
+              <rect x="86" y="20" width="16" height="15" rx="2"/><rect x="106" y="20" width="16" height="15" rx="2"/>
+              <rect x="126" y="20" width="16" height="15" rx="2"/><rect x="146" y="20" width="16" height="15" rx="2"/>
+              <rect x="86" y="40" width="16" height="15" rx="2"/><rect x="106" y="40" width="16" height="15" rx="2"/>
+              <rect x="126" y="40" width="16" height="15" rx="2"/>
+              <rect x="86" y="60" width="16" height="15" rx="2"/><rect x="106" y="60" width="16" height="15" rx="2"/>
+              <rect x="126" y="60" width="16" height="15" rx="2"/><rect x="146" y="60" width="16" height="15" rx="2"/>
+              <rect x="86" y="80" width="16" height="15" rx="2"/><rect x="106" y="80" width="16" height="15" rx="2"/>
+            </g>
+            <text x="180" y="52" font-size="14" fill="#B8402E" font-family="Georgia, serif">⟶</text>
+            <rect x="200" y="26" width="92" height="62" rx="3" fill="#F7EEEC" stroke="#B8402E"/>
+            <text x="246" y="46" font-size="7" fill="#B8402E">every combination</text>
+            <text x="246" y="58" font-size="7" fill="#B8402E">must be legal,</text>
+            <text x="246" y="70" font-size="7" fill="#B8402E">renderable, and</text>
+            <text x="246" y="82" font-size="7" fill="#B8402E">non-clipping</text>
+          </g>
+          <text x="150" y="110" font-size="6.4" fill="#9AA1AC" text-anchor="middle">
+            the design cost is not in any one item — it is in the product of the columns</text>
+        </svg>
+      </div>
+      <ul class="small mt2">
+        <li><strong>Rules beat exceptions.</strong> Instead of blacklisting broken pairs one by one, we defined
+        compatibility <em>classes</em> so a new item inherits its constraints on arrival.</li>
+        <li><strong>Defaults carry the experience.</strong> Most players never open the deep customisation tree, so
+        the default and the first-time-user preset were treated as designed content, not fallbacks.</li>
+        <li><strong>Resource integration is design work.</strong> Naming conventions, LOD rules and slot metadata
+        decide whether the art team can ship an item in a day or a week.</li>
+      </ul>
+    </div>
+
+    <div class="stack">
+      <h3 class="sec">Delivery pipeline I worked inside</h3>
+      <div class="dia">
+        <svg viewBox="0 0 300 76" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+          <defs><marker id="ar6" markerWidth="7" markerHeight="7" refX="6" refY="2.5" orient="auto">
+            <path d="M0,0 L6,2.5 L0,5 z" fill="#B8402E"/></marker></defs>
+          <g font-size="7" text-anchor="middle">
+            <rect x="4" y="16" width="52" height="26" rx="3" fill="#F3F1EA" stroke="#DEDAD2"/>
+            <text x="30" y="27">feature</text><text x="30" y="36">spec</text>
+            <rect x="66" y="16" width="52" height="26" rx="3" fill="#F3F1EA" stroke="#DEDAD2"/>
+            <text x="92" y="27">config</text><text x="92" y="36">schema</text>
+            <rect x="128" y="16" width="52" height="26" rx="3" fill="#F3F1EA" stroke="#DEDAD2"/>
+            <text x="154" y="27">art asset</text><text x="154" y="36">integration</text>
+            <rect x="190" y="16" width="52" height="26" rx="3" fill="#EDF1F7" stroke="#2E4A73"/>
+            <text x="216" y="27" fill="#2E4A73">combination</text><text x="216" y="36" fill="#2E4A73">QA sweep</text>
+            <rect x="252" y="16" width="44" height="26" rx="3" fill="#14171C"/>
+            <text x="274" y="31" fill="#fff">launch</text>
+          </g>
+          <g stroke="#B8402E" stroke-width="1.1" fill="none" marker-end="url(#ar6)">
+            <path d="M56,29 L62,29"/><path d="M118,29 L124,29"/><path d="M180,29 L186,29"/><path d="M242,29 L248,29"/>
+          </g>
+          <path d="M216,42 L216,58 L92,58 L92,46" stroke="#6B7280" stroke-width=".9" fill="none"
+                stroke-dasharray="2 2" marker-end="url(#ar6)"/>
+          <text x="150" y="70" font-size="6.4" fill="#9AA1AC" text-anchor="middle">failures loop back to the schema, not to individual assets</text>
+        </svg>
+      </div>
+
+      <div class="panel acc">
+        <h4>My contribution</h4>
+        <ul class="small" style="margin-bottom:0">
+          <li>Owned the main flow for character creation and outfit combination alongside a second designer.</li>
+          <li>Wrote the configuration schema so that art deliverables and design intent had a single source of truth.</li>
+          <li>Drove resource integration and the pre-launch combination sweep that protects the first-run experience.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h4>What I learned about live products</h4>
+        <p class="small" style="margin-bottom:0">Cosmetic systems look like content but behave like infrastructure.
+        The right question at spec time was never "what should this outfit look like" — it was
+        <strong>"what will it cost to add the two-hundredth one."</strong> That framing is what I want to bring into a
+        research-oriented design programme: treating production capacity itself as a design material.</p>
+      </div>
+      <div class="tagrow">
+        <span class="tag">Systems design</span><span class="tag">Config schema</span>
+        <span class="tag">Content pipeline</span><span class="tag">Launch QA</span>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>II · Systems Design in Production</span><span>09</span></div>
+</section>
+<section class="page" data-v="ntu hku">
+  <div class="eyebrow">II · Systems Design in Production — 07</div>
+  <h1 class="display ptitle">Gameplay-mode logic: skills, monster AI, boss phases</h1>
+  <div class="psub">Adapting a competitive hero roster into an entertainment battle-royale mode — and rebuilding the enemy AI that populates it.</div>
+  <p class="small"><span class="nda">Under NDA</span>&nbsp;&nbsp;Structures below are re-drawn generically; no proprietary logic assets are reproduced.</p>
+
+  <div class="grid g2 mt4" style="gap:5mm">
+    <div>
+      <h3 class="sec">Re-tuning skills for a different contract</h3>
+      <p class="small">A competitive MOBA kit is balanced for a 15-minute macro game. Dropped into a fast entertainment
+      mode, the same kit reads as sluggish — long cooldowns and resource costs that exist to create macro decisions
+      instead just create waiting. I worked through the roster adjusting cooldowns, costs and trigger conditions via
+      hero logic graphs and buff triggers so the kits kept their <em>identity</em> while matching the new tempo.</p>
+      <div class="panel blue">
+        <h4>The rule I worked to</h4>
+        <p class="small" style="margin-bottom:0">Change the <strong>rhythm</strong>, never the <strong>fantasy</strong>.
+        A player who mains a hero should still recognise their hero; what changes is how often they get to be them.</p>
+      </div>
+
+      <h3 class="sec mt4">Where the AI actually lived</h3>
+      <p class="small">A significant finding during this work: the monster AI I was asked to modify was not driven by
+      the visual logic graphs at all, but by <strong>behaviour-tree assets referenced by a path field in the
+      configuration table</strong>. Edits to the graphs had no effect — the graphs were vestigial. Tracing the real
+      execution path before changing anything saved the rest of the schedule.</p>
+      <div class="panel acc">
+        <h4>Transferable lesson</h4>
+        <p class="small" style="margin-bottom:0">In a decade-old live codebase, <em>the documented system and the
+        running system are different systems.</em> I now verify which one I'm editing before I touch it — usually by
+        instrumenting a probe and watching the log, not by reading the code.</p>
+      </div>
+    </div>
+
+    <div class="stack">
+      <h3 class="sec">Boss encounter: phase state machine</h3>
+      <div class="dia">
+        <svg viewBox="0 0 300 128" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+          <defs><marker id="ar7" markerWidth="6" markerHeight="6" refX="5" refY="2" orient="auto">
+            <path d="M0,0 L5,2 L0,4 z" fill="#6B7280"/></marker></defs>
+          <g font-size="7.4" text-anchor="middle">
+            <rect x="8" y="14" width="80" height="30" rx="3" fill="#F3F1EA" stroke="#DEDAD2"/>
+            <text x="48" y="27">PHASE 1</text><text x="48" y="37" font-size="6.2" fill="#6B7280">baseline kit</text>
+            <rect x="110" y="14" width="80" height="30" rx="3" fill="#F7EEEC" stroke="#B8402E"/>
+            <text x="150" y="27" fill="#B8402E">PHASE 2</text><text x="150" y="37" font-size="6.2" fill="#B8402E">transformed</text>
+            <rect x="212" y="14" width="80" height="30" rx="3" fill="#14171C"/>
+            <text x="252" y="27" fill="#fff">PHASE 3</text><text x="252" y="37" font-size="6.2" fill="#8C949F">enrage</text>
+
+            <rect x="8" y="70" width="284" height="46" rx="3" fill="#fff" stroke="#DEDAD2"/>
+            <text x="150" y="82" font-size="6.4" fill="#9AA1AC" letter-spacing=".1em">HOW A PHASE CHANGE IS IMPLEMENTED</text>
+            <g fill="#F3F1EA" stroke="#DEDAD2">
+              <rect x="16" y="88" width="58" height="20" rx="2"/><rect x="84" y="88" width="58" height="20" rx="2"/>
+              <rect x="152" y="88" width="58" height="20" rx="2"/><rect x="220" y="88" width="62" height="20" rx="2"/>
+            </g>
+            <g fill="#14171C" font-size="6.6">
+              <text x="45" y="101">HP threshold</text><text x="113" y="101">apply buff</text>
+              <text x="181" y="101">swap mesh +</text><text x="251" y="101">re-arm skill</text>
+            </g>
+            <g fill="#6B7280" font-size="5.6">
+              <text x="181" y="107">skill trigger set</text><text x="251" y="107">cadence</text>
+            </g>
+          </g>
+          <g stroke="#6B7280" stroke-width=".9" fill="none" marker-end="url(#ar7)">
+            <path d="M88,29 L104,29"/><path d="M190,29 L206,29"/>
+            <path d="M74,98 L80,98"/><path d="M142,98 L148,98"/><path d="M210,98 L216,98"/>
+          </g>
+          <path d="M48,44 L48,60 L150,60 L150,66" stroke="#B8402E" stroke-width=".9" fill="none"
+                stroke-dasharray="2 2" marker-end="url(#ar7)"/>
+        </svg>
+      </div>
+      <ul class="small mt2">
+        <li><strong>Transformation is a buff, not a new entity.</strong> Driving phase changes through the buff layer
+        keeps threat, targeting and aggro state intact across the transition, so the encounter never resets its
+        social contract with the players fighting it.</li>
+        <li><strong>Reuse the proven AI, replace the form.</strong> Cloning an existing, battle-tested behaviour tree
+        and changing the <em>presentation</em> per phase produced a stable boss far faster than hand-authoring a new
+        AI graph — an approach I arrived at after a hand-built version repeatedly deadlocked.</li>
+        <li><strong>Fail loudly.</strong> The debugging discipline that came out of this: a boss that gets stuck in
+        idle is a design bug with an engineering signature, and it is found by reading timestamps, not by intuition.</li>
+      </ul>
+      <div class="tagrow">
+        <span class="tag">Behaviour trees</span><span class="tag">Combat tuning</span>
+        <span class="tag">Boss design</span><span class="tag">Live debugging</span>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>II · Systems Design in Production</span><span>10</span></div>
+</section>
+<section class="page" data-v="ntu hku">
+  <div class="eyebrow">II · Systems Design in Production — 08</div>
+  <h1 class="display ptitle">Scaling a mode's content 20 → 110+ with an AI-assisted pipeline</h1>
+  <div class="psub">The design problem was never generation speed. It was building a validation gate I could trust.</div>
+  <p class="small"><span class="nda">Under NDA</span>&nbsp;&nbsp;Method described at architecture level only; no configuration data is shown.</p>
+
+  <div class="kpi mt4" style="border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:4mm 0;">
+    <div><div class="n">20 → 110+</div><div class="l">Characters configured for the mode</div></div>
+    <div><div class="n">≈ 7×</div><div class="l">Throughput vs. manual authoring</div></div>
+    <div><div class="n">4-stage</div><div class="l">Automated validation gate</div></div>
+    <div><div class="n">0</div><div class="l">Generated entries shipped unreviewed</div></div>
+  </div>
+
+  <div class="grid g23 flexfill" style="gap:5mm">
+    <div>
+      <h3 class="sec">Pipeline architecture</h3>
+      <div class="dia">
+        <svg viewBox="0 0 300 176" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+          <defs><marker id="ar8" markerWidth="7" markerHeight="7" refX="6" refY="2.5" orient="auto">
+            <path d="M0,0 L6,2.5 L0,5 z" fill="#B8402E"/></marker></defs>
+          <g font-size="7.6" text-anchor="middle">
+            <rect x="70" y="6" width="160" height="20" rx="3" fill="#F3F1EA" stroke="#DEDAD2"/>
+            <text x="150" y="19">reference set — hand-authored exemplars</text>
+            <rect x="70" y="38" width="160" height="20" rx="3" fill="#F3F1EA" stroke="#DEDAD2"/>
+            <text x="150" y="51">extract the pattern &amp; its constraints</text>
+            <rect x="70" y="70" width="160" height="20" rx="3" fill="#EDF1F7" stroke="#2E4A73"/>
+            <text x="150" y="83" fill="#2E4A73">AI-assisted batch generation</text>
+
+            <rect x="70" y="102" width="160" height="38" rx="3" fill="#F7EEEC" stroke="#B8402E"/>
+            <text x="150" y="114" fill="#B8402E" font-weight="600">VALIDATION GATE</text>
+            <text x="150" y="124" font-size="6.4" fill="#B8402E">schema · reference integrity · rule check · spot playtest</text>
+            <text x="150" y="134" font-size="6.4" fill="#B8402E">any failure → back to pattern, never patched by hand</text>
+
+            <rect x="70" y="152" width="160" height="20" rx="3" fill="#14171C"/>
+            <text x="150" y="165" fill="#fff">merged into the build</text>
+          </g>
+          <g stroke="#B8402E" stroke-width="1.1" fill="none" marker-end="url(#ar8)">
+            <path d="M150,26 L150,34"/><path d="M150,58 L150,66"/><path d="M150,90 L150,98"/><path d="M150,140 L150,148"/>
+          </g>
+          <path d="M70,120 L36,120 L36,48 L66,48" stroke="#6B7280" stroke-width=".9" fill="none"
+                stroke-dasharray="2 2" marker-end="url(#ar8)"/>
+          <text x="34" y="86" font-size="6" fill="#9AA1AC" transform="rotate(-90 34 86)" text-anchor="middle">failures fix the pattern</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div class="panel acc">
+        <h4>The actual insight</h4>
+        <p class="small" style="margin-bottom:0">Generation was the cheap part. The expensive part was answering
+        <strong>"how do I know it isn't wrong?"</strong> at a scale where I can no longer read every entry.
+        So the design work went into the gate: a machine-checkable definition of what "correct" means for one entry,
+        applied to all of them.</p>
+      </div>
+      <div class="panel">
+        <h4>Design rules that made it work</h4>
+        <ul class="small" style="margin-bottom:0">
+          <li><strong>Never hand-patch a generated artefact.</strong> A one-off fix hides a systematic defect; the
+          failure has to be pushed back into the pattern so it is fixed 110 times.</li>
+          <li><strong>Encode the traps.</strong> Every production landmine I hit (a path field that silently needs a
+          file extension, an index that must equal its own position, a byte-order marker that crashes a loader) went
+          into a written constraint list the pipeline checks against.</li>
+          <li><strong>Keep a human at the end.</strong> The gate rejects; only I approve. Nothing generated reached
+          the build without review.</li>
+        </ul>
+      </div>
+      <div class="panel blue">
+        <h4>Why this is a design skill, not a tooling skill</h4>
+        <p class="small" style="margin-bottom:0">Defining the validation gate <em>is</em> writing down what the design
+        actually requires — most of what a spec leaves implicit becomes explicit the moment a machine has to check it.
+        The pipeline was, in effect, the most rigorous design document I have ever written.</p>
+      </div>
+      <div class="tagrow">
+        <span class="tag">Content scaling</span><span class="tag">Validation design</span>
+        <span class="tag">Python tooling</span><span class="tag">Human-in-the-loop</span>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>II · Systems Design in Production</span><span>11</span></div>
+</section>
+<section class="page" data-v="ntu hku">
+  <div class="eyebrow">III · AI-Assisted Art Pipelines — 09</div>
+  <h1 class="display ptitle">A character art pipeline for Roblox</h1>
+  <div class="psub">Concept → design sheet → modular parts → generated 3D → R15 rig → in-engine. Built as a repeatable route, not a one-off character.</div>
+  <div class="meta">
+    <div><div class="k">Role</div><div class="v">Pipeline design &amp; end-to-end execution</div></div>
+    <div><div class="k">Toolchain</div><div class="v">Image gen · image→3D · Maya · Roblox Studio</div></div>
+    <div><div class="k">Output</div><div class="v">Rigged, skinned, engine-ready R15 character</div></div>
+    <div><div class="k">Documented</div><div class="v">Published as a public process write-up</div></div>
+  </div>
+
+  <div class="grid g3 mt2" style="gap:4mm">
+    <figure><img src="assets/rb_concept.jpg" alt="" style="height:46.4mm; object-fit:cover">
+      <figcaption><b>Step 1 · Concept.</b> Silhouette and palette locked before any 3D exists.</figcaption></figure>
+    <figure><img src="assets/rb_sheet.jpg" alt="" style="height:46.4mm; object-fit:cover">
+      <figcaption><b>Step 2 · Design sheet.</b> The single source of truth every later stage is checked against.</figcaption></figure>
+    <figure><img src="assets/rb_front.jpg" alt="" style="height:46.4mm; object-fit:cover">
+      <figcaption><b>Step 3 · Orthographic front.</b> Clean, un-posed, generation-ready.</figcaption></figure>
+  </div>
+
+  <div class="grid g23 flexfill mt4" style="gap:5mm">
+    <div>
+      <h3 class="sec">The pipeline</h3>
+      <div class="dia">
+        <svg viewBox="0 0 300 92" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+          <defs><marker id="ar9" markerWidth="6" markerHeight="6" refX="5" refY="2" orient="auto">
+            <path d="M0,0 L5,2 L0,4 z" fill="#B8402E"/></marker></defs>
+          <g font-size="6.8" text-anchor="middle">
+            <g fill="#F3F1EA" stroke="#DEDAD2">
+              <rect x="4" y="10" width="44" height="24" rx="2"/><rect x="56" y="10" width="44" height="24" rx="2"/>
+              <rect x="108" y="10" width="44" height="24" rx="2"/><rect x="160" y="10" width="44" height="24" rx="2"/>
+              <rect x="212" y="10" width="44" height="24" rx="2"/>
+            </g>
+            <rect x="252" y="46" width="44" height="24" rx="2" fill="#14171C"/>
+            <rect x="200" y="46" width="44" height="24" rx="2" fill="#F7EEEC" stroke="#B8402E"/>
+            <rect x="148" y="46" width="44" height="24" rx="2" fill="#F3F1EA" stroke="#DEDAD2"/>
+            <g fill="#14171C">
+              <text x="26" y="20">concept</text><text x="26" y="29">image</text>
+              <text x="78" y="20">design</text><text x="78" y="29">sheet</text>
+              <text x="130" y="20">part</text><text x="130" y="29">decomposition</text>
+              <text x="182" y="20">image→3D</text><text x="182" y="29">generation</text>
+              <text x="234" y="20">retopo</text><text x="234" y="29">+ clean</text>
+              <text x="170" y="56">Maya</text><text x="170" y="65">assembly</text>
+            </g>
+            <text x="222" y="56" fill="#B8402E">skin to</text><text x="222" y="65" fill="#B8402E">R15 rig</text>
+            <text x="274" y="61" fill="#fff">Studio</text>
+          </g>
+          <g stroke="#B8402E" stroke-width="1" fill="none" marker-end="url(#ar9)">
+            <path d="M48,22 L52,22"/><path d="M100,22 L104,22"/><path d="M152,22 L156,22"/><path d="M204,22 L208,22"/>
+            <path d="M234,34 L234,40 L192,40 L172,40 L172,42"/>
+            <path d="M192,58 L196,58"/><path d="M244,58 L248,58"/>
+          </g>
+          <text x="150" y="86" font-size="6.2" fill="#9AA1AC" text-anchor="middle">
+            every stage validates against the design sheet — drift is caught at the stage that caused it</text>
+        </svg>
+      </div>
+      <p class="small mt2">The reason to formalise this as a pipeline rather than "make a character" is that the
+      hard problem in generative production is <strong>consistency across stages</strong>. Each handoff is an
+      opportunity for the model to reinterpret the design; putting an explicit reference artefact at the top and
+      checking every stage against it is what keeps stage five looking like stage one.</p>
+    </div>
+
+    <div class="stack">
+      <div class="panel acc">
+        <h4>Why modular parts</h4>
+        <p class="small" style="margin-bottom:0">Generating a whole dressed character in one pass gives you an
+        un-editable blob. Decomposing into <strong>hair / garment / accessory / footwear</strong> and generating each
+        separately produces parts that can be swapped, re-skinned and re-used across characters — which is the
+        difference between an asset and a wardrobe.</p>
+      </div>
+      <div class="panel">
+        <h4>Constraints that shaped it</h4>
+        <ul class="small" style="margin-bottom:0">
+          <li>Roblox R15 is a fixed skeleton — the art has to come to the rig, never the reverse.</li>
+          <li>Custom characters bind as <strong>accessories</strong> rather than custom rigs, which keeps every stock
+          animation working for free.</li>
+          <li>Poly and texture budgets are strict, so retopology is a required stage, not an optimisation.</li>
+        </ul>
+      </div>
+      <div class="tagrow">
+        <span class="tag">Pipeline design</span><span class="tag">Image→3D</span>
+        <span class="tag">Maya</span><span class="tag">Roblox R15</span><span class="tag">Tech art</span>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>III · AI-Assisted Art Pipelines</span><span>12</span></div>
+</section>
+<section class="page" data-v="ntu">
+  <div class="eyebrow">III · AI-Assisted Art Pipelines — 09 (continued)</div>
+  <h1 class="display ptitle">Modular parts &amp; generated geometry</h1>
+  <div class="rule"></div>
+
+  <h3 class="sec">Part decomposition — each element generated and iterated independently</h3>
+  <div class="grid g3" style="gap:4mm; margin-bottom:5mm">
+    <figure><img src="assets/rb_hair.jpg" alt="" style="height:36.6mm; object-fit:cover">
+      <figcaption><b>Hair.</b> Multiple silhouette candidates evaluated against the sheet.</figcaption></figure>
+    <figure><img src="assets/rb_clothes.jpg" alt="" style="height:36.6mm; object-fit:cover">
+      <figcaption><b>Garment.</b> Iterated for how it will read at Roblox's viewing distance.</figcaption></figure>
+    <figure><img src="assets/rb_fan.jpg" alt="" style="height:36.6mm; object-fit:cover">
+      <figcaption><b>Prop.</b> Held items are separate so they can be swapped per animation.</figcaption></figure>
+  </div>
+
+  <h3 class="sec">Image → 3D geometry, part by part</h3>
+  <div class="grid g3" style="gap:4mm; margin-bottom:5mm">
+    <figure><img src="assets/rb_v_cloth.jpg" alt="" style="height:41.5mm; object-fit:cover">
+      <figcaption><b>Garment mesh.</b> Generated, then inspected for topology usable under skinning.</figcaption></figure>
+    <figure><img src="assets/rb_v_hair.jpg" alt="" style="height:41.5mm; object-fit:cover">
+      <figcaption><b>Hair mesh.</b> The hardest part to generate cleanly — thin shells fail most often.</figcaption></figure>
+    <figure><img src="assets/rb_v_fan.jpg" alt="" style="height:41.5mm; object-fit:cover">
+      <figcaption><b>Prop mesh.</b> Simple forms survive generation best; complexity is spent where it shows.</figcaption></figure>
+  </div>
+
+  <div class="grid g32 flexfill" style="gap:5mm">
+    <div>
+      <h3 class="sec">A technique worth documenting: layered garments</h3>
+      <div class="grid g3" style="gap:3mm">
+        <figure><img src="assets/rb_torso_no.jpg" alt="" style="height:31.7mm; object-fit:cover">
+          <figcaption><b>A.</b> Base torso, no garment.</figcaption></figure>
+        <figure><img src="assets/rb_torso_yes.jpg" alt="" style="height:31.7mm; object-fit:cover">
+          <figcaption><b>B.</b> Torso with garment baked.</figcaption></figure>
+        <figure><img src="assets/rb_sleeves.jpg" alt="" style="height:31.7mm; object-fit:cover">
+          <figcaption><b>C.</b> Sleeves isolated as a separate layer.</figcaption></figure>
+      </div>
+      <p class="small mt2">Generating a dressed body as one mesh looks correct and deforms badly — the garment
+      inherits the body's skin weights and shears at the shoulder. Splitting into
+      <strong>base body + garment shell + isolated sleeves</strong> lets each layer take its own weights, so the
+      silhouette survives an arm raise. This is the kind of finding that only appears once you push a generated
+      asset all the way through rigging rather than stopping at a nice render.</p>
+    </div>
+    <div class="stack">
+      <div class="panel acc">
+        <h4>Failure modes I catalogued</h4>
+        <ul class="small" style="margin-bottom:0">
+          <li><strong>Thin shells.</strong> Hair and cloth edges generate as zero-thickness and vanish under
+          normal-based shading — solved by thickening before generation, not after.</li>
+          <li><strong>Hidden-object export loss.</strong> Objects hidden in the outliner silently fail to export,
+          producing a rig with no skeleton and no error message.</li>
+          <li><strong>Scale drift.</strong> Each generated part returns in its own units; a normalisation step
+          against the rig had to become mandatory rather than remembered.</li>
+        </ul>
+      </div>
+      <div class="panel blue">
+        <h4>Method over output</h4>
+        <p class="small" style="margin-bottom:0">Every failure above became a written check in the pipeline
+        documentation. The deliverable of this project is not the character — it is the list.</p>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>III · AI-Assisted Art Pipelines</span><span>13</span></div>
+</section>
+<section class="page" data-v="ntu">
+  <div class="eyebrow">III · AI-Assisted Art Pipelines — 09 (continued)</div>
+  <h1 class="display ptitle">Assembly, rigging &amp; in-engine result</h1>
+  <div class="rule"></div>
+
+  <div class="grid g2" style="gap:4mm; margin-bottom:4mm">
+    <figure><img src="assets/rb_maya_parts.jpg" alt="" style="height:51.2mm; object-fit:cover">
+      <figcaption><b>Fig 1 · Maya, parts unassembled.</b> Generated meshes arrive at arbitrary scale and origin;
+      the first job is normalisation.</figcaption></figure>
+    <figure><img src="assets/rb_maya_asm.jpg" alt="" style="height:51.2mm; object-fit:cover">
+      <figcaption><b>Fig 2 · Assembled and adjusted.</b> Parts aligned to the R15 proportions, then hand-corrected
+      where generation misread the sheet.</figcaption></figure>
+  </div>
+
+  <div class="grid g3" style="gap:4mm; margin-bottom:4mm">
+    <figure><img src="assets/rb_r15.jpg" alt="" style="height:41.5mm; object-fit:cover">
+      <figcaption><b>Fig 3 · R15 reference.</b> The fixed target skeleton every part must serve.</figcaption></figure>
+    <figure><img src="assets/rb_skin.jpg" alt="" style="height:41.5mm; object-fit:cover">
+      <figcaption><b>Fig 4 · Skinning.</b> Weights authored per layer so garments deform independently of the body.</figcaption></figure>
+    <figure><img src="assets/rb_ingame.jpg" alt="" style="height:41.5mm; object-fit:cover">
+      <figcaption><b>Fig 5 · In Roblox Studio.</b> Running on stock animations with no custom rig required.</figcaption></figure>
+  </div>
+
+  <div class="grid g23 flexfill" style="gap:5mm">
+    <div>
+      <figure><img src="assets/rb_final.jpg" alt="" style="height:63.4mm; object-fit:cover">
+        <figcaption><b>Fig 6 · Final character in engine.</b> End of a pipeline that started as a single concept image.</figcaption></figure>
+    </div>
+    <div class="stack">
+      <div class="panel acc">
+        <h4>The decision that made this reusable</h4>
+        <p class="small" style="margin-bottom:0">Binding custom characters as <strong>accessories on the stock R15
+        rig</strong> — rather than authoring a custom rig per character — means every animation in the platform's
+        library keeps working, and a new character costs art time only. For a project that needs many characters,
+        this single constraint is worth more than any individual asset quality gain.</p>
+      </div>
+      <div class="panel">
+        <h4>Where the human stays</h4>
+        <p class="small" style="margin-bottom:0">Generation handled bulk geometry. <strong>Proportion, silhouette
+        correction, weight painting and the final in-engine read were all hand work</strong> — and they are exactly
+        the stages where the character stops being plausible and starts being appealing. The pipeline's job is to
+        buy time for those stages, not to replace them.</p>
+      </div>
+      <div class="panel blue">
+        <h4>Documented publicly</h4>
+        <p class="small" style="margin-bottom:0">The full process is published as an illustrated write-up so
+        other artists can reproduce it — see the links on the final page.</p>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>III · AI-Assisted Art Pipelines</span><span>14</span></div>
+</section>
+<section class="page" data-v="ntu hku">
+  <div class="eyebrow">III · AI-Assisted Art Pipelines — 10</div>
+  <h1 class="display ptitle">Anchor-then-generate: a method for consistent orthographic views</h1>
+  <div class="psub">Reference sheets are the input to every image-to-3D tool. Getting three views that actually agree is the whole problem.</div>
+
+  <div class="grid g2 mt4" style="gap:5mm">
+    <div>
+      <h3 class="sec">The failure I started from</h3>
+      <div class="dia" style="padding:3mm">
+        <svg viewBox="0 0 300 96" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+          <g font-size="7" text-anchor="middle">
+            <text x="76" y="10" font-size="6.4" fill="#B8402E" letter-spacing=".1em">✕ ONE-SHOT SHEET</text>
+            <rect x="8" y="16" width="136" height="52" rx="2" fill="#F7EEEC" stroke="#B8402E"/>
+            <g fill="#fff" stroke="#DEDAD2"><rect x="16" y="24" width="38" height="36" rx="2"/>
+              <rect x="58" y="24" width="38" height="36" rx="2"/><rect x="100" y="24" width="38" height="36" rx="2"/></g>
+            <g fill="#6B7280" font-size="6"><text x="35" y="45">front</text><text x="77" y="45">side</text><text x="119" y="45">back</text></g>
+            <text x="76" y="78" font-size="6.2" fill="#B8402E">details bleed between panels;</text>
+            <text x="76" y="87" font-size="6.2" fill="#B8402E">cropping yields views that disagree</text>
+
+            <text x="224" y="10" font-size="6.4" fill="#3F7A55" letter-spacing=".1em">✓ ANCHOR THEN GENERATE</text>
+            <rect x="156" y="16" width="136" height="52" rx="2" fill="#F1F6F2" stroke="#3F7A55"/>
+            <rect x="164" y="22" width="120" height="14" rx="2" fill="#fff" stroke="#DEDAD2"/>
+            <text x="224" y="32" font-size="6.2">1 · lock a style + proportion anchor</text>
+            <g fill="#fff" stroke="#DEDAD2"><rect x="164" y="42" width="38" height="20" rx="2"/>
+              <rect x="205" y="42" width="38" height="20" rx="2"/><rect x="246" y="42" width="38" height="20" rx="2"/></g>
+            <g fill="#6B7280" font-size="6"><text x="183" y="55">front</text><text x="224" y="55">side</text><text x="265" y="55">back</text></g>
+            <text x="224" y="78" font-size="6.2" fill="#3F7A55">2 · generate each view separately,</text>
+            <text x="224" y="87" font-size="6.2" fill="#3F7A55">each conditioned on the same anchor</text>
+          </g>
+        </svg>
+      </div>
+      <p class="small mt2">Asking a model for a three-view sheet in one image is the obvious approach and it fails
+      reliably: adjacent panels contaminate each other, and once you crop them the front and side no longer describe
+      the same character. <strong>Anchoring style and proportion first, then generating each view as its own
+      conditioned pass</strong>, produces views that a downstream 3D generator can actually reconcile.</p>
+
+      <div class="grid g3 mt2" style="gap:3mm">
+        <figure><img src="assets/tv_front.jpg" alt="" style="height:34.2mm; object-fit:cover"><figcaption>front</figcaption></figure>
+        <figure><img src="assets/tv_side.jpg" alt="" style="height:34.2mm; object-fit:cover"><figcaption>side</figcaption></figure>
+        <figure><img src="assets/tv_back.jpg" alt="" style="height:34.2mm; object-fit:cover"><figcaption>back</figcaption></figure>
+      </div>
+      <figcaption style="margin-top:1.5mm"><b>Fig 1.</b> Three independently generated T-pose views that stay in
+      agreement — same proportions, same palette, same costume logic.</figcaption>
+    </div>
+
+    <div class="stack">
+      <h3 class="sec">Reusable base bodies</h3>
+      <div class="grid g4" style="gap:2.5mm">
+        <img src="assets/tv_body1.jpg" alt="" style="height:31.7mm; object-fit:cover">
+        <img src="assets/tv_body2.jpg" alt="" style="height:31.7mm; object-fit:cover">
+        <img src="assets/tv_body3.jpg" alt="" style="height:31.7mm; object-fit:cover">
+        <img src="assets/tv_body4.jpg" alt="" style="height:31.7mm; object-fit:cover">
+      </div>
+      <figcaption><b>Fig 2.</b> A four-archetype base-body set (adult male / adult female / youth / child) generated
+      once and reused as the proportion anchor for every subsequent character. Style consistency stops being a
+      per-character negotiation and becomes a property of the library.</figcaption>
+
+      <h3 class="sec mt2">Part-level generation</h3>
+      <div class="grid g4" style="gap:2.5mm">
+        <img src="assets/tv_p_hair.jpg" alt="" style="height:24.4mm; object-fit:cover">
+        <img src="assets/tv_p_dress.jpg" alt="" style="height:24.4mm; object-fit:cover">
+        <img src="assets/tv_p_glove.jpg" alt="" style="height:24.4mm; object-fit:cover">
+        <img src="assets/tv_p_boots.jpg" alt="" style="height:24.4mm; object-fit:cover">
+      </div>
+      <figcaption><b>Fig 3.</b> Each garment component generated in its own three views against the shared anchor,
+      so parts remain mix-and-matchable.</figcaption>
+
+      <div class="panel acc mt2">
+        <h4>Why this matters beyond art</h4>
+        <p class="small" style="margin-bottom:0">Everything difficult about generative production is a
+        <strong>consistency</strong> problem, not a quality problem. Any model can produce one striking image; a
+        production needs a hundred that belong to the same world. The method above is my answer to that, and it is
+        the question I most want to keep working on academically.</p>
+      </div>
+      <div class="tagrow">
+        <span class="tag">Generative workflow design</span><span class="tag">Style consistency</span>
+        <span class="tag">Asset libraries</span>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>III · AI-Assisted Art Pipelines</span><span>15</span></div>
+</section>
+<section class="page" data-v="ntu">
+  <div class="eyebrow">III · AI-Assisted Art Pipelines — 11</div>
+  <h1 class="display ptitle">Image → 3D → game-ready asset</h1>
+  <div class="psub">Automating the route from a single reference image to a retopologised, PBR-textured, rigged model — and knowing exactly where the automation has to stop.</div>
+
+  <div class="grid g3 mt4" style="gap:4mm">
+    <figure><img src="assets/g3_lizard.jpg" alt="" style="height:48.8mm; object-fit:cover">
+      <figcaption><b>Creature A.</b> Stylised reptile — generated, retopologised, textured, skinned.</figcaption></figure>
+    <figure><img src="assets/g3_bear.jpg" alt="" style="height:48.8mm; object-fit:cover">
+      <figcaption><b>Creature B.</b> Same pipeline, different silhouette class.</figcaption></figure>
+    <figure><img src="assets/g3_panther.jpg" alt="" style="height:48.8mm; object-fit:cover">
+      <figcaption><b>Creature C.</b> Consistency across the set is the actual deliverable.</figcaption></figure>
+  </div>
+
+  <div class="grid g23 mt4 flexfill" style="gap:5mm">
+    <div>
+      <h3 class="sec">Pipeline &amp; where the human intervenes</h3>
+      <div class="dia">
+        <svg viewBox="0 0 300 108" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+          <defs><marker id="arA" markerWidth="6" markerHeight="6" refX="5" refY="2" orient="auto">
+            <path d="M0,0 L5,2 L0,4 z" fill="#B8402E"/></marker></defs>
+          <g font-size="6.6" text-anchor="middle">
+            <g fill="#F3F1EA" stroke="#DEDAD2">
+              <rect x="4" y="26" width="42" height="24" rx="2"/><rect x="54" y="26" width="42" height="24" rx="2"/>
+              <rect x="104" y="26" width="42" height="24" rx="2"/><rect x="154" y="26" width="42" height="24" rx="2"/>
+              <rect x="204" y="26" width="42" height="24" rx="2"/></g>
+            <rect x="254" y="26" width="42" height="24" rx="2" fill="#14171C"/>
+            <g fill="#14171C">
+              <text x="25" y="36">reference</text><text x="25" y="45">image</text>
+              <text x="75" y="36">white</text><text x="75" y="45">mesh</text>
+              <text x="125" y="36">retopo</text><text x="125" y="45">/ decimate</text>
+              <text x="175" y="36">UV +</text><text x="175" y="45">PBR bake</text>
+              <text x="225" y="36">rig &amp;</text><text x="225" y="45">skin</text></g>
+            <text x="275" y="41" fill="#fff">engine</text>
+            <g fill="#B8402E" font-size="6">
+              <text x="125" y="14">▲ human</text><text x="225" y="14">▲ human</text></g>
+            <g fill="#9AA1AC" font-size="5.6">
+              <text x="125" y="20">judgement</text><text x="225" y="20">judgement</text></g>
+          </g>
+          <g stroke="#B8402E" stroke-width="1" fill="none" marker-end="url(#arA)">
+            <path d="M46,38 L50,38"/><path d="M96,38 L100,38"/><path d="M146,38 L150,38"/>
+            <path d="M196,38 L200,38"/><path d="M246,38 L250,38"/></g>
+          <g stroke="#B8402E" stroke-width=".8" stroke-dasharray="1.5 1.5" fill="none">
+            <path d="M125,22 L125,24"/><path d="M225,22 L225,24"/></g>
+          <text x="150" y="66" font-size="6.4" fill="#9AA1AC" text-anchor="middle">
+            submit → task id → poll status → fetch artefacts · retries with back-off on transient failures</text>
+          <rect x="30" y="74" width="240" height="26" rx="2" fill="#F7EEEC" stroke="#B8402E"/>
+          <text x="150" y="85" font-size="6.6" fill="#B8402E" text-anchor="middle">HARD-WON RULE: use planar decimation on generated meshes,</text>
+          <text x="150" y="94" font-size="6.6" fill="#B8402E" text-anchor="middle">never voxel remeshing — voxel remesh destroys the silhouette that made it good</text>
+        </svg>
+      </div>
+      <ul class="small mt2">
+        <li><strong>Generation is asynchronous by nature.</strong> These are long jobs, so the middleware is a
+        submit / poll / fetch loop with signed requests and back-off retry — transient overload is an expected state,
+        not an error.</li>
+        <li><strong>One interface, many vendors.</strong> Different generation services disagree on formats, auth and
+        field names; normalising them behind a single call surface keeps that mess out of the artist's day.</li>
+        <li><strong>Everything lands in a fixed archive layout</strong> (project / character / part), because an asset
+        you cannot find is an asset you will regenerate.</li>
+      </ul>
+    </div>
+
+    <div class="stack">
+      <h3 class="sec">Generated PBR channel set</h3>
+      <div class="grid g2" style="gap:2.5mm">
+        <figure><img src="assets/g3_alb.jpg" alt="" style="height:29.3mm; object-fit:cover"><figcaption>albedo</figcaption></figure>
+        <figure><img src="assets/g3_nor.jpg" alt="" style="height:29.3mm; object-fit:cover"><figcaption>normal</figcaption></figure>
+        <figure><img src="assets/g3_rgh.jpg" alt="" style="height:29.3mm; object-fit:cover"><figcaption>roughness</figcaption></figure>
+        <figure><img src="assets/g3_met.jpg" alt="" style="height:29.3mm; object-fit:cover"><figcaption>metallic</figcaption></figure>
+      </div>
+      <div class="panel">
+        <h4>Also in this toolchain</h4>
+        <p class="small" style="margin-bottom:0"><strong>ComfyUI deployed locally</strong> on a 12 GB consumer GPU,
+        running a full custom-node workflow — which forces real engagement with VRAM limits, batching and
+        quantisation trade-offs rather than treating generation as an infinite cloud resource.</p>
+      </div>
+      <div class="panel blue">
+        <h4>The honest assessment</h4>
+        <p class="small" style="margin-bottom:0">These tools get an asset to roughly 70 % in minutes and then stop.
+        The remaining 30 % — silhouette correction, topology for deformation, weight painting — is where a model is
+        either good or unusable, and it is still entirely human. <em>My interest is in designing the handoff, not in
+        pretending it doesn't exist.</em></p>
+      </div>
+      <div class="tagrow">
+        <span class="tag">Image→3D</span><span class="tag">Retopology</span><span class="tag">PBR</span>
+        <span class="tag">ComfyUI</span><span class="tag">API middleware</span>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>III · AI-Assisted Art Pipelines</span><span>16</span></div>
+</section>
+<section class="page" data-v="ntu hku">
+  <div class="eyebrow">IV · Tools &amp; Full-Stack Work — 12</div>
+  <h1 class="display ptitle">An internal tournament &amp; prediction platform</h1>
+  <div class="psub">Designed, built, tested and operated end to end. Ran a full competitive season with a real user base.</div>
+  <div class="meta">
+    <div><div class="k">Role</div><div class="v">Solo — product, design, full-stack, ops</div></div>
+    <div><div class="k">Stack</div><div class="v">Python / Flask · SQL · server-rendered front end</div></div>
+    <div><div class="k">Scope</div><div class="v">Schedule · virtual-currency prediction · ledger · admin · analytics</div></div>
+    <div><div class="k">Status</div><div class="v">Shipped; ran one full season in production</div></div>
+  </div>
+
+  <div class="kpi" style="border-bottom:1px solid var(--line); padding-bottom:4mm; margin-bottom:4mm;">
+    <div><div class="n">106</div><div class="l">Active users</div></div>
+    <div><div class="n">70</div><div class="l">Smoke tests gating deploys</div></div>
+    <div><div class="n">6.26</div><div class="l">Avg. active pages / user</div></div>
+    <div><div class="n">0</div><div class="l">Ledger discrepancies</div></div>
+  </div>
+
+  <div class="grid g2 flexfill" style="gap:5mm">
+    <div>
+      <h3 class="sec">Three decisions I would defend</h3>
+      <ul class="small">
+        <li><strong>Money is never a float.</strong> All amounts stored as strings and computed as decimals, behind a
+        single wallet service that every balance change must pass through, with a signed ledger entry per movement.
+        The system is auditable by construction rather than by discipline.</li>
+        <li><strong>The deploy gate is the quality bar.</strong> 70 smoke tests run in CI on every push; the deploy
+        only fires if all pass. Not "run the tests" — <em>red means it does not ship.</em></li>
+        <li><strong>AI proposes, a human commits.</strong> To speed up settlement I added a vision model that reads
+        result screenshots. Its output goes to a staging buffer and a confirmation dialog — <strong>the model never
+        writes to the database.</strong> Low confidence returns "unknown" and settles nothing.</li>
+      </ul>
+      <div class="panel acc mt2">
+        <h4>Design lesson</h4>
+        <p class="small" style="margin-bottom:0">Real users double-click. Handling that took three layers — front-end
+        submit locking, a server-side duplicate window, and a database uniqueness constraint as the final guarantee.
+        A design that only works when the user behaves is not a design.</p>
+      </div>
+    </div>
+
+    <div class="stack">
+      <h3 class="sec">Architecture</h3>
+      <div class="dia">
+        <svg viewBox="0 0 300 138" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+          <defs><marker id="arB" markerWidth="6" markerHeight="6" refX="5" refY="2" orient="auto">
+            <path d="M0,0 L5,2 L0,4 z" fill="#6B7280"/></marker></defs>
+          <g font-size="7" text-anchor="middle">
+            <rect x="90" y="6" width="120" height="18" rx="2" fill="#F3F1EA" stroke="#DEDAD2"/><text x="150" y="18">browser · server-rendered UI</text>
+            <rect x="90" y="36" width="120" height="18" rx="2" fill="#F3F1EA" stroke="#DEDAD2"/><text x="150" y="48">Flask · routed blueprints</text>
+            <rect x="14" y="66" width="82" height="22" rx="2" fill="#F7EEEC" stroke="#B8402E"/>
+            <text x="55" y="76" fill="#B8402E">wallet service</text><text x="55" y="85" font-size="6" fill="#B8402E">decimal-only</text>
+            <rect x="106" y="66" width="88" height="22" rx="2" fill="#F3F1EA" stroke="#DEDAD2"/>
+            <text x="150" y="76">odds engine</text><text x="150" y="85" font-size="6" fill="#6B7280">pari-mutuel</text>
+            <rect x="204" y="66" width="82" height="22" rx="2" fill="#EDF1F7" stroke="#2E4A73"/>
+            <text x="245" y="76" fill="#2E4A73">vision settle</text><text x="245" y="85" font-size="6" fill="#2E4A73">staged + confirmed</text>
+            <rect x="60" y="100" width="180" height="18" rx="2" fill="#14171C"/>
+            <text x="150" y="112" fill="#fff">SQL · users · markets · bets · ledger</text>
+          </g>
+          <g stroke="#6B7280" stroke-width=".9" fill="none" marker-end="url(#arB)">
+            <path d="M150,24 L150,32"/><path d="M150,54 L55,54 L55,62"/><path d="M150,54 L150,62"/>
+            <path d="M150,54 L245,54 L245,62"/>
+            <path d="M55,88 L55,94 L120,94 L120,96"/><path d="M150,88 L150,96"/>
+            <path d="M245,88 L245,94 L182,94 L182,96"/>
+          </g>
+          <rect x="14" y="124" width="272" height="12" rx="2" fill="#F1F6F2" stroke="#3F7A55"/>
+          <text x="150" y="132" font-size="6.4" fill="#3F7A55" text-anchor="middle">
+            CI: push → 70 smoke tests → all green → auto-deploy · any red blocks release</text>
+        </svg>
+      </div>
+      <div class="panel">
+        <h4>The analytics loop</h4>
+        <p class="small" style="margin-bottom:0">I designed the event-tracking taxonomy alongside the features, so
+        behaviour data existed from day one. It showed which pages users actually reached (averaging 6.26 active
+        pages each) and drove the next round of navigation and UI changes. <strong>Instrumenting at design time
+        rather than after launch</strong> is the single practice I would carry into any product I work on.</p>
+      </div>
+      <div class="tagrow">
+        <span class="tag">Full-stack</span><span class="tag">Systems economy</span>
+        <span class="tag">CI test gates</span><span class="tag">Analytics design</span>
+        <span class="tag">Human-in-the-loop AI</span>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>IV · Tools &amp; Full-Stack Work</span><span>17</span></div>
+</section>
+<section class="page" data-v="ntu hku">
+  <div class="eyebrow">IV · Tools &amp; Full-Stack Work — 13</div>
+  <h1 class="display ptitle">Second Brain — a self-organising knowledge system</h1>
+  <div class="psub">A personal research project: a retrieval system that keeps learning, de-duplicating and correcting itself, built as a graph rather than a list.</div>
+
+  <div class="kpi mt4" style="border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:4mm 0;">
+    <div><div class="n">79</div><div class="l">Atomic memories</div></div>
+    <div><div class="n">128</div><div class="l">Semantic connections</div></div>
+    <div><div class="n">16</div><div class="l">Higher-order insights</div></div>
+    <div><div class="n">3-tier</div><div class="l">Retrieval cascade</div></div>
+  </div>
+
+  <div class="grid g2 flexfill" style="gap:5mm">
+    <div>
+      <h3 class="sec">Structure</h3>
+      <div class="dia">
+        <svg viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+          <g stroke="#DEDAD2" stroke-width=".7" opacity=".9">
+            <path d="M60,110 L110,86 M110,86 L150,104 M150,104 L96,124 M96,124 L60,110
+                     M110,86 L152,58 M152,58 L200,76 M200,76 L238,110 M238,110 L188,124
+                     M188,124 L150,104 M152,58 L104,44 M104,44 L60,66 M60,66 L60,110
+                     M200,76 L152,58 M238,110 L262,72 M262,72 L200,76 M104,44 L150,26
+                     M150,26 L196,38 M196,38 L152,58 M196,38 L262,72"/>
+          </g>
+          <g fill="#B8402E">
+            <circle cx="152" cy="58" r="6"/><circle cx="200" cy="76" r="5"/><circle cx="110" cy="86" r="5"/>
+          </g>
+          <g fill="#2E4A73" opacity=".75">
+            <circle cx="60" cy="110" r="3.4"/><circle cx="150" cy="104" r="3.4"/><circle cx="96" cy="124" r="3.4"/>
+            <circle cx="238" cy="110" r="3.4"/><circle cx="188" cy="124" r="3.4"/><circle cx="60" cy="66" r="3.4"/>
+            <circle cx="104" cy="44" r="3.4"/><circle cx="262" cy="72" r="3.4"/><circle cx="150" cy="26" r="3.4"/>
+            <circle cx="196" cy="38" r="3.4"/>
+          </g>
+          <g font-size="6.4" fill="#6B7280">
+            <circle cx="14" cy="12" r="5" fill="#B8402E"/><text x="24" y="14">insight — distilled from a dense cluster</text>
+            <circle cx="14" cy="26" r="3.4" fill="#2E4A73" opacity=".75"/><text x="24" y="28">memory — one atomic fact</text>
+            <line x1="9" y1="38" x2="19" y2="38" stroke="#DEDAD2" stroke-width="1"/><text x="24" y="41">synapse — weighted semantic link</text>
+          </g>
+          <text x="150" y="146" font-size="6.2" fill="#9AA1AC" text-anchor="middle">
+            links that keep getting traversed grow stronger; unused links decay — a Hebbian weighting rule</text>
+        </svg>
+      </div>
+      <p class="small mt2">Flat vector search returns things that are <em>similar</em>. Building explicit connections
+      between memories, then distilling densely-connected clusters into higher-order insights, lets the system return
+      things that are <strong>relevant but not obviously similar</strong> — which is where most useful retrieval
+      actually lives.</p>
+    </div>
+
+    <div class="stack">
+      <h3 class="sec">Two ideas I am proud of</h3>
+      <div class="panel acc">
+        <h4>1 · A quarantine before the library</h4>
+        <p class="small" style="margin-bottom:0">Anything newly acquired lands in a <strong>staging area</strong>, not
+        the main store. It is promoted only after passing a quality gate — length, source credibility, and
+        near-duplicate similarity against existing memories. Most systems optimise retrieval; almost none defend
+        <em>ingestion</em>. A knowledge base degrades from what you let in.</p>
+      </div>
+      <div class="panel blue">
+        <h4>2 · A retrieval cascade, cheapest first</h4>
+        <p class="small" style="margin-bottom:0">Queries try the existing memory store, then a local document sweep,
+        and only then reach the open web. Most questions are answered before the third tier — which saves time,
+        cost, and the temptation to trust a stranger's page over your own recorded experience.</p>
+      </div>
+      <div class="panel">
+        <h4>Why a designer built this</h4>
+        <p class="small" style="margin-bottom:0">It started as a practical problem — hundreds of scattered
+        production notes I could no longer search — but the interesting part turned out to be an interface question:
+        <strong>what should a system remember on your behalf, and how does it show you that it might be wrong?</strong>
+        That is the research question I would most like to pursue formally.</p>
+      </div>
+      <div class="tagrow">
+        <span class="tag">Retrieval systems</span><span class="tag">Knowledge graphs</span>
+        <span class="tag">Data visualisation</span><span class="tag">Python / SQL</span>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>IV · Tools &amp; Full-Stack Work</span><span>18</span></div>
+</section>
+<section class="page" data-v="ntu hku">
+  <div class="eyebrow">V · Original Visual Work — 14</div>
+  <h1 class="display ptitle">Chinese Dreamcore</h1>
+  <div class="psub">A personal image series about the interiors of a 1990s–2000s Chinese childhood, made as environment research for an unannounced narrative project.</div>
+
+  <div class="grid" style="grid-template-columns:repeat(5,1fr); gap:3mm; margin-top:4mm;">
+    <img src="assets/dc_01.jpg" alt="" style="height:41.5mm; object-fit:cover">
+    <img src="assets/dc_02.jpg" alt="" style="height:41.5mm; object-fit:cover">
+    <img src="assets/dc_03.jpg" alt="" style="height:41.5mm; object-fit:cover">
+    <img src="assets/dc_04.jpg" alt="" style="height:41.5mm; object-fit:cover">
+    <img src="assets/dc_05.jpg" alt="" style="height:41.5mm; object-fit:cover">
+  </div>
+  <div class="grid" style="grid-template-columns:repeat(5,1fr); gap:3mm; margin-top:3mm;">
+    <img src="assets/dc_06.jpg" alt="" style="height:41.5mm; object-fit:cover">
+    <img src="assets/dc_07.jpg" alt="" style="height:41.5mm; object-fit:cover">
+    <img src="assets/dc_08.jpg" alt="" style="height:41.5mm; object-fit:cover">
+    <img src="assets/dc_09.jpg" alt="" style="height:41.5mm; object-fit:cover">
+    <img src="assets/dc_10.jpg" alt="" style="height:41.5mm; object-fit:cover">
+  </div>
+  <figcaption style="margin-top:2mm"><b>Fig 1.</b> Twenty locations from one remembered world — bedroom, classroom,
+  computer room, internet café, arcade, station, courtyard, KTV room, street kiosk, stairwell. Generated by me using
+  a controlled prompt-and-reference workflow; see the AI disclosure on page 20.</figcaption>
+
+  <div class="grid g2 flexfill mt4" style="gap:5mm">
+    <div>
+      <h3 class="sec">The design problem: a series, not a picture</h3>
+      <div class="grid g2" style="gap:3mm">
+        <figure><img src="assets/dc_ref.jpg" alt="" style="height:36.6mm; object-fit:cover">
+          <figcaption><b>Before.</b> Generic output — plausible, but belongs to no particular world.</figcaption></figure>
+        <figure><img src="assets/dc_style.jpg" alt="" style="height:36.6mm; object-fit:cover">
+          <figcaption><b>After.</b> Same room, conditioned on a locked style reference.</figcaption></figure>
+      </div>
+      <p class="small mt2">Twenty images that each look good but do not look like <em>the same place</em> are worthless
+      as environment research. The entire craft here is holding a world constant across a set: fixed lens language,
+      fixed time of day, a restricted palette, and a locked reference that every generation is conditioned against.
+      It is the same consistency problem as the character pipeline in Section III, in a different medium.</p>
+    </div>
+
+    <div class="stack">
+      <div class="panel acc">
+        <h4>Why this subject</h4>
+        <p class="small" style="margin-bottom:0">Dreamcore usually borrows a Western vocabulary — motel corridors,
+        liminal pools. I wanted to know whether the same uncanny register could be built from <strong>specifically
+        Chinese domestic memory</strong>: the tiled entryway, the exercise-book-covered desk, the courtyard at dusk.
+        The interesting finding is that the unease does not come from distortion at all. It comes from
+        <em>emptiness plus accuracy</em> — a room rendered correctly, with the person who should be in it missing.</p>
+      </div>
+      <div class="panel blue">
+        <h4>Where it is going</h4>
+        <p class="small" style="margin-bottom:0">This set is environment research for a narrative project in the
+        lineage of <em>Dream</em> and <em>0423</em> — a game about a house you have to read. The images are the
+        art-direction bible, not the final art.</p>
+      </div>
+      <div class="tagrow">
+        <span class="tag">Art direction</span><span class="tag">Environment design</span>
+        <span class="tag">Series consistency</span><span class="tag">Generative imaging</span>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>V · Original Visual Work</span><span>19</span></div>
+</section>
+<section class="page" data-v="ntu hku">
+  <div class="eyebrow">Closing</div>
+  <h1 class="display ptitle">Disclosure, credits &amp; contact</h1>
+  <div class="rule"></div>
+
+  <div class="grid g2" style="gap:5mm">
+    <div>
+      <div class="panel acc">
+        <h4>Generative-AI disclosure</h4>
+        <p class="small">Declared in full, in line with the programme's request.</p>
+        <ul class="small" style="margin-bottom:0">
+          <li><strong>Section III — AI-assisted art pipelines</strong> — generative image and image-to-3D models were used as
+          production tools, which is the explicit subject of that work. Concept direction, part decomposition,
+          retopology, assembly, rigging, weight painting and all in-engine work are mine.</li>
+          <li><strong>Section V — Chinese Dreamcore</strong> — images were generated by me through a controlled
+          prompt-and-reference workflow that I designed, iterated and curated. They are presented as generated
+          images, not as photographs, paintings or hand-rendered art.</li>
+          <li><strong>Section II — content scaling</strong> — AI-assisted generation was used to author configuration
+          data behind a validation gate I designed. No generated entry shipped without human review.</li>
+          <li><strong>Section I — game projects</strong> — no generative AI was used. Design, level construction,
+          Blueprint logic, behaviour trees and animation are hand-authored.</li>
+          <li><strong>This document</strong> — written by me; layout is hand-coded.</li>
+        </ul>
+      </div>
+
+      <div class="panel blue mt4">
+        <h4>Confidentiality</h4>
+        <p class="small" style="margin-bottom:0">Section II describes work carried out at Tencent TiMi Studio Group
+        and is covered by a non-disclosure agreement. <strong>No proprietary screenshots, configuration data,
+        source assets or unreleased content appear anywhere in this portfolio.</strong> All diagrams in that section
+        were re-drawn by me at a generic level of abstraction that conveys the design reasoning without disclosing
+        the product. I would rather present my industry work honestly and incompletely than present it improperly.</p>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div class="panel">
+        <h4>Credits &amp; scope of authorship</h4>
+        <ul class="small" style="margin-bottom:0">
+          <li><em>Dream</em> · <em>0423</em> · <em>Jim's Adventure</em> — solo projects; all design and implementation
+          mine, with selected art and audio assets sourced or outsourced.</li>
+          <li><em>Clay Beats</em> — team capstone; my ownership was animation production and core interaction design.
+          The title is credited to the full team.</li>
+          <li>Industry work (Section II) — collaborative by nature; my specific contribution is stated on each page.</li>
+          <li>Everything in Sections III–V is individually authored.</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h4>Links</h4>
+        <p class="small" style="margin-bottom:1.5mm"><strong>Art pipeline write-up (illustrated):</strong><br>
+          <a href="https://flypigkun.github.io/roblox-art-pipeline/" style="color:#2E4A73">flypigkun.github.io/roblox-art-pipeline</a></p>
+        <p class="small" style="margin-bottom:1.5mm"><strong><em>Clay Beats</em> on Steam:</strong><br>
+          <a href="https://store.steampowered.com/app/3492920/Clay_Beats/" style="color:#2E4A73">store.steampowered.com/app/3492920</a></p>
+        <p class="small" style="margin-bottom:0"><strong>Gameplay reel:</strong><br>
+          <span style="color:#B8402E">[ TODO — paste your YouTube / Vimeo URL here ]</span></p>
+      </div>
+
+      <div class="panel" style="background:#14171C; color:#F2EFE9;">
+        <h4 style="color:#8C949F">Contact</h4>
+        <p style="font-size:11pt; margin-bottom:1mm; color:#fff" class="display">Shen Linkun 沈琳昆</p>
+        <p class="small" style="color:#C9CFD8; margin-bottom:0">
+          ukeming@icloud.com<br>
+          B.S. Games, University of Utah · Systems Designer, Tencent TiMi Studio Group</p>
+      </div>
+
+      <p class="tiny mta">Thank you for reading. Every project here is the same question asked in a different
+      medium: what has to be true about a production system before an idea can survive contact with it?</p>
+    </div>
+  </div>
+  <div class="folio"><span>Shen Linkun — Selected Works</span><span>20</span></div>
+</section></body>
+</html>
