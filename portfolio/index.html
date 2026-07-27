@@ -21,18 +21,16 @@ body{font-family:"Segoe UI",-apple-system,"Helvetica Neue",Arial,sans-serif;
 .wrap{max-width:900px;margin:0 auto;padding:0 24px}
 a{color:var(--accent2)}
 
-header{background:#14171C;color:#F2EFE9;padding:72px 0 0}
+header{background:#14171C;color:#F2EFE9;padding:76px 0 0}
 @media (prefers-color-scheme: dark){ header{background:#0D0F13} }
-header .wrap{padding-bottom:40px}
+header .wrap{padding-bottom:44px}
 h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(38px,8vw,62px);line-height:1.02;
   letter-spacing:-.02em;color:#fff;font-weight:600}
 .cn{color:#8C949F;letter-spacing:.34em;margin-top:10px;font-size:15px}
 .role{color:#D8D2C6;margin-top:26px;max-width:640px;font-size:clamp(15px,2.2vw,18px)}
 .role b{color:#E8845F;font-weight:600}
 .meta{color:#8C949F;margin-top:20px;font-size:14px}
-.strip{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin-top:44px}
-.strip img{width:100%;height:clamp(90px,17vw,190px);object-fit:cover;display:block;
-  filter:saturate(.9) contrast(1.03)}
+.strip img{width:100%;display:block;filter:saturate(.92) contrast(1.03)}
 
 main{padding:56px 0 24px}
 h2{font-family:Georgia,serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;
@@ -40,7 +38,7 @@ h2{font-family:Georgia,serif;font-size:13px;letter-spacing:.2em;text-transform:u
 .lead{font-size:clamp(17px,2.4vw,21px);line-height:1.55;max-width:720px;color:var(--sub)}
 .lead strong{color:var(--ink)}
 
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:22px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:22px}
 .card{border:1px solid var(--line);border-radius:6px;padding:22px;background:var(--panel);
   text-decoration:none;color:inherit;display:block;transition:transform .12s ease, border-color .12s ease}
 .card:hover{transform:translateY(-2px);border-color:var(--accent)}
@@ -48,6 +46,8 @@ h2{font-family:Georgia,serif;font-size:13px;letter-spacing:.2em;text-transform:u
 .card .t{font-weight:650;margin-top:10px}
 .card .d{font-size:14px;color:var(--muted);margin-top:6px}
 .card .go{font-size:13px;color:var(--accent2);margin-top:14px;font-weight:600}
+.card.dark{background:#14171C;border-color:#2C3138}
+.card.dark .t{color:#F2EFE9} .card.dark .d{color:#98A0AC} .card.dark .n{color:#E8845F}
 
 section{margin-top:56px}
 ul{list-style:none}
@@ -73,13 +73,7 @@ footer a{color:var(--accent2)}
       <b>technical implementation</b>, and <b>AI-assisted content production</b>.</p>
     <p class="meta">Systems Designer, Tencent TiMi Studio Group · B.S. Games, University of Utah</p>
   </div>
-  <div class="strip">
-    <img src="assets/dc_05.jpg" alt="Environment study — arcade">
-    <img src="assets/rb_final.jpg" alt="Character built through an AI-assisted pipeline">
-    <img src="assets/dc_04.jpg" alt="Environment study — internet café">
-    <img src="assets/dc_06.jpg" alt="Environment study — station">
-    <img src="assets/dc_02.jpg" alt="Environment study — classroom">
-  </div>
+  <div class="strip"><img src="assets/PL_cover.jpg" alt="Stills from Dream, 0423, Jim's Adventure and Clay Beats"></div>
 </header>
 
 <main class="wrap">
@@ -91,28 +85,34 @@ footer a{color:var(--accent2)}
   <section>
     <h2>Read the portfolio</h2>
     <div class="cards">
+      <a class="card dark" href="videos/">
+        <div class="n">▶</div>
+        <div class="t">Gameplay footage</div>
+        <div class="d">Unedited capture from all three solo titles.</div>
+        <div class="go" style="color:#E8845F">Watch →</div>
+      </a>
       <a class="card" href="portfolio.html">
-        <div class="n">20</div>
-        <div class="t">Full edition — read in browser</div>
+        <div class="n">17</div>
+        <div class="t">Full edition — in browser</div>
         <div class="d">Every project, with process and diagrams.</div>
         <div class="go">Open →</div>
       </a>
-      <a class="card" href="pdf/Portfolio_ShenLinkun_20p_full.pdf">
+      <a class="card" href="pdf/Portfolio_ShenLinkun_full.pdf">
         <div class="n">PDF</div>
-        <div class="t">Full edition — 20 pages</div>
-        <div class="d">A4, 10 MB. The complete document.</div>
+        <div class="t">Full edition — 17 pages</div>
+        <div class="d">A4, 4.7 MB. The complete document.</div>
         <div class="go">Download →</div>
       </a>
-      <a class="card" href="pdf/Portfolio_ShenLinkun_12p_short.pdf">
+      <a class="card" href="pdf/Portfolio_ShenLinkun_short.pdf">
         <div class="n">PDF</div>
-        <div class="t">Short edition — 12 pages</div>
-        <div class="d">A4, 3.7 MB. Condensed selection.</div>
+        <div class="t">Short edition — 11 pages</div>
+        <div class="d">A4, 1.6 MB. Condensed selection.</div>
         <div class="go">Download →</div>
       </a>
-      <a class="card" href="pdf/Portfolio_ShenLinkun_5p_brief.pdf">
+      <a class="card" href="pdf/Portfolio_ShenLinkun_brief.pdf">
         <div class="n">PDF</div>
         <div class="t">Brief — 5 pages</div>
-        <div class="d">A4, 0.5 MB. The fastest read.</div>
+        <div class="d">A4, 0.3 MB. The fastest read.</div>
         <div class="go">Download →</div>
       </a>
     </div>
@@ -128,11 +128,11 @@ footer a{color:var(--accent2)}
         and customisation system, gameplay-mode logic and boss phases, and an AI-assisted pipeline that took one
         mode's configured roster from 20 to 110+ behind a validation gate. Described at architecture level only;
         this work is covered by an NDA.</li>
-      <li><b>AI-assisted art pipelines</b> — concept to rigged, engine-ready character; a method for generating
-        orthographic views that actually agree; image-to-3D through retopology, PBR and skinning.</li>
+      <li><b>AI-assisted art pipelines</b> — the method and its limits: anchoring style before generating,
+        orthographic views that actually agree, and image-to-3D through retopology, PBR and skinning. Commercial
+        pipeline work is withheld; what is shown is method.</li>
       <li><b>Tools and full-stack work</b> — a prediction platform that ran a full season for 106 users behind a
         70-test CI deploy gate, and a self-organising knowledge system built as a graph.</li>
-      <li><b>Original visual work</b> — an image series about the interiors of a 1990s–2000s Chinese childhood.</li>
     </ul>
     <div class="note">
       <b>On generative AI:</b> its use is disclosed in full on the final page of the portfolio, section by section.
@@ -144,8 +144,6 @@ footer a{color:var(--accent2)}
   <section>
     <h2>Also</h2>
     <ul>
-      <li><a href="https://flypigkun.github.io/roblox-art-pipeline/">Roblox character art pipeline</a> — an
-        illustrated process write-up of the pipeline covered in the portfolio.</li>
       <li><a href="https://store.steampowered.com/app/3492920/Clay_Beats/"><em>Clay Beats</em> on Steam</a> —
         free to play, two controllers required.</li>
     </ul>
@@ -154,7 +152,7 @@ footer a{color:var(--accent2)}
 </main>
 
 <footer class="wrap">
-  <p><b>Shen Linkun 沈琳昆</b> — <a href="mailto:ukeming@icloud.com">ukeming@icloud.com</a></p>
+  <p><b>Shen Linkun 沈琳昆</b> — <a href="mailto:shenlinkun829@gmail.com">shenlinkun829@gmail.com</a></p>
   <p style="margin-top:8px">All work is original and created by the applicant. Industry work is described without
   disclosing proprietary material.</p>
 </footer>
