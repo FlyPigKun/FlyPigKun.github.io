@@ -286,7 +286,7 @@ svg{display:block; width:100%; height:auto;}
       kept the chase scarce — constant threat becomes noise and the player stops feeling it, whereas a threat that
       has fired once and could fire again turns every ordinary corridor into a <em>possible</em> corridor.</p>
       <p class="small mt2"><strong>Takeaway —</strong> mid-project I refactored the Blueprint layer into
-      explicit categories; iteration speed roughly doubled. <em>Framework first, features second.</em></p>
+      explicit categories; iteration speed roughly doubled.</p>
     </div>
 
     <div>
@@ -565,6 +565,55 @@ svg{display:block; width:100%; height:auto;}
   <div class="folio"><span>II · Systems Design in Production</span><span>06</span></div>
 </section>
 <section class="page" data-v="ntu hku">
+  <div style="display:flex; justify-content:space-between; align-items:flex-start">
+    <div>
+      <div class="eyebrow">III · AI-Assisted Art Pipelines — the benchmark</div>
+      <h1 class="display ptitle">Before the pipelines: work done entirely by hand</h1>
+    </div>
+    <span class="nda" style="background:#FCF0E2; border-color:#E5C89F; color:#7A3B10; margin-top:2mm">HAND-SCULPTED · NO AI</span>
+  </div>
+  <div class="psub">A character study sculpted, retopologised and textured by hand — the standard every generated
+  asset in this section is judged against.</div>
+  <div class="meta">
+    <div><div class="k">Nature</div><div class="v">Personal study · non-commercial</div></div>
+    <div><div class="k">Subject</div><div class="v">Vanellope · concept “Vanilapy” by Lauren Magpie</div></div>
+    <div><div class="k">Toolchain</div><div class="v">ZBrush · Maya · Substance Painter</div></div>
+    <div><div class="k">Budget</div><div class="v">21,271 triangles · game-ready</div></div>
+  </div>
+
+  <div class="grid g32" style="gap:5mm; margin-bottom:3mm">
+    <figure><img src="assets_mid/van_wire.jpg" alt="" style="height:62mm; object-fit:cover">
+      <figcaption><b>Fig 1 · Final wireframe.</b> Hand-retopologised in Maya — three unbroken edge loops
+      around the eyes, an independent loop group around the mouth, hair as closed separate shells.
+      Every loop exists for a deformation it will one day have to survive.</figcaption></figure>
+    <div>
+      <h3 class="sec">Deliberate translation choices</h3>
+      <ul class="small">
+        <li><strong>Brows thickened, peak raised.</strong> The concept reads sweet; the character's core is
+        <em>stubborn</em>. A peaked brow over a slightly lowered lid keeps that read even at rest.</li>
+        <li><strong>Hair reduced to three silhouette masses</strong> — ponytail, side falls, fringe —
+        clean closed volumes that hold the silhouette at distance and leave room for physics later.</li>
+        <li><strong>Face gets half the polygon budget.</strong> The hoodie keeps only its structural folds;
+        the loops are spent where the acting happens.</li>
+      </ul>
+      <div class="panel acc mt2">
+        <h4>Why this page sits here</h4>
+        <p class="small" style="margin-bottom:0">Only someone who has sculpted an eye socket by hand can tell
+        when a generated one is wrong. This piece is the calibration for every judgement made on the
+        following pages — <em>the craft is not what AI replaces; it is what qualifies me to accept or
+        reject what AI produces.</em></p>
+      </div>
+    </div>
+  </div>
+
+  <figure class="flexfill" style="min-height:0">
+    <img src="assets_mid/PL_van_views.jpg" alt="" style="height:72mm; object-fit:cover; object-position:top">
+    <figcaption><b>Fig 2 · Front · three-quarter · profile</b> — the brow keeps one story from every angle.
+    © Disney · concept: Lauren Magpie · all 3D work mine.</figcaption>
+  </figure>
+  <div class="folio"><span>III · AI-Assisted Art Pipelines — Benchmark</span><span>07</span></div>
+</section>
+<section class="page" data-v="ntu hku">
   <div class="eyebrow">III · AI-Assisted Art Pipelines — 09</div>
   <h1 class="display ptitle">Producing game-ready art with generative tools</h1>
   <div class="psub">The hard problem is never getting one good asset. It is getting the hundredth one to belong to
@@ -661,7 +710,7 @@ svg{display:block; width:100%; height:auto;}
       </div>
     </div>
   </div>
-  <div class="folio"><span>III · AI-Assisted Art Pipelines</span><span>07</span></div>
+  <div class="folio"><span>III · AI-Assisted Art Pipelines</span><span>08</span></div>
 </section>
 <section class="page" data-v="ntu hku">
   <div class="eyebrow">III · AI-Assisted Art Pipelines — 10</div>
@@ -709,17 +758,15 @@ svg{display:block; width:100%; height:auto;}
     </div>
 
     <div class="stack">
-      <h3 class="sec">Why the order matters</h3>
-      <ul class="small">
-        <li><strong>The anchor is an asset, not a prompt.</strong> Once a proportion and palette reference exists as
-        a file, every later character is negotiated against <em>it</em> rather than against the last thing the model
-        happened to produce. Consistency stops being a per-character argument.</li>
-        <li><strong>Separate passes cost more and fail less.</strong> Three conditioned generations are slower than
-        one sheet, but a sheet that has to be re-rolled four times is slower still — and re-rolls silently change
-        the character.</li>
-        <li><strong>Orthographic means un-posed.</strong> Any perspective or dynamic pose in a reference view becomes
-        baked geometry downstream, so the discipline is to generate something deliberately boring.</li>
-      </ul>
+      <h3 class="sec">The end of the pipeline</h3>
+      <figure>
+        <img src="assets_mid/anq_final.jpg" alt="" style="height:56mm; object-fit:cover">
+        <figcaption><b>Fig 2.</b> The finished game model these views fed into — viewport capture of the real
+        asset: <b>14,452 triangles</b>, hand-painted texture, T-pose on the target rig.</figcaption>
+      </figure>
+      <p class="small mt2"><strong>The anchor is an asset, not a prompt.</strong> Every later character is
+      negotiated against a <em>file</em>, not against the last thing the model happened to produce —
+      consistency stops being a per-character argument.</p>
 
       <div class="panel acc">
         <h4>Why this matters beyond art</h4>
@@ -728,13 +775,10 @@ svg{display:block; width:100%; height:auto;}
         production needs a hundred that belong to the same world. The method above is my answer to that, and it is
         the question I most want to keep working on academically.</p>
       </div>
-      <div class="tagrow">
-        <span class="tag">Generative workflow design</span><span class="tag">Style consistency</span>
-        <span class="tag">Asset libraries</span>
-      </div>
+
     </div>
   </div>
-  <div class="folio"><span>III · AI-Assisted Art Pipelines</span><span>08</span></div>
+  <div class="folio"><span>III · AI-Assisted Art Pipelines</span><span>09</span></div>
 </section>
 <section class="page" data-v="ntu hku">
   <div class="eyebrow">IV · Tools &amp; Full-Stack Work — 12</div>
@@ -818,7 +862,7 @@ svg{display:block; width:100%; height:auto;}
       </div>
     </div>
   </div>
-  <div class="folio"><span>IV · Tools &amp; Full-Stack Work</span><span>09</span></div>
+  <div class="folio"><span>IV · Tools &amp; Full-Stack Work</span><span>10</span></div>
 </section>
 <section class="page" data-v="ntu hku">
   <div class="eyebrow">IV · Tools &amp; Full-Stack Work — 13</div>
@@ -929,7 +973,7 @@ svg{display:block; width:100%; height:auto;}
       </div>
     </div>
   </div>
-  <div class="folio"><span>IV · Tools &amp; Full-Stack Work</span><span>10</span></div>
+  <div class="folio"><span>IV · Tools &amp; Full-Stack Work</span><span>11</span></div>
 </section>
 <section class="page" data-v="ntu hku">
   <div class="eyebrow">Closing</div>
@@ -942,6 +986,8 @@ svg{display:block; width:100%; height:auto;}
         <h4>Generative-AI disclosure</h4>
         <p class="small">Declared in full, in line with the programme's request.</p>
         <ul class="small" style="margin-bottom:0">
+          <li><strong>Section III, benchmark page</strong> — the Vanellope study is entirely hand-made
+          (ZBrush, Maya, Substance Painter); no generative tools were used at any stage.</li>
           <li><strong>Section III — AI-assisted art pipelines</strong> — generative image and image-to-3D models were used as
           production tools, which is the explicit subject of that work. Concept direction, part decomposition,
           retopology, assembly, rigging, weight painting and all in-engine work are mine.</li>
@@ -971,6 +1017,8 @@ svg{display:block; width:100%; height:auto;}
         <ul class="small" style="margin-bottom:0">
           <li><em>Dream</em> · <em>0423</em> · <em>Jim's Adventure</em> — solo projects; all design and implementation
           mine, with selected art and audio assets sourced or outsourced.</li>
+          <li>Vanellope study — personal fan study; character © Disney, concept “Vanilapy” by
+          Lauren Magpie; all 3D work mine.</li>
           <li><em>Clay Beats</em> — team capstone; my ownership was animation production and core interaction design.
           The title is credited to the full team.</li>
           <li>Industry work (Section II) — collaborative by nature; my specific contribution is stated on each page.</li>
@@ -1003,6 +1051,6 @@ svg{display:block; width:100%; height:auto;}
   <figure class="mta" style="margin:8mm -14mm 6mm; width:210mm">
     <img src="assets_mid/PL_cover.jpg" alt="" style="display:block; width:210mm; filter:saturate(.92) contrast(1.03)">
   </figure>
-  <div class="folio"><span>Shen Linkun — Selected Works</span><span>11</span></div>
+  <div class="folio"><span>Shen Linkun — Selected Works</span><span>12</span></div>
 </section></body>
 </html>
