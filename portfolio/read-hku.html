@@ -354,7 +354,7 @@ svg{display:block; width:100%; height:auto;}
             <path d="M144,122 C170,126 190,126 206,125"/>
           </g>
           <text x="150" y="144" font-size="6.4" fill="#9AA1AC" text-anchor="middle">
-            blend-out is authored per transition; interrupts resolve by priority, never by whoever wrote last</text>
+            blend-out authored per transition · interrupts resolve by declared priority</text>
         </svg>
       </div>
       <ul class="small mt2">
@@ -903,7 +903,7 @@ svg{display:block; width:100%; height:auto;}
             <line x1="9" y1="38" x2="19" y2="38" stroke="#DEDAD2" stroke-width="1"/><text x="24" y="41">synapse — weighted semantic link</text>
           </g>
           <text x="150" y="146" font-size="6.2" fill="#9AA1AC" text-anchor="middle">
-            links that keep getting traversed grow stronger; unused links decay — a Hebbian weighting rule</text>
+            links strengthen with use and decay without it — a Hebbian rule</text>
         </svg>
       </div>
       <p class="small mt2">Flat vector search returns things that are <em>similar</em>. Building explicit connections

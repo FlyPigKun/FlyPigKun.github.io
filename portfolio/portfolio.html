@@ -718,7 +718,7 @@ svg{display:block; width:100%; height:auto;}
             <path d="M144,122 C170,126 190,126 206,125"/>
           </g>
           <text x="150" y="144" font-size="6.4" fill="#9AA1AC" text-anchor="middle">
-            blend-out is authored per transition; interrupts resolve by priority, never by whoever wrote last</text>
+            blend-out authored per transition · interrupts resolve by declared priority</text>
         </svg>
       </div>
       <ul class="small mt2">
@@ -1285,7 +1285,7 @@ svg{display:block; width:100%; height:auto;}
           <g stroke="#B8402E" stroke-width=".8" stroke-dasharray="1.5 1.5" fill="none">
             <path d="M125,22 L125,24"/><path d="M225,22 L225,24"/></g>
           <text x="150" y="66" font-size="6.4" fill="#9AA1AC" text-anchor="middle">
-            submit → task id → poll status → fetch artefacts · retries with back-off on transient failures</text>
+            submit → poll → fetch · back-off retry on transient failures</text>
           <rect x="30" y="74" width="240" height="26" rx="2" fill="#F7EEEC" stroke="#B8402E"/>
           <text x="150" y="85" font-size="6.6" fill="#B8402E" text-anchor="middle">HARD-WON RULE: use planar decimation on generated meshes,</text>
           <text x="150" y="94" font-size="6.6" fill="#B8402E" text-anchor="middle">never voxel remeshing — voxel remesh destroys the silhouette that made it good</text>
@@ -1450,7 +1450,7 @@ svg{display:block; width:100%; height:auto;}
             <line x1="9" y1="38" x2="19" y2="38" stroke="#DEDAD2" stroke-width="1"/><text x="24" y="41">synapse — weighted semantic link</text>
           </g>
           <text x="150" y="146" font-size="6.2" fill="#9AA1AC" text-anchor="middle">
-            links that keep getting traversed grow stronger; unused links decay — a Hebbian weighting rule</text>
+            links strengthen with use and decay without it — a Hebbian rule</text>
         </svg>
       </div>
       <p class="small mt2">Flat vector search returns things that are <em>similar</em>. Building explicit connections
